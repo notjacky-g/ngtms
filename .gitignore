@@ -19,3 +19,16 @@ build/
 
 # NJ ignore directory
 ao/bin/
+
+
+#git 
+E:
+cd E:\GoogleDrive\TC\NJ\10.121.41.38\ngtms_src
+git config --global user.name "notjacky-g"
+git config --global user.email "notjacky@gmail.com"
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/notjacky-g/ngtms.git
+git push -u origin main
