@@ -1,0 +1,107 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+	xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
+    xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
+    xmlns:common="urn:import:com.hwacom.ngtms.common.am.view">
+	
+	
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins4444">
+        <ui:attributes top="4" right="4" bottom="4" left="4" />
+    </ui:with>
+    
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins4440">
+        <ui:attributes top="4" right="4" bottom="4" left="0" />
+    </ui:with>
+    
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="westMargins">
+		<ui:attributes top="4" right="4" bottom="4" left="4" />
+	</ui:with>
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
+		<ui:attributes top="4" right="4" bottom="4" left="0" />
+	</ui:with>
+    
+    <ui:with field="searchFieldVerticalLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes margins="{margins4444}" height="130" width="1"/>
+    </ui:with>
+    
+    <ui:with field="conditionVerticalLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes margins="{margins4444}" height="30" width="320"/>
+    </ui:with>
+    
+    <ui:with field="gridVerticalLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes margins="{margins4444}" height="1" width="1"/>
+    </ui:with>
+	
+	<ui:with field="centerData" type="com.sencha.gxt.widget.core.client.container.MarginData">
+		<ui:attributes margins="{centerMargins}" />
+	</ui:with>
+	<ui:with field="westData" type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
+		<ui:attributes size="320" margins="{westMargins}" collapsible="true" split="true" />
+	</ui:with>
+		
+	<ui:with type="com.sencha.gxt.data.shared.ListStore" field="recordStore"/>
+	<ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" field="recordColumnModel"/>
+	<ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" field="recordGridView">
+		<ui:attributes stripeRows="true" forceFit="true"/>
+	</ui:with>
+	
+	<!--<container:VerticalLayoutContainer>
+		<container:child layoutData="{searchFieldVerticalLayoutData}">-->
+	<container:BorderLayoutContainer ui:field="borderLayoutContainer" borders="true">
+		<container:west layoutData="{westData}">
+			<gxt:ContentPanel heading="門禁卡片紀錄查詢"
+							  buttonAlign="CENTER">
+				<container:VerticalLayoutContainer>
+					<container:child layoutData="{conditionVerticalLayoutData}">
+						<form:FieldLabel text="起迄時間"
+									  labelWidth="60">
+							<form:widget>
+								<common:DateRangePicker ui:field="dateRangePicker" 
+														timePicker="true" 
+														singleDatePicker="false" />
+							</form:widget>
+						</form:FieldLabel>
+					</container:child>				
+					<container:child layoutData="{conditionVerticalLayoutData}">
+						<form:FieldLabel text="機房"
+									  labelWidth="40">
+							<form:widget>
+								<form:SimpleComboBox ui:field="ncuComboBox"
+                                  					 triggerAction="ALL"
+                                  					 editable="false"/>
+							</form:widget>
+						</form:FieldLabel>
+					</container:child>
+					<container:child layoutData="{conditionVerticalLayoutData}">
+						<form:FieldLabel text="門禁位置"
+									  labelWidth="60">
+							<form:widget>
+								<form:SimpleComboBox ui:field="locationComboBox"
+                                  					 triggerAction="ALL"
+                                  					 editable="false"/>
+							</form:widget>
+						</form:FieldLabel>
+					</container:child>
+				</container:VerticalLayoutContainer>
+				<gxt:button>
+					<button:TextButton ui:field="queryButton"
+									   text="查詢"/>
+				</gxt:button>
+			</gxt:ContentPanel>
+		</container:west>
+		<container:center layoutData="{centerData}">
+		<!-- </container:child>
+		<container:child layoutData="{gridVerticalLayoutData}">-->
+			<grid:Grid ui:field="recordGrid"
+                                   store="{recordStore}"
+                                   cm="{recordColumnModel}"
+                                   view="{recordGridView}"/>
+		<!--</container:child>
+	  </container:VerticalLayoutContainer>-->
+	  	</container:center>
+	</container:BorderLayoutContainer>
+</ui:UiBinder> 

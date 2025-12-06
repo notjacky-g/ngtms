@@ -1,0 +1,163 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" 
+    xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container" 
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button" 
+    xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form" 
+    xmlns:toolbar="urn:import:com.sencha.gxt.widget.core.client.toolbar">
+
+    <ui:with field="messages" type="com.hwacom.ngtms.hcce.am.view.Messages" />
+    <ui:with field="allImages" type="com.hwacom.ngtms.hcce.am.images.AllImages" />
+
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
+        <ui:attributes top="0" right="0" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="eastMargins">
+        <ui:attributes top="2" right="5" bottom="0" left="0" />
+    </ui:with>
+    <ui:with field="margin_10" type="com.sencha.gxt.core.client.util.Margins">
+        <ui:attributes top="10" right="10" bottom="10" left="10" />
+    </ui:with>
+
+    <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="eastData">
+        <ui:attributes size="450" margins="{eastMargins}" split="true" />
+    </ui:with>
+
+    <ui:with type="com.sencha.gxt.data.shared.ListStore" field="store" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" field="cm" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" field="view">
+        <ui:attributes stripeRows="true"></ui:attributes>
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.MarginData" field="centerData">
+        <ui:attributes margins="{centerMargins}" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData" field="rightBottomData">
+        <ui:attributes width="1" height="0" />
+    </ui:with>
+    <ui:with field="itemData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="30" margins="{margin_10}" />
+    </ui:with>
+    <ui:with field="itemTitleData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="80" height="1" />
+    </ui:with>
+    <ui:with field="itemTitle2Data" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="60" height="1" />
+    </ui:with>
+    <ui:with field="itemValueData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="item2Data" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="40" margins="{margin_10}" />
+    </ui:with>
+    <ui:with field="item3Data" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="150" margins="{margin_10}" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData" field="dynamicDataTop">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData" field="dynamicDataBottom">
+        <ui:attributes width="1" height="120" />
+    </ui:with>
+    
+
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="editDataConfig">
+        <ui:attributes text="{messages.fm_editPanelTitle}" />
+    </ui:with>
+
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="dynamicDataConfig">
+        <ui:attributes text="{messages.dynamicConfig_tab}" />
+    </ui:with>
+
+    <ui:with type="com.sencha.gxt.data.shared.ListStore" field="dynamicConfigStore" />
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" field="dynamicConfigCm" />
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" field="dynamicConfigView">
+        <ui:attributes stripeRows="true"></ui:attributes>
+    </ui:with>
+
+    <container:BorderLayoutContainer borders="true">
+        <container:center layoutData="{centerData}">
+            <gxt:ContentPanel headerVisible="false">
+                <gxt:widget>
+                    <grid:Grid ui:field="grid" store="{store}" cm="{cm}" view="{view}" borders="false" columnReordering="true" stateful="true" />
+                </gxt:widget>
+            </gxt:ContentPanel>
+        </container:center>
+        <container:east layoutData="{eastData}">
+            <gxt:TabPanel tabScroll="true">
+                <gxt:child config="{editDataConfig}">
+                    <gxt:FramedPanel ui:field="fmeDefinitionPanel" heading="{messages.fm_editPanelTitle}" headerVisible="false" buttonAlign="CENTER">
+                        <container:VerticalLayoutContainer>
+                            <container:HorizontalLayoutContainer layoutData="{itemData}">
+                                <toolbar:LabelToolItem label="{messages.fm_groupName}：" layoutData="{itemTitleData}" />
+                                <form:TextField ui:field="groupName" allowBlank="false" layoutData="{itemValueData}" enabled="false" />
+                            </container:HorizontalLayoutContainer>
+                            <container:HorizontalLayoutContainer layoutData="{itemData}">
+                                <toolbar:LabelToolItem label="{messages.fm_fmeName}：" layoutData="{itemTitleData}" />
+                                <form:TextField ui:field="fmeName" allowBlank="false" layoutData="{itemValueData}" />
+                            </container:HorizontalLayoutContainer>
+                            <container:HorizontalLayoutContainer layoutData="{itemData}">
+                                <toolbar:LabelToolItem label="{messages.fm_className}：" layoutData="{itemTitleData}" />
+                                <form:TextField ui:field="className" allowBlank="false" layoutData="{itemValueData}" />
+                            </container:HorizontalLayoutContainer>
+                            <container:HorizontalLayoutContainer layoutData="{itemData}">
+                                <toolbar:LabelToolItem label="{messages.fm_enableDisable}：" layoutData="{itemTitleData}" />
+                                <g:HorizontalPanel layoutData="{itemValueData}">
+                                    <form:Radio ui:field="enableRadio" boxLabel="{messages.fm_enable}" value="true" />
+                                    <form:Radio ui:field="disableRadio" boxLabel="{messages.fm_disable}" />
+                                </g:HorizontalPanel>
+                            </container:HorizontalLayoutContainer>
+                            <container:HorizontalLayoutContainer layoutData="{item2Data}">
+                                <toolbar:LabelToolItem label="{messages.fm_description}：" layoutData="{itemTitleData}" />
+                                <form:TextArea ui:field="description" allowBlank="true" layoutData="{itemValueData}" />
+                            </container:HorizontalLayoutContainer>
+                            <container:HorizontalLayoutContainer ui:field="listContainer" layoutData="{item3Data}">
+                                <toolbar:LabelToolItem label="{messages.fm_nodePriority}：" layoutData="{itemTitleData}" />
+                            </container:HorizontalLayoutContainer>
+                        </container:VerticalLayoutContainer>
+                        <gxt:button>
+                            <button:TextButton ui:field="saveButton" text="{messages.fm_button_save}" />
+                        </gxt:button>
+                        <gxt:button>
+                            <button:TextButton ui:field="deleteButton" text="{messages.fm_button_delete}" enabled="false" />
+                        </gxt:button>
+                        <gxt:button>
+                            <button:TextButton ui:field="cancel" text="{messages.fm_button_cancel}" enabled="false" />
+                        </gxt:button>
+                    </gxt:FramedPanel>
+                </gxt:child>
+                <gxt:child config="{dynamicDataConfig}">
+                    <gxt:ContentPanel headerVisible="false" buttonAlign="CENTER">
+                        <container:VerticalLayoutContainer>
+                            <container:child layoutData="{dynamicDataTop}">
+                                <grid:Grid ui:field="dynamicConfigGrid" store="{dynamicConfigStore}" cm="{dynamicConfigCm}" view="{dynamicConfigView}" borders="false"
+                                    columnReordering="true" stateful="true" />
+                            </container:child>
+                            <container:child layoutData="{dynamicDataBottom}">
+                                <gxt:FramedPanel  headerVisible="false" buttonAlign="CENTER">
+                                    <container:VerticalLayoutContainer>
+                                        <container:HorizontalLayoutContainer layoutData="{itemData}">
+                                            <toolbar:LabelToolItem label="{messages.dynamicConfig_name}：" layoutData="{itemTitleData}" />
+                                            <form:TextField ui:field="dynamicConfigName" allowBlank="false" layoutData="{itemValueData}"  />
+                                        </container:HorizontalLayoutContainer>
+                                        <container:HorizontalLayoutContainer layoutData="{itemData}">
+                                            <toolbar:LabelToolItem label="{messages.dynamicConfig_value}：" layoutData="{itemTitleData}" />
+                                            <form:TextField ui:field="dynamicConfigValue" allowBlank="false" layoutData="{itemValueData}" />
+                                        </container:HorizontalLayoutContainer>
+                                    </container:VerticalLayoutContainer>
+                                    <gxt:button>
+                                        <button:TextButton ui:field="saveDynamicButton" text="{messages.fm_button_save}" />
+                                    </gxt:button>
+                                </gxt:FramedPanel>
+                            </container:child>
+                        </container:VerticalLayoutContainer>
+                    </gxt:ContentPanel>
+                </gxt:child>
+            </gxt:TabPanel>
+        </container:east>
+    </container:BorderLayoutContainer>
+</ui:UiBinder>
+

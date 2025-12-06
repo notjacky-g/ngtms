@@ -1,0 +1,101 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
+	xmlns:gwt="urn:import:com.google.gwt.user.client.ui"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+    xmlns:am="urn:import:com.hwacom.ngtms.cam.client.ui"
+    xmlns:tree="urn:import:com.sencha.gxt.widget.core.client.tree"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
+    xmlns:toolbar="urn:import:com.sencha.gxt.widget.core.client.toolbar"
+    xmlns:view="urn:import:com.hwacom.ngtms.pd.am.view">
+    
+    <ui:with field="messages" type="com.hwacom.ngtms.pd.am.view.Messages" />
+    
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins4444">
+        <ui:attributes top="4" right="4" bottom="4" left="4" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins4440">
+        <ui:attributes top="4" right="4" bottom="4" left="0" />
+    </ui:with>
+    
+    <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="westLayoutData">
+        <ui:attributes size="300" margins="{margins4444}" collapsible="true" split="true" />
+    </ui:with>
+     <ui:with type="com.sencha.gxt.widget.core.client.container.MarginData" field="centerLayoutData">
+        <ui:attributes margins="{margins4440}" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="eastLayoutData">
+        <ui:attributes size="250" margins="{margins4444}" collapsible="true" />
+    </ui:with>
+    <ui:with field="toolBarRowData"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="20" />
+    </ui:with>
+    <ui:with field="treeRowData"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData" field="roadTreeViewLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    
+    <ui:import field="com.sencha.gxt.widget.core.client.button.ToolButton.QUESTION" />
+    <ui:import field="com.sencha.gxt.widget.core.client.button.ToolButton.EXPAND" />
+    <ui:import field="com.sencha.gxt.widget.core.client.button.ToolButton.COLLAPSE" />
+    <ui:import field="com.sencha.gxt.widget.core.client.button.ToolButton.GEAR" />
+
+	<container:BorderLayoutContainer>
+	    <container:west layoutData="{westLayoutData}">
+            <gxt:ContentPanel heading="{messages.titleView_pd}">
+                <gxt:tool>
+                    <button:ToolButton ui:field="info" config="{QUESTION}" />
+                </gxt:tool>
+                <container:VerticalLayoutContainer>
+                    <am:RoadTreeViewer ui:field="roadTree" deviceType="PD" layoutData="{roadTreeViewLayoutData}" />
+                </container:VerticalLayoutContainer>
+            </gxt:ContentPanel>
+        </container:west>
+		<container:center layoutData="{centerLayoutData}">
+			<gxt:ContentPanel heading="{messages.pdLoopDeviceConfigSetting_heading_loopDevice}">
+				<container:VerticalLayoutContainer borders="true" >
+            		<container:child layoutData="{treeRowData}">
+						<view:PdLoopDeviceConfigGrid ui:field="loopDeviceConfigGrid"/>
+					</container:child>
+				</container:VerticalLayoutContainer>
+				<gxt:tool>
+                    <button:ToolButton ui:field="setting"
+                                       config="{GEAR}"
+                                       toolTip="{messages.pdLoopDeviceConfigSetting_toolButton_setting}" />
+                </gxt:tool>
+				<gxt:tool>
+                    <button:ToolButton ui:field="expandAll"
+                                       config="{EXPAND}"
+                                       toolTip="{messages.pdLoopDeviceConfigSetting_toolButton_expand}" />
+                </gxt:tool>
+                <gxt:tool>
+                    <button:ToolButton ui:field="collapseAll"
+                                       config="{COLLAPSE}"
+                                       toolTip="{messages.pdLoopDeviceConfigSetting_toolButton_collapse}" />
+                </gxt:tool>
+			</gxt:ContentPanel>
+		</container:center>
+		<container:east layoutData="{eastLayoutData}">
+		<gxt:ContentPanel heading="{messages.pdLoopDeviceConfigSetting_heading_unsetLoopDevice}">
+			<view:PdUnsetLoopDeviceConfigGrid ui:field="unsetLoopDeviceConfigGrid"/>
+			<gxt:tool>
+                    <button:ToolButton ui:field="expandAllunset"
+                                       config="{EXPAND}"
+                                       toolTip="{messages.pdLoopDeviceConfigSetting_toolButton_expand}" />
+                </gxt:tool>
+                <gxt:tool>
+                    <button:ToolButton ui:field="collapseAllunset"
+                                       config="{COLLAPSE}"
+                                       toolTip="{messages.pdLoopDeviceConfigSetting_toolButton_collapse}" />
+                </gxt:tool>
+		</gxt:ContentPanel>
+		</container:east>
+	</container:BorderLayoutContainer>
+</ui:UiBinder> 

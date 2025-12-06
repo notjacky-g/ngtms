@@ -1,0 +1,30 @@
+/*    */ package com.hwacom.ngtms.room.fm.task;
+/*    */ 
+/*    */ import com.hwacom.ngtms.hcce.fme.controller.fm.JobBase;
+/*    */ import com.hwacom.ngtms.room.service.RoomCardMonitorService;
+/*    */ import org.quartz.JobDataMap;
+/*    */ import org.slf4j.Logger;
+/*    */ import org.slf4j.LoggerFactory;
+/*    */ import org.springframework.beans.factory.annotation.Autowired;
+/*    */ 
+/*    */ public class RoomRegularCardMonitorTask
+/*    */   extends JobBase {
+/* 12 */   private Logger logger = LoggerFactory.getLogger(RoomRegularCardMonitorTask.class);
+/*    */   
+/*    */   @Autowired
+/*    */   RoomCardMonitorService roomCardMonitorService;
+/*    */ 
+/*    */   
+/*    */   protected void init(JobDataMap jobDataMap) {}
+/*    */   
+/*    */   protected void process() {
+/* 21 */     this.logger.debug("RoomRegularCardMonitorTask start.");
+/* 22 */     this.roomCardMonitorService.doRegularCardMonitor();
+/*    */   }
+/*    */ }
+
+
+/* Location:              D:\TC\NJ\機房門禁10.121.41.38\ngtms\ao\lib.src\fm-room-1.0-SNAPSHOT.jar!\com\hwacom\ngtms\room\fm\task\RoomRegularCardMonitorTask.class
+ * Java compiler version: 8 (52.0)
+ * JD-Core Version:       1.1.3
+ */

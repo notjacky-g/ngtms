@@ -1,0 +1,50 @@
+
+整體架構分為後端服務 (Server) 與前端介面 (Client)。
+
+後端核心 (Server Side)
+啟動與初始化 (Startup):
+
+入口點: com.hwacom.ngtms.ao.boot.FmInvoker 是 Spring Boot 的啟動類別 (@SpringBootApplication)。
+
+執行順序:
+
+FmInvoker.main() 啟動 Spring Context。
+
+@PostConstruct 觸發 hcNodeInvoker.run()，這會啟動 HCCE (系統核心環境) 的節點服務。
+
+載入設定檔 (application.properties, hazelcast.xml, hcce.properties)。
+
+模組初始化: 透過 Spring 的依賴注入初始化各個 Service 和 Component，例如 AlarmConfig 會註冊 Hazelcast 的 Map (AlarmHzMap)。
+
+告警處理流程 (Alarm Processing): 這是系統的核心功能之一，處理設備或系統異常。
+
+接收: AlarmReceiveProcessor 啟動一個 Daemon Thread，持續監聽 Hazelcast Queue (AlarmHzQueue.Message)。
+
+過濾與判斷: 當 Queue 有新的 AlarmLogDTO 時，AlarmReceiveProcessor 會取出並轉換為 AlarmLog Entity。
+
+邏輯檢查: 呼叫 AlarmService 檢查告警級別 (AlarmLevelConfig)、是否被抑制 (Suppress)、或是否為重複告警。
+
+儲存: 有效的告警會透過 AlarmLogRepository 存入資料庫 (MySQL)。
+
+後處理 (Post-Process): AlarmPostProcessorImpl 負責後續動作，例如透過 AlarmSmsNotifyService 或 AlarmMailNotifyService 發送簡訊或郵件通知。
+
+即時推送: 透過 BrowserAlarmWebSocket 將告警即時推送到前端瀏覽器。
+
+資料快取與分散式協作 (Hazelcast):
+
+系統大量使用 Hazelcast (HzUtils) 來存取記憶體中的資料，例如設備狀態 (DeviceTcStatus)、系統配置 (DeviceTcConfig)。
+
+這保證了多個伺服器節點間的資料一致性與快速存取。
+
+通訊協定 (NCC - Network Control Center):
+
+雖然只有片段 (如 NccClient, RemoteTcRequestHandler)，但可看出後端負責與底層設備 (TC) 進行通訊。它會發送指令 (Command) 並接收回應 (Response) 或主動回報 (Report)。
+
+前端介面 (Client Side - GWT/GXT)
+入口點: HomeEP 和 RoadEP 是 GWT 的 EntryPoint。
+
+執行順序: 瀏覽器載入後 -> onModuleLoad -> 初始化 RestService (RestyGWT) -> 建立 UI (Viewport, HomeViewer, RoadConfigViewer)。
+
+UI 結構: 使用 AmTabPanel 管理頁籤，包含 RoadTreeViewer (路網樹狀圖)、LiveViewer (即時數據圖表)、HistoryViewer (歷史查詢) 等。
+
+MVP 模式: 前端採用 Model-View-Presenter 模式 (例如 HomePresenter, DeviceTypePresenter) 將邏輯與 UI 分離。

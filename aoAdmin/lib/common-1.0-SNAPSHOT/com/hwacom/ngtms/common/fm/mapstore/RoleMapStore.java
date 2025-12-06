@@ -1,0 +1,49 @@
+/*    */ package com.hwacom.ngtms.common.fm.mapstore;
+/*    */ 
+/*    */ import com.hwacom.ngtms.base.hazelcast.JPAMapStore;
+/*    */ import com.hwacom.ngtms.common.fm.model.Role;
+/*    */ import com.hwacom.ngtms.common.fm.repository.RoleRepository;
+/*    */ import java.util.Collection;
+/*    */ import java.util.HashMap;
+/*    */ import java.util.Map;
+/*    */ import java.util.Set;
+/*    */ import javax.annotation.PostConstruct;
+/*    */ import org.springframework.beans.factory.annotation.Autowired;
+/*    */ import org.springframework.data.repository.CrudRepository;
+/*    */ import org.springframework.stereotype.Component;
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ @Component
+/*    */ public class RoleMapStore
+/*    */   extends JPAMapStore<Role, String>
+/*    */ {
+/*    */   @Autowired
+/*    */   private RoleRepository repository;
+/*    */   
+/*    */   @PostConstruct
+/*    */   public void setCrudRepository() {
+/* 27 */     setCrudRepository((CrudRepository)this.repository);
+/*    */   }
+/*    */ 
+/*    */   
+/*    */   public Map<String, Role> loadAll(Collection<String> collection) {
+/* 32 */     Map<String, Role> map = new HashMap<>();
+/* 33 */     for (Role role : this.repository.findAllById(collection)) {
+/* 34 */       map.put(role.getName(), role);
+/*    */     }
+/* 36 */     return map;
+/*    */   }
+/*    */ 
+/*    */   
+/*    */   public Set<String> loadAllKeys() {
+/* 41 */     return this.repository.findAllKeys();
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\User\\user\Desktop\lib\common-1.0-SNAPSHOT.jar!\com\hwacom\ngtms\common\fm\mapstore\RoleMapStore.class
+ * Java compiler version: 8 (52.0)
+ * JD-Core Version:       1.1.3
+ */

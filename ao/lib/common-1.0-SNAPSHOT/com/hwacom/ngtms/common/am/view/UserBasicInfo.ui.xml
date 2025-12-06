@@ -1,0 +1,66 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form">
+
+    <ui:with type="com.hwacom.ngtms.common.am.view.Messages" field="messages" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData" field="verticalLayoutData">
+        <ui:attributes width="1.0" />
+    </ui:with>
+
+    <container:VerticalLayoutContainer>
+        <container:child layoutData="{verticalLayoutData}">
+            <form:FieldLabel text="{messages.user_login}" labelWidth="100">
+                <form:widget>
+                    <form:TextField ui:field="login" allowBlank="false" />
+                </form:widget>
+            </form:FieldLabel>
+        </container:child>
+        <container:child layoutData="{verticalLayoutData}">
+            <form:FieldLabel text="{messages.user_name}" labelWidth="100">
+                <form:widget>
+                    <form:TextField ui:field="name" allowBlank="false" />
+                </form:widget>
+            </form:FieldLabel>
+        </container:child>
+        <container:child layoutData="{verticalLayoutData}">
+            <form:FieldLabel text="{messages.user_password}" labelWidth="100">
+                <form:widget>
+                    <form:PasswordField ui:field="password" allowBlank="false"
+                                        emptyText="{messages.user_password_validation}" />
+                </form:widget>
+            </form:FieldLabel>
+        </container:child>
+        <container:child layoutData="{verticalLayoutData}">
+            <form:FieldLabel text="{messages.user_confirmPassword}" labelWidth="100">
+                <form:widget>
+                    <form:PasswordField ui:field="confirmPassword" allowBlank="false"
+                                        emptyText="{messages.user_password_validation}" />
+                </form:widget>
+            </form:FieldLabel>
+        </container:child>
+        <container:child layoutData="{verticalLayoutData}">
+            <form:FieldLabel text="{messages.user_description}" labelWidth="100">
+                <form:widget>
+                    <form:TextField ui:field="description" />
+                </form:widget>
+            </form:FieldLabel>
+        </container:child>
+        <container:child layoutData="{verticalLayoutData}">
+            <form:FieldLabel text="{messages.user_mail}" labelWidth="100">
+                <form:widget>
+                    <form:TextField ui:field="mail" />
+                </form:widget>
+            </form:FieldLabel>
+        </container:child>
+        <container:child layoutData="{verticalLayoutData}">
+            <form:FieldLabel text="{messages.user_mobile}" labelWidth="100">
+                <form:widget>
+                    <form:TextField ui:field="mobile" />
+                </form:widget>
+            </form:FieldLabel>
+        </container:child>
+    </container:VerticalLayoutContainer>
+</ui:UiBinder> 

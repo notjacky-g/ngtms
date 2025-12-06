@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmdFmtDef xmlns="http://hwacom.com/ngtms/cmdfmtdef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://hwacom.com/ngtms/cmdfmtdef cmdFmtDef.xsd"
+	version="v3.0" name="ct3-oh" bindPackage="com.hwacom.ngtms.ncc.tc.ct3.cmdparam.oh"
+	extend="/cmdProt/ct3/ct3-common.xml" classSuffix="Pm" >
+	
+	<command id="6F51" name="ohEventReport" type="report" direction="T2C">
+		<value name="hour" type="byte" minValue="0" maxValue="23" />
+		<value name="min" type="byte" minValue="0" maxValue="59" />
+		<value name="second" type="byte" minValue="0" maxValue="59" />
+	</command>
+</cmdFmtDef>

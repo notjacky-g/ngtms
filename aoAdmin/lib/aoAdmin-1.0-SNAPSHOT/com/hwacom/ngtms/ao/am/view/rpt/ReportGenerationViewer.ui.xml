@@ -1,0 +1,106 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client" 
+    xmlns:rpt="urn:import:com.hwacom.ngtms.ao.am.view.rpt"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button">
+
+    <!-- I18N、Resource -->
+    <ui:with field="messages" type="com.hwacom.ngtms.ao.am.view.Messages" />
+    <!-- ======== -->
+
+    <!-- Margin 設定區 -->
+    <ui:with field="margins_2" type="com.sencha.gxt.core.client.util.Margins">
+        <ui:attributes top="2" right="2" bottom="2" left="2" />
+    </ui:with>
+    <!-- ======== -->
+
+    <!-- Layout Data 區 -->
+    <ui:with field="westViewLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="250" height="1" margins="{margins_2}" />
+    </ui:with>
+    <ui:with field="eastViewLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="1" margins="{margins_2}" />
+    </ui:with>
+    <ui:with field="westTreeViewLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" margins="{margins_2}" />
+    </ui:with>
+    <ui:with field="northEastViewLayoutData" type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
+        <ui:attributes size="250" />
+    </ui:with>
+    <ui:with field="southEastViewLayoutData" type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
+        <ui:attributes size="1" />
+    </ui:with>
+    <ui:with field="southButtonBarLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="30" />
+    </ui:with>
+    <ui:with field="southReportHtmlLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="spaceExpandLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="previewToolBarLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="32" />
+    </ui:with>
+    <ui:with field="previewContentLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData" field="boxFlexLayoutData">
+        <ui:attributes flex="1" />
+    </ui:with>
+    <!-- ======== -->
+
+    <!-- 其他 import / with -->
+    <!-- ======== -->
+
+    <!-- UI Design -->
+    <container:HorizontalLayoutContainer>
+        <gxt:ContentPanel headerVisible="false" layoutData="{westViewLayoutData}">
+            <container:VerticalLayoutContainer>
+                <rpt:ReportNavigator ui:field="reportNavigator" layoutData="{westTreeViewLayoutData}" />
+            </container:VerticalLayoutContainer>
+        </gxt:ContentPanel>
+        <container:BorderLayoutContainer ui:field="borderContainer" borders="true" layoutData="{eastViewLayoutData}">
+            <container:north layoutData="{northEastViewLayoutData}">
+                <gxt:ContentPanel ui:field="ripContentPanel" />
+            </container:north>
+            <container:center layoutData="{southEastViewLayoutData}">
+                <container:VerticalLayoutContainer>
+                    <container:child layoutData="{southButtonBarLayoutData}">
+                        <container:HBoxLayoutContainer>
+                            <container:child>
+                                <button:ButtonBar ui:field="btnBarDynamic">
+                                </button:ButtonBar>
+                            </container:child>
+                            <container:child layoutData="{boxFlexLayoutData}">
+                                <g:Label/>
+                            </container:child>
+                            <container:child>
+                                <button:ButtonBar>
+                                    <button:TextButton ui:field="btnClearContent"
+                                                       text="{messages.button_text_clearSelectedDevice}" />
+                                    <button:TextButton ui:field="btnQuery"
+                                                       text="{messages.button_text_query}" />
+                                    <button:TextButton ui:field="btnExportToFile"
+                                                       text="{messages.button_text_exportToFile}" />
+                                    <button:TextButton ui:field="btnPrint"
+                                                       text="{messages.button_text_print}" />
+                                    <button:TextButton ui:field="btnCollapse" />
+                                </button:ButtonBar>
+                            </container:child>
+                        </container:HBoxLayoutContainer>
+                    </container:child>
+                    <container:child layoutData="{southReportHtmlLayoutData}">
+                        <gxt:ContentPanel headerVisible="false" ui:field="previewContainer">
+                            <gxt:widget>
+                            </gxt:widget>
+                        </gxt:ContentPanel>
+                    </container:child>
+                </container:VerticalLayoutContainer>
+            </container:center>
+        </container:BorderLayoutContainer>
+    </container:HorizontalLayoutContainer>
+</ui:UiBinder>

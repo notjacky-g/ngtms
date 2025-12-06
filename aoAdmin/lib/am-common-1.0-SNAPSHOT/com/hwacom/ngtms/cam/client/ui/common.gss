@@ -1,0 +1,7 @@
+.selectAll {
+  gwt-sprite: "selectAll";
+}
+
+.deselectAll {
+  gwt-sprite: "deselectAll";
+}

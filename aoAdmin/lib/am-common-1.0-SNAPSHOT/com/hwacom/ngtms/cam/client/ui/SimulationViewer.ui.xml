@@ -1,0 +1,90 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:c="urn:import:com.sencha.gxt.widget.core.client.container" 
+	xmlns:am="urn:import:com.hwacom.ngtms.cam.client.ui" 
+	xmlns:f="urn:import:com.sencha.gxt.widget.core.client.form" 
+	xmlns:b="urn:import:com.sencha.gxt.widget.core.client.button" 
+	xmlns:g="urn:import:com.sencha.gxt.widget.core.client.grid" xmlns:gwt="urn:import:com.google.gwt.widget.client" xmlns:m="urn:import:com.sencha.gxt.widget.core.client.menu">
+
+	<!-- I18N、Resource -->
+	<!-- ==== -->
+	
+	<!-- Layout Data 區 -->
+	<ui:with field="deviceGridLayoutData" type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
+		<ui:attributes size="150" collapsible="true"/>
+	</ui:with>
+
+	<ui:with field="leftMargin" type="com.sencha.gxt.core.client.util.Margins" >
+		<ui:attributes top="0" right="2" bottom="0" left="10" />
+	</ui:with>
+	<ui:with field="rightMargin" type="com.sencha.gxt.core.client.util.Margins" >
+		<ui:attributes top="0" right="10" bottom="0" left="2" />
+	</ui:with>
+	<ui:with field="centerMargin" type="com.sencha.gxt.core.client.util.Margins" >
+		<ui:attributes top="0" right="2" bottom="0" left="2" />
+	</ui:with>
+	<ui:with field="operationMargins" type="com.sencha.gxt.core.client.util.Margins">
+		<ui:attributes top="10" right="10" bottom="10" left="10" />
+	</ui:with>
+	
+	<ui:with field="leftLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+		<ui:attributes margins="{leftMargin}" />
+	</ui:with>
+	<ui:with field="rightLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+		<ui:attributes margins="{rightMargin}" />
+	</ui:with>
+	<ui:with field="middleLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+		<ui:attributes margins="{centerMargin}" />
+	</ui:with>
+	<ui:with field="operationLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+		<ui:attributes width="1" height="100" margins="{operationMargins}" />
+	</ui:with>
+	<ui:with field="gridLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+		<ui:attributes width="1" height="-100" />
+	</ui:with>	
+	<!-- ==== -->
+	
+	<!-- 其他 import / with -->
+	<ui:with field="cm" type="com.sencha.gxt.widget.core.client.grid.ColumnModel" />
+	<ui:with field="store" type="com.sencha.gxt.data.shared.ListStore" />
+	<ui:with field="view" type="com.sencha.gxt.widget.core.client.grid.GridView" />	
+	<!-- ==== -->
+	
+	<c:BorderLayoutContainer>
+		<c:west layoutData="{deviceGridLayoutData}">
+			<am:DeviceCommViewer ui:field="commView" />
+		</c:west>
+		<c:center>
+			<c:VerticalLayoutContainer>
+				<!-- 上方的操作區 -->
+				<c:HorizontalLayoutContainer layoutData="{operationLayoutData}">
+					<f:FieldLabel text="群組" labelWidth="50" layoutData="{middleLayoutData}"><!-- I18N -->
+						<f:widget>
+							<f:StringComboBox ui:field="group" triggerAction="ALL" />
+						</f:widget>
+					</f:FieldLabel>
+					<b:TextButton text="新增群組" layoutData="{leftLayoutData}" /><!-- I18N -->
+					<b:TextButton text="刪除群組" layoutData="{rightLayoutData}" /><!-- I18N -->
+					<b:TextButton text="匯入" layoutData="{leftLayoutData}" /><!-- I18N -->
+					<b:TextButton text="匯出" layoutData="{rightLayoutData}" /><!-- I18N -->
+					<b:TextButton text="儲存模擬資料" layoutData="{leftLayoutData}" /><!-- I18N -->
+					<b:TextButton text="模擬資料下載" layoutData="{middleLayoutData}" /><!-- I18N -->
+					<b:TextButton text="開啟上傳設定" layoutData="{rightLayoutData}" /><!-- I18N -->
+				</c:HorizontalLayoutContainer>
+				<!-- ======== -->
+				
+				<!-- 下方的表格 grid 區 -->
+				<g:Grid ui:field="grid" cm="{cm}" store="{store}" view="{view}" layoutData="{gridLayoutData}">
+					<g:contextmenu>
+						<m:Menu>
+							<m:MenuItem text="新增模擬資料" />
+							<m:MenuItem text="複製模擬資料" />
+							<m:MenuItem text="刪除模擬資料" />
+						</m:Menu>
+					</g:contextmenu>
+				</g:Grid>
+				<!-- ======== -->
+			</c:VerticalLayoutContainer>
+		</c:center>
+	</c:BorderLayoutContainer>
+</ui:UiBinder> 

@@ -1,0 +1,187 @@
+body{
+	margin:0px;
+}
+#layout{
+	height: 100vh;
+}
+#title{
+	padding: 8px 12px;
+	font: 32px bold;
+	color:white;
+	background: linear-gradient(to left, #263C52 0%,#267D71 60%,#2C7BB3 100%);
+}
+#title #nodeAttr{ 
+	font: 16px bold;
+	position: absolute;
+	right: 10px;
+	bottom: 20px;
+}
+
+#popupContentTimestampDiv{
+	position: absolute;
+    top: 6px;
+    right: 10px;
+    background-color: #fdd9ee;
+}
+
+#tabs .w2ui-tab.active {
+	background-color: #dff;
+}
+
+#tabs .w2ui-tab{
+	font-size: 14px;
+	font-weight: bolder;
+	padding: 5x 12x;
+}
+
+#tabsContent{
+     height:calc(100% - 36px);
+     overflow: auto;
+}
+
+#tabsContentRefresh{
+	position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#tabsContentTimestampDiv{
+	position: absolute;
+    top: 5px;
+    right: 40px;
+    background-color: #fdd9ee;
+}
+
+.w2ui-reset *{
+	line-height: 18px !important;
+}
+
+.w2ui-reset table{
+	font-size: 14px !important;
+}
+
+td.w2ui-grid-data > div{
+	white-space: normal !important;
+}
+
+.classContent{
+	color: #a00e11;
+	background-color: #e1fecf;
+}
+
+.header{
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#hzDumpTab,#hzDistObjGrid{
+   	height: 100%;
+}
+
+#hzDistObjPopupGrid{
+	height:calc(100% - 30px);
+}
+
+#hzDumpTab a{
+	color: blue;
+}
+
+#hzDumpTab a:hover{
+	background-color: #fdd9ee;
+	cursor: pointer;
+}
+#smsTab{
+   	height: 100%;
+}
+#smsForm{
+   	width: 800px;
+   	height: 300px;
+}
+#hzInfo{
+	font-size: 16px;
+	padding-top: 20px;
+	padding-left: 20px;
+}
+
+#hzTopicData{
+	font-size: 14px;
+	line-height: 18px;
+}
+
+#hzTopicClear{
+	position: absolute;
+	top:5px;
+    right: 10px;
+}
+
+#popupTool{
+	padding: 2px;
+}
+
+#sysPerfLogTab,#sysPerfLogLayout{
+	height: 100%;
+}
+#sysPerfLogGrid{
+	height:calc(100% - 30px);
+}
+#settingTab ol li{
+	height:32px;
+}
+#logContent table{
+	margin: 10px 5px;
+	border: 1px solid black;
+}
+
+#logContent .alarm{
+	border: 3px groove #E41A1A;
+}
+
+#logContent th{
+	text-align: left;
+    padding: 5px 10px;
+    background-color: #dddddd;
+}
+
+#logContent td{
+	padding: 5px;
+}
+
+#sysPerfLogTab .counterName{
+	display: inline-block;
+	padding: 0px 2px;
+	margin: 2px 1px;
+	background-color: #E5F9E4;
+}
+
+#sysPerfLogTab .counterValue{
+	display: inline-block;
+	padding-right: 10px;
+}
+
+#benchmarkTab,#benchmarkLayout{
+	height: 100%;
+}
+
+#benchmarkClear{
+	position: absolute;
+	top:5px;
+    right: 10px;
+}
+
+#benchmarkResult{
+	margin: 10px;
+}
+
+.ngmtsLogo{
+    height: 30px;
+    margin: 5px 20px;
+}
+
+.hwacomLogo{
+	height: 28px;
+    margin: 5px 50px;
+}
+#dateString{
+	width: 200px;
+}

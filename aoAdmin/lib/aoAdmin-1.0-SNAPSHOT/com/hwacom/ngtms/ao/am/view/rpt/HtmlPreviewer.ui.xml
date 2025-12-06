@@ -1,0 +1,39 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client" 
+    xmlns:rpt="urn:import:com.hwacom.ngtms.ao.am.view.rpt"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button">
+	
+	<!-- I18N、Resource -->
+    <!-- ======== -->
+	
+	<!-- Layout Data 區 -->
+	<ui:with field="previewToolBarLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="32" />
+    </ui:with>
+    <ui:with field="previewContentLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <!-- ======== -->
+    
+    <!-- 其他 import / with -->
+    <!-- ======== -->
+    
+    <!-- UI Design -->
+	<gxt:ContentPanel headerVisible="false">
+        <container:VerticalLayoutContainer>
+            <container:child layoutData="{previewToolBarLayoutData}">
+                <rpt:ReportPreviewToolBar ui:field="previewToolBar" />
+            </container:child>
+            <container:child layoutData="{previewContentLayoutData}">
+                <container:FlowLayoutContainer scrollMode="AUTO">
+                    <g:HTML ui:field="previewContent" 
+                            text="The generated report in html format will be here" />
+                </container:FlowLayoutContainer>
+            </container:child>
+        </container:VerticalLayoutContainer>
+    </gxt:ContentPanel>
+</ui:UiBinder> 

@@ -1,0 +1,158 @@
+    <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
+    xmlns:c="urn:import:com.sencha.gxt.widget.core.client"
+    xmlns:toolbar="urn:import:com.sencha.gxt.widget.core.client.toolbar"
+    xmlns:amc="urn:import:com.hwacom.ngtms.hcce.am.view"
+    xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
+    xmlns:hcce="urn:import:com.hwacom.ngtms.hcce.am.view">
+    
+    <ui:with field="messages" type="com.hwacom.ngtms.node.performance.am.view.Messages" />
+    <ui:with field="allImages" type="com.hwacom.ngtms.hcce.am.images.AllImages" />
+    <ui:with type="com.sencha.gxt.core.client.util.Margins"
+        field="sideMargins">
+        <ui:attributes top="0" right="0" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins"
+        field="centerMargins">
+        <ui:attributes top="0" right="0" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins"
+        field="gridMargins">
+        <ui:attributes top="0" right="0" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins"
+        field="rowMargin">
+        <ui:attributes top="10" right="0" bottom="0" left="20" />
+    </ui:with>
+
+    <ui:with
+        type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
+        field="centerLayoutData">
+        <ui:attributes width="1" height="1" margins="{centerMargins}" />
+    </ui:with>
+    <ui:with
+        type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
+        field="sideLayoutData">
+        <ui:attributes width="300" height="1" margins="{sideMargins}" />
+    </ui:with>
+
+    <ui:with
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData"
+        field="topData">
+        <ui:attributes width="1" height="1" margins="{gridMargins}" />
+    </ui:with>
+    <ui:with field="dateRowData"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="40" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.data.shared.ListStore" field="store" />
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel"
+        field="cm" />
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView"
+        field="view">
+        <ui:attributes stripeRows="true"></ui:attributes>
+    </ui:with>
+    <ui:with field="rowHLayoutData"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="300" height="45" margins="{rowMargin}" />
+    </ui:with>
+    <ui:with field="emptyData"
+        type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="48" height="20" />
+    </ui:with>
+    <ui:with field="leftItemData"
+        type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="100" height="20" />
+    </ui:with>
+    <ui:with field="itemData"
+        type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="40" height="20" />
+    </ui:with>
+    <ui:with field="itemEmptyData"
+        type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="20" />
+    </ui:with>
+    <ui:with field="itemValueData"
+        type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="100" height="20" />
+    </ui:with>
+    <ui:with field="gridBottomData"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" />
+    </ui:with>
+    <container:SimpleContainer ui:field="mainSystemContainer">
+        <container:HorizontalLayoutContainer>
+            <container:child layoutData="{sideLayoutData}">
+                <c:FramedPanel
+                    heading="{messages.nodePerformanceLog_queryTitle}"
+                    bodyStyle="background: none; padding: 5px">
+                    <container:VerticalLayoutContainer
+                        layoutData="{centerLayoutData}">
+                        <container:HorizontalLayoutContainer
+                            layoutData="{dateRowData}">
+                            <toolbar:LabelToolItem
+                                label=" " layoutData="{emptyData}" />
+                            <toolbar:LabelToolItem
+                                label="{messages.nodePerformanceLog_systemName} :"
+                                layoutData="{leftItemData}" />
+                            <form:ComboBox ui:field="groupNameCombo"
+                                width="100" editable="false"
+                                triggerAction="ALL" />
+                            <toolbar:LabelToolItem
+                                label=" " layoutData="{itemEmptyData}" />
+                        </container:HorizontalLayoutContainer>
+                        <container:HorizontalLayoutContainer
+                            layoutData="{dateRowData}">
+                            <toolbar:LabelToolItem
+                                label=" " layoutData="{emptyData}" />
+                            <toolbar:LabelToolItem
+                                label="{messages.nodePerformanceLog_nodeName} :"
+                                layoutData="{leftItemData}" />
+                            <form:ComboBox ui:field="nodeNameCombo"
+                                width="100" editable="false"
+                                triggerAction="ALL" />
+                            <toolbar:LabelToolItem
+                                label=" " layoutData="{itemEmptyData}" />
+                        </container:HorizontalLayoutContainer>
+                        <amc:DateTimeField ui:field="startTime"
+                            text="{messages.nodePerformanceLog_startTime}"
+                            labelWidth="60" dateFieldWidth="100"
+                            timeFieldWidth="60" layoutData="{rowHLayoutData}" />
+                        <amc:DateTimeField ui:field="endTime"
+                            text="{messages.nodePerformanceLog_endTime}"
+                            labelWidth="60" dateFieldWidth="100"
+                            timeFieldWidth="60" layoutData="{rowHLayoutData}" />
+                        <container:HorizontalLayoutContainer
+                            layoutData="{dateRowData}">
+                            <toolbar:LabelToolItem
+                                label=" " layoutData="{leftItemData}" />
+                            <toolbar:LabelToolItem
+                                label=" " layoutData="{itemData}" />
+                            <button:TextButton
+                                ui:field="queryButton" layoutData="{itemValueData}"
+                                text="{messages.nodePerformanceLog_queryButton}" />
+                            <toolbar:LabelToolItem
+                                label=" " layoutData="{itemEmptyData}" />
+                        </container:HorizontalLayoutContainer>
+                    </container:VerticalLayoutContainer>
+                </c:FramedPanel>
+            </container:child>
+            <container:child layoutData="{centerLayoutData}">
+                <container:VerticalLayoutContainer
+                    layoutData="{centerLayoutData}">
+                    <grid:Grid ui:field="grid" store="{store}"
+                        cm="{cm}" view="{view}" borders="false"
+                        columnReordering="true" stateful="true"
+                        layoutData="{topData}" />
+                    <toolbar:PagingToolBar
+                        pageSize="50" ui:field="pageToolBar" layoutData="{gridBottomData}" />
+                </container:VerticalLayoutContainer>
+            </container:child>
+        </container:HorizontalLayoutContainer>
+    </container:SimpleContainer>
+</ui:UiBinder>

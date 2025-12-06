@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.1//EN" "http://www.gwtproject.org/doctype/2.8.1/gwt-module.dtd">
+<module rename-to="room">
+	<inherits name="com.hwacom.ngtms.room.am.common" />
+    <entry-point class="com.hwacom.ngtms.room.am.RoomEP"/>
+</module>

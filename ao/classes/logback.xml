@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For assistance related to logback-translator or configuration -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user -->
+<!-- -->
+<!-- For professional support please see -->
+<!-- http://www.qos.ch/shop/products/professionalSupport -->
+<!-- -->
+<configuration debug="false" scan="true">
+
+	<!-- <timestamp key="bySecond" datePattern="yyyy-MM-dd HH:mm:ss.SSS"/> -->
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender -->
+		<!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy -->
+		<!--for further documentation -->
+		<File>/ngtms/logs/ao.log</File>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%c:%L] [%p] - %m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/ngtms/logs/ao.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are by default assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%c:%L] [%p] - %m%n</pattern>
+		</encoder>
+	</appender>
+    <!-- 使用 SysPerfLogService 時，須將下列區段複製到您的 logback.xml -->
+    <!-- ********** copy from here ********** -->
+    <appender name="sysPerfLog" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator class="ch.qos.logback.classic.sift.MDCBasedDiscriminator">
+            <key>module</key>
+            <defaultValue>unknown</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${module}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <File>/ngtms/logs/sysPerfLog/${module}.log</File>
+                <encoder>
+                    <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] - %m%n</pattern>
+                </encoder>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>/ngtms/logs/sysPerfLog/${module}.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+                    <maxHistory>30</maxHistory>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>100MB</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                </rollingPolicy>
+            </appender>
+        </sift>
+    </appender>
+
+    <!-- 將 level 設為 OFF , 關閉 SysPerfLog 功能-->
+    <logger name="com.hwacom.ngtms.base.sysperflog.service.SysPerfLogService.SysPerfLog" level="INFO" additivity="false">
+        <appender-ref ref="sysPerfLog" />
+    </logger>
+
+    <appender name="kmsObject" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <File>/ngtms/logs/kmsObject.log</File>
+            <encoder>
+                    <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%c:%L] [%p] - %m%n</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>/ngtms/logs/kmsObject.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+                    <maxHistory>30</maxHistory>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                            <maxFileSize>100MB</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+    </appender>
+    <logger name="com.hwacom.ngtms.webrtc.core.KmsObjectCleaner" level="DEBUG" additivity="false">
+        <appender-ref ref="kmsObject" />
+    </logger>
+
+    <!-- ********** copy to here ********** -->
+	<logger name="com.hwacom" level="DEBUG" />
+	<logger name="com.hwacom.ngtms.common.websocket.AbstractServerEndpoint" level="WARN" />
+	<logger name="com.zaxxer.hikari.pool.PoolBase" level="ERROR" />
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>

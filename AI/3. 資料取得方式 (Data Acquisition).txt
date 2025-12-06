@@ -1,0 +1,50 @@
+WebSocket
+用於伺服器主動推播資訊給前端。
+
+/websocket/browserAlarm: 推播即時告警訊息到前端標題列或彈跳視窗。
+
+/websocket/operationLog: (在 OperationLogViewer 中使用) 推播最新的操作紀錄。
+
+3. 資料取得方式 (Data Acquisition)
+系統採用混合式的資料取得策略：
+
+靜態/設定資料 (Configuration Data):
+
+來源: 關聯式資料庫 (MySQL)。
+
+取得方式: 透過 Spring Data JPA (Repository 介面) 查詢。
+
+快取: 啟動時通常會載入 Hazelcast Map (如 DeviceTcConfig) 以加速讀取。
+
+前端: 呼叫 CommonRestService 或 RoadRestService 取得 DTO。
+
+即時狀態資料 (Real-time Status):
+
+來源: 現場設備 (TC) -> NCC (通訊伺服器) -> Hazelcast。
+
+儲存: 存在記憶體快取中 (Hazelcast IMap)，例如 DeviceTcStatus。
+
+取得方式: 前端呼叫 getDeviceStatus API，後端直接從 Hazelcast 讀取最新狀態回傳，不查 DB 以確保效能。
+
+更新機制: 前端使用 Timer 定期輪詢 (Polling) 或透過 WebSocket 接收變更。
+
+歷史資料 (Historical Data):
+
+來源: 關聯式資料庫 (儲存 log 的資料表，如 alarm_log)。
+
+取得方式: 透過 JPA Repository (如 AlarmLogRepository) 執行 SQL 查詢 (支援時間區間、設備過濾)。
+
+呈現: 前端 HistoryViewer 透過 API 取得數據後，繪製成 TimeLineChart。
+
+檔案/圖片資料:
+
+背景圖/圖控: 透過 Servlet (BackgroundGraphicUploader, GraphicProvider) 處理上傳與讀取。圖片資料可能以 byte array 形式存於 DB 或 Hazelcast 中，透過 Servlet 以 Stream 輸出給前端 Image 元件顯示。
+
+總結
+這是一個高整合性的監控系統。
+
+運作順序: 系統啟動 -> 連接 DB 與 Hazelcast -> 啟動通訊模組接收設備訊號 -> 更新記憶體狀態 -> 前端透過 API 讀取狀態並顯示。
+
+關鍵技術: Spring Boot (IoC/MVC), JPA (DB), Hazelcast (In-Memory Data Grid), GWT (AJAX UI), WebSocket (Real-time push)。
+
+資料流: 設備 -> NCC -> Hazelcast -> Web API -> 瀏覽器。

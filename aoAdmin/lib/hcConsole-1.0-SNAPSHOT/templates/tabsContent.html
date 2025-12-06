@@ -1,0 +1,943 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head lang="pl">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<div id="tabsContentTimestampDiv">
+		<span id="tabsContentTimestamp"></span>
+	</div>
+	<img id="tabsContentRefresh" src="images/refresh.png"></img>
+	<div id="hzMemberTab" style="display: block;padding: 0px 5px;">
+		<p class="header">HZ Group Members:</p>
+		<div id="hzMemberGrid"></div>
+		<p class="header">HZ Group Clients:</p>
+		<div id="hzClientGrid"></div>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			$('#hzMemberGrid').w2grid({
+				name   : 'hzMemberGrid',
+				recordHeight:32,
+				recid:"address",
+				fixedBody:false,
+				columns: [
+					{ field: 'address', caption: 'Address', size: '180px', sortable: true,title:''},
+					{ field: 'coordinator', caption: 'Coordinator', size: '100px',title:''},
+					{ field: 'localMember', caption: 'LocalMember', size: '110px',title:''},
+					{ field: 'uuid', caption: 'UUID', size: '300px',title:''},
+					{ field: 'attributes', caption: 'Attributes', size: '100%', sortable: true,title:''}
+				],
+				sortData: [{ field: 'address', direction: 'asc' }],
+			});
+			$('#hzClientGrid').w2grid({
+				name   : 'hzClientGrid',
+				recid:"address",
+				fixedBody:false,
+				columns: [
+					{ field: 'address', caption: 'Address', size: '180px', sortable: true,title:''},
+					{ field: 'client', caption: 'Client Info', size: '100%',title:''},
+				],
+				sortData: [{ field: 'address', direction: 'asc' }]
+			});
+			$.get("hcConsole/hzMemberData", hzMemberOnloadData);
+			function hzMemberOnloadData(data,status){
+				$("#tabsContentTimestamp").text(data.timestamp);
+				w2ui['hzMemberGrid'].add(data.members);
+				w2ui['hzClientGrid'].add(data.clients);
+			}
+			function hzMemberTabOnVisible(visiable){
+				if(visiable) hzMemberTabOnRefresh();
+				else{
+					w2ui['hzMemberGrid'].clear();
+					w2ui['hzClientGrid'].clear();
+				}
+			}
+
+			function hzMemberTabOnRefresh(){
+				w2ui['hzMemberGrid'].clear();
+				w2ui['hzClientGrid'].clear();
+				$.get("hcConsole/hzMemberData", hzMemberOnloadData);
+			}
+			/*]]>*/
+		</script>
+	</div>
+	<div id="hzConfigTab" style="display: none;padding: 0px 5px;">
+		<p class="header">Hazelcast Config</p>
+		<div id="hzConfigDiv"></div>
+		<p class="header">Serializer Config</p>
+		<div id="hzSerializerConfigDiv"></div>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			function hzConfigOnloadData(data,status){
+				$("#tabsContentTimestamp").text(data.timestamp);
+				$("#hzConfigDiv").text(data.hzConfig);
+				$("#hzSerializerConfigDiv").text(data.hzSerializerConfig);
+			}
+			function hzConfigTabOnVisible(visiable){
+				if(visiable) hzConfigTabOnRefresh();
+				else{
+					$("#hzConfigDiv").text('');
+					$("#hzSerializerConfigDiv").text('');
+				}
+			}
+			function hzConfigTabOnRefresh(){
+				$("#hzConfigDiv").text('');
+				$("#hzSerializerConfigDiv").text('');
+				$.get("hcConsole/getHzConfig", hzConfigOnloadData);
+			}
+			/*]]>*/
+		</script>
+	</div>
+	<div id="sysPerfLogTab" style="display: none;padding: 0px 5px;">
+		<div id="sysPerfLogLayout"></div>
+		<script th:inline="javascript">
+			$().w2layout({
+		        name: 'sysPerfLogLayout',
+		        panels: [
+		            { type: 'left', size: 300, resizable: true, title:'功能模組列表' },
+		            { type: 'main', style: 'background-color: white;', content:
+		            	'<div id="popupTool">'
+				    		+'Time milliseconds <input type="text" size="12" onchange="long2Date(this.value,\'#sysPerfLogTab #dateString\')"/>'
+				    		+'to date: <input id="dateString" type="text" readonly="readonly"/>'
+				    	+'</div>'
+		            	+'<div id="sysPerfLogGrid"></div>'}
+		        ]
+		    });
+	
+			// sidebar
+			w2ui['sysPerfLogLayout'].content('left', $().w2sidebar({
+		    	name: 'sysPerfLogSidebar',
+		    	img: null,
+		    	onClick: function (event) {
+		    		w2ui['sysPerfLogGrid'].clear();
+		    		loadModuleLogs(event.target);
+		    	}
+		    }));
+			$().w2grid({
+				    name   : 'sysPerfLogGrid',
+				    recid:"id",
+				    recordHeight: 32,
+				    show: {
+				        toolbar: true,
+				        footer: true,
+				    },
+				    columns: [
+						{ field: 'id', caption: 'ID', size: '70px', sortable: true,title:''},
+						{ field: 'jobName', caption: 'JobName', size: '150px', sortable: true},
+						{ field: 'time', caption: 'Time', size: '160px',title:''},
+						{ field: 'description', caption: 'Description', size: '180px',title:''},
+						{ field: 'counters', caption: 'Counters', size: '100%',title:''}
+					],
+		 			sortData: [{ field: 'jobName', direction: 'asc' }],
+		 			onReload: function(event) {
+		 				w2ui['sysPerfLogGrid'].clear();
+		 				loadModuleLogs(curSysPerLogModuleName);
+		 		    }
+			});
+			var curSysPerLogModuleName=null;
+			function loadModuleLogs(moduleName){
+				curSysPerLogModuleName=moduleName;
+				$.get("sysPerfLog/moduleLogs",{name: moduleName},function (data,status){
+	    			$("#tabsContentTimestamp").text(data.timestamp);
+	    			var sysPerfLogs=data.sysPerfLogs;
+	    			<!-- 不知道為什麼，在這裡用 for(var i=0;i<sysPerfLogs.length;i++) 會在 parse 的時候 fail -->
+					for(var index in sysPerfLogs){
+						var sysPerfLog = sysPerfLogs[index];
+						var log=sysPerfLog;
+	    				var html='';
+	    				for(var counter in log.counterMap) {
+	    					var chtml='<span class="counterName">'+counter+':</span><span class="counterValue">'+log.counterMap[counter]+'</span>';
+	    					html+=chtml;
+	    				}
+	    				sysPerfLog.counters=html;
+	    				html='';
+	    				if(log.startTime){
+	    					html=html+log.startTime;
+	    					if(log.endTime) html+=' ~ '+log.endTime;
+	    				}
+	    				sysPerfLog.time=html;
+	    				if(log.issueAlarm) sysPerfLog.style='color: red';
+					}
+	    			
+	    			w2ui['sysPerfLogGrid'].add(sysPerfLogs);
+	    		},"json");
+			}
+			function sysPerfLogOnloadData(data,status){
+				$("#tabsContentTimestamp").text(data.timestamp);
+				var moduleNames=data.moduleNames;
+				var nodes=[];
+				<!-- 不知道為什麼，在這裡用 for(var i=0;i<moduleNames.length;i++) 會在 parse 的時候 fail -->
+				for(var index in moduleNames){
+					nodes.push({id:moduleNames[index], text:moduleNames[index],img: 'icon-page'});
+				}
+				w2ui['sysPerfLogSidebar'].add(nodes);
+			}
+			function sysPerfLogTabOnVisible(visiable){
+				if(visiable){
+					if(!sysPerfLogInit){
+						$('#sysPerfLogLayout').w2render('sysPerfLogLayout');
+						$('#sysPerfLogGrid').w2render('sysPerfLogGrid');
+						sysPerfLogInit=true;
+					}
+					w2ui['sysPerfLogLayout'].resize();
+					sysPerfLogTabOnRefresh();
+				}
+			}
+			var sysPerfLogInit=false;
+			function sysPerfLogTabOnRefresh(){
+				w2ui['sysPerfLogSidebar'].nodes=[];
+				w2ui['sysPerfLogSidebar'].refresh();
+				$.get("sysPerfLog/sidebarData",sysPerfLogOnloadData);
+			}
+		</script>
+	</div>
+<!--
+<div id="versionTab" style="display: none;padding: 0px 5px;">
+	<ul class="info">
+		<li>軟體名稱：${hcNodeInfo.title}</li>
+		<li>版本號碼：${hcNodeInfo.version}</li>
+		<li>修訂版次：${hcNodeInfo.revision}</li>
+		<li>發行日期：${hcNodeInfo.issueDate}</li>
+		<li>啟動時間：${hcNodeInfo.startTime}</li>
+	</ul>
+	<img alt="" class="ngmtsLogo" src="images/ngtmsLogo.png">
+	<img alt="" class="hwacomLogo" src="images/hwacom.gif">
+	<br/><input id="suggestGc" type="button" value="Suggest Garbage Collection"/>
+	<script>
+		$("#suggestGc").click(function(){
+			$.get("hcConsole/suggestGc", function(data,status){
+    			w2alert("已建議系統進行 Garbage Collection");
+    		});
+		});
+	</script>
+</div>
+<div id="sysPerfLogTab" style="display: none;padding: 0px 5px;">
+	<div id="sysPerfLogLayout"></div>
+	<script>
+		$().w2layout({
+	        name: 'sysPerfLogLayout',
+	        panels: [
+	            { type: 'left', size: 300, resizable: true, title:'功能模組列表' },
+	            { type: 'main', style: 'background-color: white;', content:
+	            	'<div id="popupTool">'
+			    		+'Time milliseconds <input type="text" size="12" onchange="long2Date(this.value,\'#sysPerfLogTab #dateString\')"/>'
+			    		+'to date: <input id="dateString" type="text" readonly="readonly"/>'
+			    	+'</div>'
+	            	+'<div id="sysPerfLogGrid"></div>'}
+	        ]
+	    });
+
+		// sidebar
+		w2ui['sysPerfLogLayout'].content('left', $().w2sidebar({
+	    	name: 'sysPerfLogSidebar',
+	    	img: null,
+	    	onClick: function (event) {
+	    		w2ui['sysPerfLogGrid'].clear();
+	    		loadModuleLogs(event.target);
+	    	}
+	    }));
+		$().w2grid({
+			    name   : 'sysPerfLogGrid',
+			    recid:"id",
+			    recordHeight: 32,
+			    show: {
+			        toolbar: true,
+			        footer: true,
+			    },
+			    columns: [
+					{ field: 'id', caption: 'ID', size: '70px', sortable: true,title:''},
+					{ field: 'jobName', caption: 'JobName', size: '150px', sortable: true},
+					{ field: 'time', caption: 'Time', size: '150px',title:''},
+					{ field: 'description', caption: 'Description', size: '180px',title:''},
+					{ field: 'counters', caption: 'Counters', size: '100%',title:''}
+				],
+	 			sortData: [{ field: 'jobName', direction: 'asc' }],
+	 			onReload: function(event) {
+	 				w2ui['sysPerfLogGrid'].clear();
+	 				loadModuleLogs(curSysPerLogModuleName);
+	 		    }
+		});
+		var curSysPerLogModuleName=null;
+		function loadModuleLogs(moduleName){
+			curSysPerLogModuleName=moduleName;
+			$.get("sysPerfLog/moduleLogs",{name: moduleName},function (data,status){
+    			$("#tabsContentTimestamp").text(data.timestamp);
+    			var sysPerfLogs=data.sysPerfLogs;
+    			for	(var i = 0; i < sysPerfLogs.length; i++) {
+    				var log=sysPerfLogs[i];
+    				var html='';
+    				for(var counter in log.counterMap) {
+    					var chtml='<span class="counterName">'+counter+':</span><span class="counterValue">'+log.counterMap[counter]+'</span>';
+    					html+=chtml;
+    				}
+    				sysPerfLogs[i].counters=html;
+    				html='';
+    				if(log.startTime){
+    					html=html+log.startTime;
+    					if(log.endTime) html+=' ~ '+log.endTime;
+    				}
+    				sysPerfLogs[i].time=html;
+    				if(log.issueAlarm) sysPerfLogs[i].style='color: red';
+    			}
+    			w2ui['sysPerfLogGrid'].add(sysPerfLogs);
+    		},"json");
+		}
+		function sysPerfLogOnloadData(data,status){
+			$("#tabsContentTimestamp").text(data.timestamp);
+			var moduleNames=data.moduleNames;
+			var nodes=[];
+			for	(var i = 0; i < moduleNames.length; i++) {
+				nodes.push({id:moduleNames[i], text:moduleNames[i],img: 'icon-page'});
+			}
+			w2ui['sysPerfLogSidebar'].add(nodes);
+		}
+		function sysPerfLogTabOnVisible(visiable){
+			if(visiable){
+				if(!sysPerfLogInit){
+					$('#sysPerfLogLayout').w2render('sysPerfLogLayout');
+					$('#sysPerfLogGrid').w2render('sysPerfLogGrid');
+			x		sysPerfLogInit=true;
+				}
+				w2ui['sysPerfLogLayout'].resize();
+				sysPerfLogTabOnRefresh();
+			}
+		}
+		var sysPerfLogInit=false;
+		function sysPerfLogTabOnRefresh(){
+			w2ui['sysPerfLogSidebar'].nodes=[];
+			w2ui['sysPerfLogSidebar'].refresh();
+			$.get("sysPerfLog/sidebarData",sysPerfLogOnloadData);
+		}
+	</script>
+</div>
+<div id="benchmarkTab" style="display: none;padding: 0px 5px;">
+	<div id="benchmarkLayout"></div>
+	<script>
+		$().w2layout({
+	        name: 'benchmarkLayout',
+	        panels: [
+	            { type: 'left', size: 370, resizable: true},
+	            { type: 'main', style: 'background-color: white'}
+	        ]
+	    });
+		w2ui['benchmarkLayout'].content('main', '<button id="benchmarkClear" onclick="clearBenchmarkResult()">Clear</button><div id="benchmarkResult"></div>');
+		// sidebar
+		w2ui['benchmarkLayout'].content('left', $().w2sidebar({
+	    	name: 'benchmarkSidebar',
+	    	img: null,
+	    	nodes : [
+				{ id: 'Hazelcast', text: 'Hazelcast', img: 'icon-folder',
+					nodes: [
+						{ id: 'HzDeviceConfigBenchmark', text: '線上 DeviceConfig 測試', img: 'icon-page' },
+						{ id: 'HzDeviceConfigBenchmark1', text: '1 DeviceConfig1 測試[無 FST+ Serializable]', img: 'icon-page' },
+						{ id: 'HzDeviceConfigBenchmark2', text: '2 DeviceConfig2 測試[FST+ Serializable]', img: 'icon-page' },
+						{ id: 'HzDeviceConfigBenchmark3', text: '3 DeviceConfig3 測試[FST+ 優化Serializable]', img: 'icon-page' },
+						{ id: 'HzDeviceConfigBenchmark4', text: '4 DeviceConfig4 測試[無FST+ Externalizable]', img: 'icon-page' },
+						{ id: 'HzDeviceConfigBenchmark5', text: '5 DeviceConfig5 測試[FST+ Externalizable]', img: 'icon-page' },
+						{ id: 'HzDeviceConfigBenchmark6', text: '5 DeviceConfig Replicated Map 測試', img: 'icon-page' }
+					]
+	    	    },
+	    	    { id: 'DbTest3', text: 'Database (無繼承關係)', img: 'icon-folder',
+	    	    	nodes: [
+						{ id: 'SingleWriteVdData1MinUseRepository3', text: '寫入一筆 VD 1分鐘週期資料到DB', img: 'icon-page' },
+	    	            { id: 'BatchWriteVdData1MinUseRepository3', text: '批次寫入 VD 1分鐘週期資料到DB', img: 'icon-page' },
+	    	            { id: 'SingleReadVdData1MinUseRepository3', text: '從DB讀取一筆 VD 1分鐘週期資料', img: 'icon-page' },
+	    	            { id: 'BatchReadVdData1MinUseRepository3', text: '從DB整批讀取 VD 1分鐘週期資料', img: 'icon-page' },
+	    	            { id: 'CleanVdData1Min3', text: '清除table', img: 'icon-page' }
+					]
+	    	    },
+	    	    { id: 'DbTest4', text: 'Database (無繼承無關聯)', img: 'icon-folder',
+	    	    	nodes: [
+						{ id: 'SingleWriteVdData1MinUseRepository4', text: '寫入一筆 VD 1分鐘週期資料到DB', img: 'icon-page' },
+	    	            { id: 'BatchWriteVdData1MinUseRepository4', text: '批次寫入 VD 1分鐘週期資料到DB', img: 'icon-page' },
+	    	            { id: 'SingleReadVdData1MinUseRepository4', text: '從DB讀取一筆 VD 1分鐘週期資料', img: 'icon-page' },
+	    	            { id: 'BatchReadVdData1MinUseRepository4', text: '從DB整批讀取 VD 1分鐘週期資料', img: 'icon-page' },
+	    	            { id: 'CleanVdData1Min4', text: '清除table', img: 'icon-page' }
+					]
+	    	    },
+	    	    { id: 'DbTest1', text: 'Database (InheritanceType = SINGLE_TABLE)', img: 'icon-folder',
+	    	    	nodes: [
+						{ id: 'SingleWriteVdData1MinUseRepository1', text: '寫入一筆 VD 1分鐘週期資料到DB', img: 'icon-page' },
+	    	            { id: 'BatchWriteVdData1MinUseRepository1', text: '批次寫入 VD 1分鐘週期資料到DB', img: 'icon-page' },
+	    	            { id: 'SingleReadVdData1MinUseRepository1', text: '從DB讀取一筆 VD 1分鐘週期資料', img: 'icon-page' },
+	    	            { id: 'BatchReadVdData1MinUseRepository1', text: '從DB整批讀取 VD 1分鐘週期資料', img: 'icon-page' },
+	    	            { id: 'CleanVdData1Min1', text: '清除table', img: 'icon-page' }
+					]
+	    	    }
+	    	    ,
+	    	    { id: 'DbTest2', text: 'Database (InheritanceType = TABLE_PER_CLASS)', img: 'icon-folder',
+	    	    	nodes: [
+						{ id: 'SingleWriteVdData1MinUseRepository2', text: '寫入一筆 VD 1分鐘週期資料到DB', img: 'icon-page' },
+	    	            { id: 'BatchWriteVdData1MinUseRepository2', text: '批次寫入 VD 1分鐘週期資料到DB', img: 'icon-page' },
+	    	            { id: 'SingleReadVdData1MinUseRepository2', text: '從DB讀取一筆 VD 1分鐘週期資料', img: 'icon-page' },
+	    	            { id: 'BatchReadVdData1MinUseRepository2', text: '從DB整批讀取 VD 1分鐘週期資料', img: 'icon-page' },
+	    	            { id: 'CleanVdData1Min2', text: '清除table', img: 'icon-page' }
+					]
+	    	    }
+	    	],
+	    	onClick: function (event) {
+	    		if(event.node.nodes.length==0){
+	    			benchmarkSocket.send(event.target);
+	    		}
+	    	}
+	    }));
+		function clearBenchmarkResult(){
+			$("#benchmarkResult").empty();
+		}
+		function benchmarkOnloadData(data,status){
+			$("#tabsContentTimestamp").text(data.timestamp);
+			var moduleNames=data.moduleNames;
+			var nodes=[];
+			for	(var i = 0; i < moduleNames.length; i++) {
+				nodes.push({id:moduleNames[i], text:moduleNames[i],img: 'icon-page'});
+			}
+			w2ui['sysPerfLogSidebar'].add(nodes);
+		}
+		var benchmarkInit=false;
+		var benchmarkSocket;
+		function benchmarkTabOnVisible(visiable){
+			if(visiable){
+				if(!benchmarkInit){
+					$('#benchmarkLayout').w2render('benchmarkLayout');
+					benchmarkInit=true;
+				}
+				w2ui['benchmarkLayout'].resize();
+				$("#tabsContentTimestamp").text('none');
+				var url= (location.protocol=="http:"? "ws://":"wss://") +location.hostname+":"+
+				location.port+ "<%=request.getContextPath()%>/benchmark/testMessage";
+				benchmarkSocket = new WebSocket(url);
+				benchmarkSocket.onopen = function() {
+					$("#benchmarkResult").append('<li>WS OnOpen</li>');
+
+				};
+
+				benchmarkSocket.onmessage = function(message) {
+					$("#benchmarkResult").append('<li>'+message.data+'</li>');
+				};
+
+				benchmarkSocket.onclose = function() {
+					$("#benchmarkResult").append('<li>WS OnClose</li>');
+				}
+
+				benchmarkSocket.onerror = function() {
+					$("#benchmarkResult").append('<li>WS OnError</li>');
+				}
+			}
+			else{
+				benchmarkSocket.close();
+			}
+		}
+	</script>
+</div>
+-->
+	<div id="hzDumpTab" style="display: none;padding: 0px 5px;">
+		<div id="hzDistObjGrid"></div>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			$('#hzDistObjGrid').w2grid({
+				name   : 'hzDistObjGrid',
+				recid:"name",
+				recordHeight: 32,
+				show: {
+					toolbar: true,
+					lineNumbers: true,
+					footer: true
+				},
+				columns: [
+					{ field: 'name', caption: 'Name', size: '350px', sortable: true,title:''},
+					{ field: 'size', caption: 'Size', size: '70px', sortable: true,title:''},
+					{ field: 'hzClient', caption: 'HzClient', size: '80px',hidden: true,title:''},
+					{ field: 'local', caption: 'Local', size: '60px',hidden: true,title:''},
+					{ field: 'predicate', caption: 'Predicate', size: '190px',hidden: true,title:''},
+					{ field: 'query', caption: 'Query', size: '100px',title:''},
+					{ field: 'performance', caption: 'Performance', size: '110px',title:''},
+					{ field: 'destroy', caption: 'Destroy', size: '100px',title:''},
+					{ field: 'comment', caption: 'Comment', size: '100%',title:''}
+				],
+				sortData: [{ field: 'name', direction: 'asc' }],
+				onReload: function(event) {
+					hzDumpTabOnRefresh();
+				}
+			});
+			function getDistObjDetail(type,name,id){
+				switch(type){
+				case "IMap":
+					var predicate=$('#hzDistObjGrid #p'+id).val();
+					var useHzClient=$('#hzDistObjGrid #c'+id).prop('checked');
+					var useLocal=$('#hzDistObjGrid #l'+id).prop('checked');
+					$('#hzDistObjPopup').w2popup('open',{
+						title   : type+" : "+name+(predicate? ", predecate: "+predicate:"")
+							+(useHzClient? ", use Hz Client":"")+(useLocal? ", use Local":""),
+						showMax : true,
+						width   : 1200,
+						height  : 800,
+						onOpen  : function (event) {
+							event.onComplete = function () {
+								$('#w2ui-popup #hzDistObjPopupGrid').w2render('hzMapGrid');
+								//console.log("useHzClient:"+useHzClient);
+								hzMapOnRefresh(type+"?name="+name,predicate,useHzClient,useLocal);
+							};
+						},
+						onClose : function (event) {
+							event.onComplete = function () {
+								w2ui['hzMapGrid'].clear();
+							}
+						},
+						onToggle: function (event) {
+							event.onComplete = function () {
+								w2ui['hzMapGrid'].resize();
+							}
+						}
+					});
+
+					break;
+				case "IQueue":
+					$('#hzDistObjPopup').w2popup('open',{
+						title   : type+" : "+name,
+						showMax : true,
+						width   : 1200,
+						height  : 800,
+						onOpen  : function (event) {
+							event.onComplete = function () {
+								$('#w2ui-popup #hzDistObjPopupGrid').w2render('hzQueueGrid');
+								hzQueueOnRefresh(type+"?name="+name);
+							};
+						},
+						onClose : function (event) {
+							event.onComplete = function () {
+								w2ui['hzQueueGrid'].clear();
+							}
+						},
+						onToggle: function (event) {
+							event.onComplete = function () {
+								w2ui['hzQueueGrid'].resize();
+							}
+						}
+					});
+					break;
+				case "ILock":
+					$('#hzInfoPopup').w2popup('open',{
+						title   : type+" : "+name,
+						width   : 500,
+						height  : 300,
+						onOpen  : function (event) {
+							event.onComplete = function () {
+								hzLockOnRefresh(type+"?name="+name);
+							};
+						},
+					});
+					break;
+				case "ITopic":
+					$('#hzTopicPopup').w2popup('open',{
+						title   : type+" : "+name,
+						showMax : true,
+						width   : 1200,
+						height  : 800,
+						onOpen  : function (event) {
+							event.onComplete = function () {
+								hzTopicOnVisible(true,name);
+							};
+						},
+						onClose : function (event) {
+							event.onComplete = function () {
+								hzTopicOnVisible(false);
+							}
+						},
+					});
+					break;
+				default:
+					break;;
+				}
+
+			}
+			function getDistObjPerformance(type,name){
+				$('#hzInfoPopup').w2popup('open',{
+					title   : type+" : "+name,
+					showMax : true,
+					width   : 700,
+					height  : 500,
+					onOpen  : function (event) {
+						event.onComplete = function () {
+							hzPerformanceOnRefresh('performance?type='+type+'&name=' +name);
+						};
+					},
+				});
+			}
+			function getDistObjDestroy(type,name){
+				w2confirm('Destroy and recreate '+type+" : "+name+' ?', function (btn) {
+					if(btn=='Yes'){
+						$('#hzInfoPopup').w2popup('open',{
+							title   : type+" : "+name,
+							width   : 500,
+							height  : 300,
+							onOpen  : function (event) {
+								event.onComplete = function () {
+									hzDeleteOnRefresh("destroyRecreateDistObj?type="+type+"&name="+name);
+								};
+							},
+						});
+					}
+				});
+			}
+			function long2Date(time,id){
+				var date=new Date(Number(time));
+				if(!id) id='#w2ui-popup #dateString';
+				$(id).val(date.toLocaleString()+"."+(1000+date.getMilliseconds()).toString().substr(1));
+			}
+			function hzDumpOnloadData(data,status){
+				$("#tabsContentTimestamp").text(data.timestamp);
+				var distObjs=data.distObjs;
+				for(var i=0;i<distObjs.length;i++){
+					var distObj=distObjs[i];
+					if(distObj.size<0) distObj.size=null;
+
+					if(distObj.predicate) {
+						distObj.predicate='<input type="text" id="p'+i+'"></input>';
+						distObj.hzClient='<input type="checkbox" id="c'+i+'"></input>';
+						distObj.local='<input type="checkbox" id="l'+i+'"></input>';
+					}
+					else {
+						distObj.predicate=null;
+						distObj.hzClient=null;
+					}
+					if(distObj.query) distObj.query='<a onclick="getDistObjDetail(\''+distObj.type+'\',\''+distObj.name+'\','+i+');">Get Detail</a>';
+					else distObj.query=null;
+					if(distObj.performance)	distObj.performance='<a onclick="getDistObjPerformance(\''+distObj.type+'\',\''+distObj.name+'\')">Display</a>';
+					else distObj.performance=null;
+					if(distObj.destroy)	distObj.destroy='<a onclick="getDistObjDestroy(\''+distObj.type+'\',\''+distObj.name+'\')">Exec</a>';
+					else distObj.destroy=null;
+					distObj.name=distObj.type+" : "+distObj.name;
+				}
+				w2ui['hzDistObjGrid'].add(distObjs);
+				w2ui['hzDistObjGrid'].unlock();
+			}
+			function hzDumpTabOnVisible(visiable){
+				if(visiable) hzDumpTabOnRefresh();
+				else{
+					w2ui['hzDistObjGrid'].clear();
+				}
+			}
+
+			function hzDumpTabOnRefresh(){
+				w2ui['hzDistObjGrid'].lock('Loading....',true);
+				w2ui['hzDistObjGrid'].clear();
+				$.get("hcConsole/hzDistObjData", hzDumpOnloadData);
+			}
+			/*]]>*/
+		</script>
+	</div>
+<!--
+<div id="settingTab" style="display: none;padding: 5px 5px 0px 5px;">
+	<ol>
+	<li>
+		清空這個Node 上的 NccClient 的 [onResponseExecutorServiceA] thread pool<button class="btn" onclick="settingCleanExecutorServiceA()">執行</button>
+	</li>
+	<li>
+		清空這個Node 上的 NccClient 的 [onResponseExecutorServiceB] thread pool<button class="btn" onclick="settingCleanExecutorServiceB()">執行</button>
+	</li>
+	</ol>
+	<script>
+	function settingCleanExecutorServiceA(){
+		w2confirm('確定執行?','clearOnResponseExecutorServiceA')
+		    .yes(function () {
+		    	$.get("hcConsole/clearOnResponseExecutorServiceA",function(data,status){
+					w2alert("已要求清空, 目前等待執行個數："+data,"clearOnResponseExecutorServiceA");
+				});
+		    });
+
+	}
+	function settingCleanExecutorServiceB(){
+		w2confirm('確定執行?','clearOnResponseExecutorServiceB')
+		    .yes(function () {
+		    	$.get("hcConsole/clearOnResponseExecutorServiceB",function(data,status){
+					w2alert("已要求清空, 目前等待執行個數："+data,"clearOnResponseExecutorServiceB");
+				});
+		    });
+
+	}
+
+	function settingTabOnVisible(){
+
+	}
+	function settingTabOnDeviceChanged(target){
+
+	}
+	function settingTabOnRefresh(){
+
+	}
+	</script>
+</div>
+<div id="smsTab" style="display: none;padding: 5px 5px 0px 5px;">
+<div id="smsForm">
+	<div class="w2ui-page page-0">
+		<div class="w2ui-field">
+			<label>電話號碼:</label>
+				<div>
+                    <input name="toAddrs" maxlength="200" size="60"/>
+                </div>
+            </div>
+            <div class="w2ui-field">
+                <label>簡訊內容:</label>
+                <div>
+                    <input name="messages" maxlength="400" size="60"/>
+                </div>
+            </div>
+            <div class="w2ui-field">
+                <label>傳送結果:</label>
+                <div>
+                    <textarea name="results" style="width: 550px; height: 120px;"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="w2ui-buttons">
+        	<input type="button" value="Send" name="send"/>
+            <input type="button" value="Reset" name="reset"/>
+        </div>
+	</div>
+	<script>
+	$('#smsForm').w2form({
+	    name : 'smsForm',
+	    //header :'Unknown',
+	    url : 'hcConsole/sendSms',
+	    recid    : 1,
+	    fields: [
+	        { name: 'toAddrs', type: 'text',  required: true},
+	        { name: 'messages', type: 'text',  required: true},
+	        { name: 'results', type: 'text'}
+	    ],
+	    actions: {
+	    	reset: function () {
+                this.clear();
+            },
+	    	send: function () {
+	    		w2ui['smsForm'].record['results'] = null;
+	            this.save(function(data){
+	            	w2ui['smsForm'].record['results'] = data.record.results;
+	            	w2ui['smsForm'].refresh();
+	            });
+	        },
+	    }
+	});
+	function smsTabOnVisible(){
+
+	}
+	function smsTabOnDeviceChanged(target){
+
+	}
+	function smsTabOnRefresh(){
+
+	}
+	</script>
+</div>
+-->
+<div id="hzDistObjPopup" style="display: none;padding: 0px 5px;width: 100%; height: 100%">
+	<div id="popupTool">
+		Time milliseconds <input type="text" size="12" onchange="long2Date(this.value)"/>
+		to date: <input id="dateString" type="text" readonly="readonly"/>
+		<div id="popupContentTimestampDiv"><span id="tabsContentTimestamp"></span></div>
+	</div>
+	<div id="hzDistObjPopupGrid"></div>
+</div>
+<div id="hzInfoPopup" style="display: none;padding: 0px 5px;width: 100%; height: 100%">
+	<div id="popupTool">
+		<div id="popupContentTimestampDiv"><span id="tabsContentTimestamp"></span></div>
+	</div>
+	<pre id="hzInfo"></pre>
+</div>
+<div id="hzTopicPopup" style="display: none;padding: 0px 5px;width: 100%; height: 100%">
+	<div id="popupTool">
+		Time milliseconds <input type="text" size="12" onchange="long2Date(this.value)"/>
+		to date: <input id="dateString" type="text" readonly="readonly"/>
+		<button id="hzTopicClear" onclick="clearHzTopicResult()">Clear</button>
+	</div>
+	<ol id="hzTopicData"></ol>
+</div>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		// hzMap
+		var hzMapUrl;
+		$().w2grid({
+			name   : 'hzMapGrid',
+			recid:"key",
+			recordHeight: 64,
+			show: {
+				toolbar: true,
+				lineNumbers: true,
+				footer: true
+			},
+			columns: [
+				{ field: 'key', caption: 'Key', size: '150px', sortable: true,title:''},
+				{ field: 'value', caption: 'Value', size: '100%',title:''}
+			],
+			sortData: [{ field: 'key', direction: 'asc' }],
+			onReload: function(event) {
+				hzMapOnRefresh();
+			}
+		});
+
+		function hzMapOnloadData(data,status){
+			$("#w2ui-popup #tabsContentTimestamp").text(data.timestamp);
+			var dataMap=data.dataMap;
+			var records=[];
+			for(var key in dataMap){
+				records.push({key:key,value:dataMap[key]});
+			}
+			w2ui['hzMapGrid'].add(records);
+			w2ui['hzMapGrid'].unlock();
+		}
+		function hzMapOnRefresh(url,p,c,l){
+			if(url) {
+				hzMapUrl=url;
+				if(p) {
+					hzMapUrl=hzMapUrl+'&predicate='+p;
+				}
+				if(c){
+					hzMapUrl=hzMapUrl+'&useHzClient='+c;
+				}
+				if(l){
+					hzMapUrl=hzMapUrl+'&useLocal='+l;
+				}
+			}
+			w2ui['hzMapGrid'].lock('Loading....',true);
+			w2ui['hzMapGrid'].clear();
+			$.get("hcConsole/"+hzMapUrl, hzMapOnloadData);
+		}
+
+		// hzQueue
+		var hzQueueUrl;
+		$().w2grid({
+			name   : 'hzQueueGrid',
+			recid:"index",
+			recordHeight: 32,
+			show: {
+				toolbar: true,
+				lineNumbers: true,
+				footer: true
+			},
+			toolbar: {
+				items: [
+					{ id: 'clear', type: 'button', caption: 'Clear Queue',  }
+				],
+				onClick: function (event) {
+					if (event.target == 'clear') {
+						w2confirm('Clear this queue?', function (btn) {
+							if(btn=='Yes'){
+								hzQueueOnRefresh(null,true);
+							}
+						});
+					}
+				}
+			},
+			columns: [
+				{ field: 'index', caption: 'Index', size: '80px', sortable: true,title:''},
+				{ field: 'value', caption: 'Value', size: '100%',title:''}
+			],
+			sortData: [{ field: 'index', direction: 'asc' }],
+			onReload: function(event) {
+				hzQueueOnRefresh();
+			}
+		});
+
+		function hzQueueOnloadData(data,status){
+			$("#w2ui-popup #tabsContentTimestamp").text(data.timestamp);
+			var dataList=data.dataList;
+			var records=[];
+			for(var i=0;i<dataList.length;i++){
+				records.push({index:i,value:dataList[i]});
+			}
+			w2ui['hzQueueGrid'].add(records);
+			w2ui['hzQueueGrid'].unlock();
+		}
+		function hzQueueOnRefresh(url,clear){
+			if(url) {
+				hzQueueUrl=url;
+			}
+			w2ui['hzQueueGrid'].lock('Loading....',true);
+			w2ui['hzQueueGrid'].clear();
+			$.get("hcConsole/"+hzQueueUrl+(clear? "&clear=true":""), hzQueueOnloadData);
+		}
+		// hzTopic
+		var hzTopicCount=0;
+		var hzTopicSocket;
+		function hzTopicOnVisible(visible,name){
+			if(visible){
+				var url= (location.protocol=="http:"? "ws://":"wss://") +location.hostname+":"+
+				location.port+ "<%=request.getContextPath()%>/hcConsole/topicMessage";
+				hzTopicSocket = new WebSocket(url);
+				hzTopicSocket.onopen = function() {
+					$("#w2ui-popup #hzTopicData").append('<li>WS OnOpen</li>');
+					hzTopicSocket.send(name);
+				};
+
+				hzTopicSocket.onmessage = function(message) {
+					$("#w2ui-popup #hzTopicData").append('<li>'+message.data+'</li>');
+				};
+
+				hzTopicSocket.onclose = function() {
+					$("#w2ui-popup #hzTopicData").append('<li>WS OnClose</li>');
+				}
+
+				hzTopicSocket.onerror = function() {
+					$("#w2ui-popup #hzTopicData").append('<li>WS OnError</li>');
+				}
+			}
+			else{
+				hzTopicSocket.close();
+			}
+		}
+		function clearHzTopicResult(){
+			$("#w2ui-popup #hzTopicData").empty();
+		}
+		// hzLock
+		function hzLockOnloadData(data,status){
+			$("#w2ui-popup #tabsContentTimestamp").text(data.timestamp);
+			$("#w2ui-popup #hzInfo").text(JSON.stringify(data.ilockInfo,null,2));
+		}
+		function hzLockOnRefresh(url){
+			$("#w2ui-popup #hzInfo").text('');
+			$.get("hcConsole/"+url, hzLockOnloadData);
+		}
+		// performance
+		function hzPerformanceOnloadData(data,status){
+			$("#w2ui-popup #tabsContentTimestamp").text(data.timestamp);
+			var json=JSON.parse(data.performance);
+			$("#w2ui-popup #hzInfo").text(JSON.stringify(json,null,2));
+		}
+		function hzPerformanceOnRefresh(url){
+			$("#w2ui-popup #hzInfo").text('');
+			$.get("hcConsole/"+url, hzPerformanceOnloadData);
+		}
+		// delete
+		function hzDeleteOnloadData(data,status){
+			$("#w2ui-popup #tabsContentTimestamp").text(data.timestamp);
+			$("#w2ui-popup #hzInfo").text(data.result);
+		}
+		function hzDeleteOnRefresh(url){
+			$("#w2ui-popup #hzInfo").text('');
+			$.get("hcConsole/"+url, hzDeleteOnloadData);
+		}
+		/*]]>*/
+	</script>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var curDisplayTabId="hzMemberTab";
+		function showTabContent(id){
+			$("#"+curDisplayTabId).css("display", "none");
+			$("#"+id).css("display", "block");
+			if(typeof window[curDisplayTabId+"OnVisible"] == "function")
+				window[curDisplayTabId+"OnVisible"](false);
+			curDisplayTabId=id;
+			if(typeof window[curDisplayTabId+"OnVisible"] == "function")
+				window[curDisplayTabId+"OnVisible"](true);
+		}
+		function selectedDeviceChanged(target){
+			if(typeof window[curDisplayTabId+"OnDeviceChanged"] == "function")
+				window[curDisplayTabId+"OnDeviceChanged"](target);
+		}
+		$('#tabsContentRefresh').click(function(){
+			if(typeof window[curDisplayTabId+"OnRefresh"] == "function")
+				window[curDisplayTabId+"OnRefresh"]();
+		});
+		/*]]>*/
+	</script>
+</html>

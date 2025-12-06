@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:f="urn:import:com.sencha.gxt.widget.core.client.form" 
+	xmlns:c="urn:import:com.sencha.gxt.widget.core.client.container">
+
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="marginR10">
+		<ui:attributes top="0" right="10" bottom="0" left="0" />
+	</ui:with>
+	
+	<ui:with field="dateLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+		<ui:attributes width="0.5" height="1" margins="{marginR10}" />
+	</ui:with>
+	<ui:with field="timeLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+		<ui:attributes width="0.5" height="1" />
+	</ui:with>
+	
+	<c:HorizontalLayoutContainer>
+		<f:DateField ui:field="date" layoutData="{dateLayoutData}" />
+		<f:TimeField ui:field="time" triggerAction="ALL" layoutData="{timeLayoutData}" editable="false" />
+	</c:HorizontalLayoutContainer>
+</ui:UiBinder>

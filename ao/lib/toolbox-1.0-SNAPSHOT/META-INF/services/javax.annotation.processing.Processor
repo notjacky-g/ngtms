@@ -1,0 +1,2 @@
+com.hwacom.ngtms.toolbox.gwt.annotation.processor.GwtEventAnnotationProcessor
+com.hwacom.ngtms.toolbox.gwt.annotation.processor.GwtWebSocketAnnotationProcessor

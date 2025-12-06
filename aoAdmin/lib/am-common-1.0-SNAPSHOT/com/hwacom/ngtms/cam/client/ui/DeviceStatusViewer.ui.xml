@@ -1,0 +1,107 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+    xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
+    xmlns:tree="urn:import:com.sencha.gxt.widget.core.client.tree"
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
+    xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
+
+    <!-- I18N、Resource -->
+    <ui:with type="com.hwacom.ngtms.cam.images.AmImages" field="amImage" />
+    <ui:with type="com.hwacom.ngtms.cam.view.Messages" field="messages" />
+    <!-- ==== -->
+
+    <!-- Layout Data 區 -->
+    <ui:with field="eastMargin" type="com.sencha.gxt.core.client.util.Margins">
+        <ui:attributes top="0" right="0" bottom="0" left="4" />
+    </ui:with>
+    <ui:with field="eastLayoutData" type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
+        <ui:attributes size="220" margins="{eastMargin}" collapsible="true" split="true" />
+    </ui:with>
+    <ui:with field="southLayoutData" type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
+        <ui:attributes size="35" />
+    </ui:with>    
+    <ui:with field="toolBarRowData"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="30" />
+    </ui:with>
+    <ui:with field="checkboxMargin" type="com.sencha.gxt.core.client.util.Margins">
+        <ui:attributes top="10" right="2" bottom="0" left="10" />
+    </ui:with>
+    <ui:with field="checkboxLayoutData"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="25" margins="{checkboxMargin}" />
+    </ui:with>
+    <!-- ==== -->
+
+    <!-- 其他 import / with -->
+    <ui:import field="com.sencha.gxt.widget.core.client.button.ToolButton.PRINT" />
+    <ui:import field="com.sencha.gxt.widget.core.client.button.ToolButton.EXPAND" />
+    <ui:import field="com.sencha.gxt.widget.core.client.button.ToolButton.COLLAPSE" />
+    
+    <ui:with field="view" type="com.sencha.gxt.widget.core.client.grid.GridView" />
+    <ui:with type="com.sencha.gxt.data.shared.TreeStore" field="treeStore" />
+    <ui:with type="com.sencha.gxt.core.client.ValueProvider" field="valueProvider" />
+    <!-- ==== -->
+
+    <container:BorderLayoutContainer>
+        <container:east layoutData="{eastLayoutData}">
+            <gxt:ContentPanel>
+                <gxt:widget>
+                    <tree:Tree ui:field="tree"
+                               store="{treeStore}"
+                               valueProvider="{valueProvider}"
+                               checkable="true"
+                               checkStyle="TRI" />
+                </gxt:widget>
+                <gxt:tool>
+                    <button:ToolButton ui:field="export"
+                                       config="{PRINT}"
+                                       toolTip="{messages.export}" />
+                </gxt:tool>
+                <gxt:tool>
+                    <button:ToolButton ui:field="expandAll"
+                                       config="{EXPAND}"
+                                       toolTip="{messages.tree_allExpand}" />
+                </gxt:tool>
+                <gxt:tool>
+                    <button:ToolButton ui:field="collapseAll"
+                                       config="{COLLAPSE}"
+                                       toolTip="{messages.tree_allCollapse}" />
+                </gxt:tool>
+<!--                     <gxt:tool> -->
+<!--                         <button:TextButton ui:field="expandAll" -->
+<!--                                            icon="{amImage.folder}" -->
+<!--                                            toolTip="{messages.tree_allExpand" /> -->
+<!--                     </gxt:tool> -->
+<!--                     <gxt:tool> -->
+<!--                         <button:TextButton ui:field="collapseAll" -->
+<!--                                            icon="{amImage.folder_close}" -->
+<!--                                            toolTip="{messages.tree_allCollapse}" /> -->
+<!--                     </gxt:tool> -->
+<!--                     <gxt:tool> -->
+<!--                         <button:TextButton ui:field="selectAll" -->
+<!--                                            text="{messages.tree_allSelected}" /> -->
+<!--                     </gxt:tool> -->
+<!--                     <gxt:tool> -->
+<!--                         <button:TextButton ui:field="deselectAll" -->
+<!--                                            text="{messages.tree_allUnSelected}" /> -->
+<!--                     </gxt:tool> -->
+<!--                 <gxt:tool> -->
+<!--                     <button:ToolButton ui:field="export" -->
+<!--                                        config="{PRINT}" -->
+<!--                                        toolTip="{messages.export}" /> -->
+<!--                 </gxt:tool> -->
+            </gxt:ContentPanel>
+        </container:east>
+        <container:center>
+            <gxt:ContentPanel heading="{messages.view_statusGrid}">
+                <grid:Grid ui:field="grid" view="{view}" />
+            </gxt:ContentPanel>
+        </container:center>
+        <container:south layoutData="{southLayoutData}">
+            <gwt:HTML ui:field="statistics" />
+        </container:south>
+    </container:BorderLayoutContainer>
+</ui:UiBinder> 

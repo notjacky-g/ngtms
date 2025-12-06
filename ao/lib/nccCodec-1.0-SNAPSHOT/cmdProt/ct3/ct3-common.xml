@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmdFmtDef xmlns="http://hwacom.com/ngtms/cmdfmtdef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hwacom.com/comm/cmdfmtdef cmdFmtDef.xsd"
+	 version="v3.0" name="ct3-common" bindPackage="com.hwacom.ngtms.ncc.tc.ct3.cmdparam" classSuffix="Pm">
+	<globalParams>
+		<params name="time">
+			<value name="year" type="byte" minValue="0" maxValue="255"/>
+			<value name="month" type="byte" minValue="1" maxValue="12"/>
+			<value name="day" type="byte" minValue="1" maxValue="31" />
+			<value name="week" type="byte" minValue="1" maxValue="7" />
+			<value name="hour" type="byte" minValue="0" maxValue="23" />
+			<value name="min" type="byte" minValue="0" maxValue="59" />
+			<value name="sec" type="byte" minValue="0" maxValue="59" />
+		</params>
+		<params name="timeNoWeek">
+			<value name="year" type="byte" minValue="0" maxValue="255"/>
+			<value name="month" type="byte" minValue="1" maxValue="12"/>
+			<value name="day" type="byte" minValue="1" maxValue="31" />
+			<value name="hour" type="byte" minValue="0" maxValue="23" />
+			<value name="min" type="byte" minValue="0" maxValue="59" />
+			<value name="sec" type="byte" minValue="0" maxValue="59" />
+		</params>
+		<params name="timeNoWeekNoSec">
+			<value name="year" type="byte" minValue="0" maxValue="255"/>
+			<value name="month" type="byte" minValue="1" maxValue="12"/>
+			<value name="day" type="byte" minValue="1" maxValue="31" />
+			<value name="hour" type="byte" minValue="0" maxValue="23" />
+			<value name="min" type="byte" minValue="0" maxValue="59" />
+		</params>
+		<params name="hm">
+			<value name="hour" type="byte" minValue="0" maxValue="23"/>
+			<value name="minute" type="byte" minValue="0" maxValue="59"/>
+		</params>
+	</globalParams>
+	<command id="0F80" name="ackRsp" type="set" direction="T2C">
+		<value name="commandId" type="short" />
+	</command>
+	<command id="0F81" name="nakRsp" type="set" direction="T2C">
+		<value name="commandId" type="short" />
+		<value name="errorCode" type="byte" />
+		<value name="parameterNumber" type="byte" />
+	</command>
+	
+	<command id="0F10" name="resetDeviceReq" type="set" direction="C2T" responseId="0F90">
+		<value name="reset" type="short" defaultValue="21074" minValue="21074" maxValue="21074" />
+	</command>
+	<command id="0F90" name="resetDeviceRsp" type="set" direction="T2C" responseId="0F10">
+		<value name="reset" type="short" defaultValue="21074" minValue="21074" maxValue="21074" />
+	</command>
+	
+	<command id="0F40" name="getEquipmentNoReq" type="query" direction="C2T" responseId="0FC0">
+		<value name="equipmentNo" type="byte" minValue="0" maxValue="255"/>
+	</command>
+	<command id="0FC0" name="getEquipmentNoRsp" type="query" direction="T2C" responseId="0F40">
+		<value name="equipmentNo" type="byte" minValue="0" maxValue="255" />
+		<list  name="equipmentDataList" lenByteNo="1">
+			<value name="subEquipmentNo" type="byte" minValue="0" maxValue="255" />
+			<value name="equipmentId" type="short" minValue="0" maxValue="65535" />
+		</list>
+	</command>
+	
+	<command id="0F00" name="powerRestartReport" type="report" direction="T2C">
+		<value name="month" type="byte" minValue="1" maxValue="12"/>
+		<value name="day" type="byte" minValue="1" maxValue="31"/>
+		<value name="hour" type="byte" minValue="0" maxValue="24"/>
+		<value name="min" type="byte" minValue="0" maxValue="60"/>
+	</command>
+	
+	<command id="0F11" name="commRestartReq" type="set" direction="C2T" responseId="0F91" />
+	<command id="0F91" name="commRestartRsp" type="set" direction="T2C" responseId="0F11"/>
+	
+	<command id="0F41" name="commRestartAndTestReq" type="set" direction="C2T" responseId="0FC1" />
+	<command id="0FC1" name="commRestartAndTestRsp" type="set" direction="T2C" responseId="0F41">
+		<byteArray name="hwStatus" length="2"/>
+	</command>
+	
+	<command id="0F12" name="setTimeReq" type="set" direction="C2T" responseId="0FC2">
+		<paramsRef paramsName="time"/>
+	</command>
+	<command id="0F92" name="setTimeRsp" type="set" direction="T2C" responseId="0F12">
+		<value name="secDif" type="byte" minValue="0" maxValue="128"/>
+	</command>
+	
+	<command id="0F42" name="getTimeReq" type="query" direction="C2T" responseId="0FC2"/>
+	<command id="0FC2" name="getTimeRsp" type="query" direction="T2C" responseId="0F42">
+		<paramsRef paramsName="time"/>
+	</command>
+	
+	<command id="0F02" name="modifyTimeReport" type="report" direction="T2C" />
+	
+	<command id="0F13" name="setCommandSetReq" type="set" direction="C2T">
+		<value name="commandSet" type="byte" minValue="0" maxValue="3"/>
+	</command>
+	
+	<command id="0F43" name="getVerReq" type="query" direction="C2T" responseId="0FC3"/>
+	<command id="0FC3" name="getVerRsp" type="query" direction="T2C" responseId="0F43">
+		<value name="year" type="byte" minValue="0" maxValue="255"/>
+		<value name="month" type="byte" minValue="1" maxValue="12"/>
+		<value name="day" type="byte" minValue="1" maxValue="31" />
+		<value name="companyId" type="byte" minValue="0" maxValue="255"/>
+	 	<value name="version" type="byte" minValue="0" maxValue="255"/>
+	 	<value name="commandSet" type="byte" minValue="0" maxValue="3"/>
+	</command>
+	
+	<command id="0F14" name="setReportHwStatusCycleReq" type="set" direction="C2T">
+		<value name="hardwareCycle" type="byte" minValue="0" maxValue="5"/>
+	</command>
+	
+	<command id="0F44" name="getReportHwStatusCycleReq" type="query" direction="C2T" responseId="0FC4"/>
+	<command id="0FC4" name="getReportHwStatusCycleRsp" type="query" direction="T2C" responseId="0F44">
+		<value name="hardwareCycle" type="byte" minValue="0" maxValue="5"/>
+	</command>
+	
+	<command id="0F04" name="hwStatusReport" type="report" direction="T2C">
+		<byteArray name="hwStatus" length="2"/>
+	</command>
+	
+	<command id="0F15" name="setDbPasswordReq" type="set" direction="C2T">
+		<byteArray name="password" length="6"/>
+	</command>
+	
+	<command id="0F45" name="queryDbPasswordReq" type="query" direction="C2T" responseId="0FC5" />
+	<command id="0FC5" name="queryDbPasswordRsp" type="query" direction="T2C" responseId="0F45">
+		<byteArray name="password" length="6"/>
+	</command>
+	
+	<command id="0F16" name="setLockDbReq" type="set" direction="C2T">
+		<value name="lockDb" type="byte" minValue="0" maxValue="2"/>
+	</command>
+	
+	<command id="0F46" name="queryLockDbReq" type="query" direction="C2T" responseId="0FC6"/>
+	<command id="0FC6" name="queryLockDbRsp" type="query" direction="T2C" responseId="0F46">
+		<value name="lockDb" type="byte" minValue="0" maxValue="2"/>
+	</command>
+	
+</cmdFmtDef>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style>
+            .header {
+                width: 100px;
+                background: #F2F3F1;
+                padding: .75pt .75pt .75pt .75pt;
+            }
+
+            .cell {
+                width: 500px;
+                padding:.75pt .75pt .75pt .75pt;
+            }
+        </style>
+    </head>
+    <body>
+        <div align="center">
+            <table border="1" cellspacing="0" cellpadding="0" style="width: 600px; border-collapse: collapse">
+                <tbody>
+                    <tr>
+                        <td class="header"><p style="margin-left:7.5pt">違常使用帳號</p></td>
+                        <td class="cell"><p style="margin-left:7.5pt">${login} / ${name}</p></td>
+                    </tr>
+                    <tr>
+                        <td class="header"><p style="margin-left:7.5pt">功能名稱</p></td>
+                        <td class="cell"><p style="margin-left:7.5pt">${functionPermissionName}</p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p align="center" style="text-align:center">注意：本郵件是由系統產生與發送，請勿直接回覆。</p>
+    </body>
+</html>

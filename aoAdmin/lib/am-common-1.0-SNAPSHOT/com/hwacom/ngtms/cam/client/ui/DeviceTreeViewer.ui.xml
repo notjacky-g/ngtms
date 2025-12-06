@@ -1,0 +1,63 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder' xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container" xmlns:toolbar="urn:import:com.sencha.gxt.widget.core.client.toolbar"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client" xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button" xmlns:tree="urn:import:com.sencha.gxt.widget.core.client.tree"
+    xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid">
+
+    <!-- I18N、Resource -->
+    <ui:with type="com.hwacom.ngtms.cam.view.Messages" field="messages" />
+    <ui:with type="com.hwacom.ngtms.cam.images.AmImages" field="amImage" />
+    <!-- ======== -->
+
+    <!-- Layout Data 區 -->
+    <ui:with field="toolBarRowData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="30" />
+    </ui:with>
+    <ui:with field="treeRowData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="gridVLD" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="100" />
+    </ui:with>
+    <ui:with field="deviceRowData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="fullSizeData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <!-- ======== -->
+
+    <!-- 其他 import / with -->
+    <ui:with type="com.sencha.gxt.data.shared.TreeStore" field="store" />
+    <ui:with type="com.sencha.gxt.core.client.ValueProvider" field="valueProvider" />
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" field="cm" />
+    <ui:with type="com.sencha.gxt.data.shared.ListStore" field="gridStore" />
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" field="view">
+        <ui:attributes forceFit="true" />
+    </ui:with>
+    <!-- ======== -->
+
+    <ui:style>
+    
+    </ui:style>
+
+    <gxt:ContentPanel ui:field="treePanel" headerVisible="false">
+        <container:VerticalLayoutContainer borders="true" ui:field="treeVerticalPanel">
+            <container:child layoutData="{toolBarRowData}">
+                <toolbar:ToolBar>
+                    <button:TextButton ui:field="allExpand" icon="{amImage.folder}" toolTip="{messages.tree_allExpand}" />
+                    <button:TextButton ui:field="allCollapse" icon="{amImage.folder_close}" toolTip="{messages.tree_allCollapse}" />
+                </toolbar:ToolBar>
+            </container:child>
+            <container:child layoutData="{treeRowData}">
+                <container:HorizontalLayoutContainer layoutData="{deviceRowData}">
+                    <tree:Tree ui:field="tree" valueProvider="{valueProvider}" store="{store}" layoutData="{deviceRowData}" />
+                </container:HorizontalLayoutContainer>
+            </container:child>
+            <container:child layoutData="{gridVLD}">
+                    <gxt:ContentPanel ui:field="gridPanel" heading="{messages.roadTree_selectedDevice}">
+                        <grid:Grid ui:field="grid" cm="{cm}" store="{gridStore}" view="{view}" hideHeaders="true" />
+                    </gxt:ContentPanel>
+            </container:child>
+        </container:VerticalLayoutContainer>
+    </gxt:ContentPanel>
+</ui:UiBinder>

@@ -1,0 +1,63 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+			 xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+             xmlns:toolbar="urn:import:com.sencha.gxt.widget.core.client.toolbar"
+             xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+             xmlns:am="urn:import:com.hwacom.ngtms.cam.client.ui"
+             xmlns:view="urn:import:com.hwacom.ngtms.room.am.view">
+             
+    <ui:with field="messages" type="com.hwacom.ngtms.room.am.view.Messages" />
+    <ui:with field="allImages" type="com.hwacom.ngtms.room.am.images.AllImages" />
+
+	<ui:with field="margins4444" type="com.sencha.gxt.core.client.util.Margins">
+		<ui:attributes top="4" right="4" bottom="4" left="4" />
+	</ui:with>
+	
+	<ui:with field="westMargins" type="com.sencha.gxt.core.client.util.Margins">
+        <ui:attributes top="4" right="4" bottom="4" left="4" />
+    </ui:with>
+    
+    <ui:with field="centerMargins" type="com.sencha.gxt.core.client.util.Margins">
+        <ui:attributes top="4" right="4" bottom="4" left="0" />
+    </ui:with>
+
+    <ui:with field="northLayoutData"
+        type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
+        <ui:attributes size="70" />
+    </ui:with>
+    
+    <ui:with field="centerLayoutData"
+        type="com.sencha.gxt.widget.core.client.container.MarginData">
+        <ui:attributes margins="{centerMargins}" />
+    </ui:with>
+    
+    <container:BorderLayoutContainer borders="false">
+        <container:north layoutData="{northLayoutData}">
+            <am:TitleViewer  itemName="{messages.room}" />
+        </container:north>
+        <container:center layoutData="{centerLayoutData}">
+            <am:AmTabPanel ui:field="amTabPanel" >
+                <am:item>
+                    <view:RoomCardGroupViewer	ui:field="roomCardGroupViewer"
+                                              	tabTitle="定期卡群組設定"/>
+                </am:item>
+                <am:item>
+                    <view:RoomCardIssueViewer	ui:field="roomCardIssueViewer"
+                                              	tabTitle="卡片發卡"/>
+                </am:item>
+                <am:item>
+                	<view:RoomDevicePositionEditViewer ui:field="roomDevicePositionEditViewer"
+                						 		  tabTitle="機房設備位置設定頁面" />
+                </am:item>
+                <am:item>
+                	<view:RoomDeviceMonitorViewer ui:field="roomDeviceMonitorViewer"
+                						 		  tabTitle="機房設備監控頁面" />
+                </am:item>
+                <am:item>
+                	<view:RoomDeviceConfigSettingViewer ui:field="roomDeviceConfigSettingViewer"
+                						 		  tabTitle="監控點設定" />
+                </am:item>
+            </am:AmTabPanel>
+        </container:center>
+    </container:BorderLayoutContainer>
+</ui:UiBinder>

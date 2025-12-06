@@ -1,0 +1,137 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client">
+
+    <ui:style type="com.hwacom.ngtms.ao.am.view.TitleViewer.Style">
+    .overCursor {
+        cursor: pointer;
+    }
+    </ui:style>
+
+    <ui:with type="com.hwacom.ngtms.ao.am.view.TitleViewer.TitleResources" field="titleResources" />
+    <ui:with type="com.hwacom.ngtms.ao.am.images.AllImages" field="allImages" />
+
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins30010">
+        <ui:attributes top="3" right="0" bottom="0" left="10" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins0006">
+        <ui:attributes top="0" right="0" bottom="0" left="6" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins15000">
+        <ui:attributes top="15" right="0" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins10000">
+        <ui:attributes top="10" right="0" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins151200">
+        <ui:attributes top="15" right="12" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins15006">
+        <ui:attributes top="15" right="0" bottom="0" left="6" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins20006">
+        <ui:attributes top="20" right="0" bottom="0" left="6" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins25000">
+        <ui:attributes top="25" right="0" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins100100">
+        <ui:attributes top="10" right="0" bottom="10" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins0202">
+        <ui:attributes top="0" right="2" bottom="0" left="2" />
+    </ui:with>
+
+    <ui:with field="headerLeftLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="650" height="1" />
+    </ui:with>
+    <ui:with field="headerItemLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="230" height="1" />
+    </ui:with>
+    <ui:with field="headerLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="headerRightLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="335" height="1" />
+    </ui:with>
+
+    <ui:with field="logoLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes margins="{margins30010}" width="610" height="60" />
+    </ui:with>
+    <ui:with field="itemLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes margins="{margins0006}" width="84" height="71" />
+    </ui:with>
+    <ui:with field="alarmTextLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+         <ui:attributes margins="{margins15000}" width="150" height="1" />
+     </ui:with>
+
+    <ui:with type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData" field="alarmLayoutData">
+        <ui:attributes margins="{margins0202}" width="268" height="1" />
+    </ui:with>
+
+    <ui:with field="homeLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes margins="{margins151200}" width="50" height="53" />
+    </ui:with>
+    <ui:with field="separationLineLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes margins="{margins100100}" width="2" height="1" />
+    </ui:with>
+    <ui:with field="timeLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes margins="{margins15006}" width="44" height="53" />
+    </ui:with>
+    <ui:with field="timeDataLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes margins="{margins20006}" width="75" height="1" />
+    </ui:with>
+    <ui:with field="peopleLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes margins="{margins15006}" width="44" height="53" />
+    </ui:with>
+    <ui:with field="userDataLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes margins="{margins25000}" width="60" height="1" />
+    </ui:with>
+    <ui:with field="logoutDataLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes margins="{margins15006}" width="44" height="53" />
+    </ui:with>
+
+    <container:HorizontalLayoutContainer>
+        <container:child layoutData="{headerLeftLayoutData}">
+            <container:HorizontalLayoutContainer styleName="{titleResources.title.titleLeft}">
+                <container:child layoutData="{logoLayoutData}">
+                	<g:Label />
+<!--                     <g:Image url="{allImages.logo.getSafeUri.asString}" /> -->
+                </container:child>
+            </container:HorizontalLayoutContainer>
+        </container:child>
+        <container:child layoutData="{headerLayoutData}">
+            <g:Image url="{titleResources.headerCenter.getSafeUri.asString}" />
+        </container:child>
+        <container:child layoutData="{headerRightLayoutData}">
+            <container:HorizontalLayoutContainer styleName="{titleResources.title.titleRight}">
+                <container:child layoutData="{timeLayoutData}">
+                    <g:Image url="{allImages.time.getSafeUri.asString}" />
+                </container:child>
+                <container:child layoutData="{timeDataLayoutData}">
+                    <container:VerticalLayoutContainer>
+                        <g:Label ui:field="dateLabel" styleName="{titleResources.title.titleColor}" />
+                        <g:Label ui:field="timeLabel" styleName="{titleResources.title.titleColor}" />
+                    </container:VerticalLayoutContainer>
+                </container:child>
+                <container:child layoutData="{separationLineLayoutData}">
+                    <g:Image url="{allImages.separationLine.getSafeUri.asString}" />
+                </container:child>
+                <container:child layoutData="{peopleLayoutData}">
+                    <g:Image ui:field="userImage" url="{allImages.people.getSafeUri.asString}" styleName="{style.overCursor}" />
+                </container:child>
+                <container:child layoutData="{userDataLayoutData}">
+                    <g:Label ui:field="userName" styleName="{titleResources.title.titleColor}" />
+                </container:child>
+                <container:child layoutData="{separationLineLayoutData}">
+                    <g:Image url="{allImages.separationLine.getSafeUri.asString}" />
+                </container:child>
+                <container:child layoutData="{logoutDataLayoutData}">
+                    <g:Image ui:field="loginOutImage" url="{allImages.logout.getSafeUri.asString}" styleName="{style.overCursor}" />
+                </container:child>
+            </container:HorizontalLayoutContainer>
+        </container:child>
+    </container:HorizontalLayoutContainer>
+</ui:UiBinder> 

@@ -1,0 +1,74 @@
+/*
+ * © HwaCom Systems Inc. ${year}
+ * All Rights Reserved
+ * No part of this software or any of its contents may be reproduced, copied, modified or adapted,
+ * without the prior written consent of HwaCom Systems Inc., unless otherwise indicated for stand-alone materials.
+ */
+package ${packageName};
+
+import com.google.gwt.user.client.Window.Location;
+import com.google.gwt.core.client.JavaScriptObject;
+
+public class ${webSocketName} {
+
+  private String uri;
+
+  private ${webSocketName}.WebSocketHandler handler;
+
+  private JavaScriptObject wsObject;
+
+  public ${webSocketName}(${webSocketName}.WebSocketHandler handler) {
+    this.handler = handler;
+    String protocol = Location.getProtocol().equals("https:") ? "wss:" : "ws:";
+    this.uri = protocol + "//" + ${entryPoint}.webSocketIp + ":" + ${entryPoint}.webSocketPort + "/${uri}";
+  }
+
+  public native void send(String message) /*-{
+    var ws = this.@${packageName}.${webSocketName}::wsObject;
+    ws.send(message);
+  }-*/;
+
+  public native void close() /*-{
+    var ws = this.@${packageName}.${webSocketName}::wsObject;
+    ws.close();
+  }-*/;
+
+  /**
+   * http://www.w3.org/TR/2011/WD-websockets-20110419/
+   * 
+   * CONNECTING (numeric value 0) The connection has not yet been established.
+   * OPEN (numeric value 1) The WebSocket connection is established and communication is possible.
+   * CLOSING (numeric value 2) The connection is going through the closing handshake.
+   * CLOSED (numeric value 3) The connection has been closed or could not be opened.
+   * 
+   * @return
+   */
+  public native boolean isClosed() /*-{
+    var ws = this.@${packageName}.${webSocketName}::wsObject;
+    return ws.readyState == 3;
+  }-*/;
+
+  public native void open() /*-{
+    var websocket = new $wnd.WebSocket(this.@${packageName}.${webSocketName}::uri);
+    var handler = this.@${packageName}.${webSocketName}::handler;
+    websocket.onopen = function() {
+      handler.@${packageName}.${webSocketName}.WebSocketHandler::onOpen()();
+    }
+    websocket.onmessage = function(event) {
+      handler.@${packageName}.${webSocketName}.WebSocketHandler::onMessage(Ljava/lang/String;)(event.data);
+    }
+    websocket.onclose = function(event) {
+      handler.@${packageName}.${webSocketName}.WebSocketHandler::onClose(ILjava/lang/String;)(event.code, event.reason);
+    }
+    this.@${packageName}.${webSocketName}::wsObject = websocket;
+  }-*/;
+
+  public interface WebSocketHandler {
+
+    void onOpen();
+
+    void onMessage(String message);
+
+    void onClose(int code, String reason);
+  }
+}

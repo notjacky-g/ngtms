@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmdFmtDef xmlns="http://hwacom.com/ngtms/cmdfmtdef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://hwacom.com/ngtms/cmdfmtdef cmdFmtDef.xsd"
+	version="v3.0" name="ct3-mf" bindPackage="com.hwacom.ngtms.ncc.tc.ct3.cmdparam.mf"
+	extend="/cmdProt/ct3/ct3-common.xml" classSuffix="Pm" >
+	
+	<command id="6F53" name="mfStatusReport" type="report" direction="T2C">
+		<list name="mfStatusReportList" lenByteNo="1">
+			<value name="mfStatus" type="byte" />
+			<value name="barrierStatus" type="byte" />
+			<value name="tempStatus" type="byte" />
+		</list>
+	</command>
+</cmdFmtDef>

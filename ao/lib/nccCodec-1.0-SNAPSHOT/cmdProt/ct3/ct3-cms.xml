@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmdFmtDef xmlns="http://hwacom.com/ngtms/cmdfmtdef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://hwacom.com/ngtms/cmdfmtdef cmdFmtDef.xsd"
+	version="v3.0" name="ct3-cms" bindPackage="com.hwacom.ngtms.ncc.tc.ct3.cmdparam.cms"
+	extend="/cmdProt/ct3/ct3-common.xml" classSuffix="Pm"
+	marshalHelperClass="com.hwacom.ngtms.ncc.tc.ct3.marshalhelper.Ct3CmsMarshalHelper">
+	
+	<globalParams>
+		<params name="textColor">
+			<bitArray byteNo="1" name="color">
+				<bits name="fontColor" bitsLenth="2"/>
+				<bits name="backgroundColor" bitsLenth="2"/>
+				<bits name="flashSpeed" bitsLenth="2"/>
+				<bits name="NA" bitsLenth="2"/>
+			</bitArray>
+		</params>
+		<params name="fullColor">
+			<value name="red" type="byte"/>
+			<value name="green" type="byte"/>
+			<value name="blue" type="byte"/>
+		</params>
+		<params name="showPatternZone">
+			<value name="zoneNo" type="byte"/>
+			<value name="show" type="byte" minValue="0" maxValue="1"/>
+			<value name="fitSize" type="byte" minValue="0" maxValue="1"/>
+			<value name="fontType" type="byte"/>
+			<list name="displayList" lenByteNo="1">
+				<value name="displayTime" type="byte"/>
+				<value name="msgId" type="byte"/>
+			</list>
+		</params>
+		<params name="displayShowPatternZone">
+			<value name="zoneNo" type="byte"/>
+			<list name="displayList" lenByteNo="1">
+				<value name="displayTime" type="byte"/>
+				<value name="msgId" type="byte"/>
+			</list>
+		</params>
+		<params name="brightMap">
+            <bitArray byteNo="1" name="bright">
+                <bits name="sixtyFive" bitsLenth="1"/>
+                <bits name="eighty" bitsLenth="1"/>
+                <bits name="hundred" bitsLenth="1"/>
+                <bits name="noneLight" bitsLenth="1"/>
+                <bits name="releaseForce" bitsLenth="1"/>
+                <bits name="force" bitsLenth="1"/>
+                <bits name="noneControl" bitsLenth="1"/>
+                <bits name="local" bitsLenth="1"/>
+            </bitArray>
+        </params>
+	</globalParams>
+	
+	<command id="AF10" name="setCycleDisplayParamReq" type="set" direction="C2T">
+		<value name="displayTime" type="byte" />
+		<list name="textIdList" lenByteNo="1">
+			<value name="textId" type="byte" minValue="1" maxValue="254"/>
+		</list>
+	</command>	
+	
+	<command id="AF40" name="queryCycleDisplayParamReq" type="query" direction="C2T" responseId="AFC0">
+	</command>
+	<command id="AFC0" name="queryCycleDisplayParamRsp" type="query" direction="T2C" responseId="AF40">
+		<value name="displayTime" type="byte" />
+		<list name="textIdList" lenByteNo="1">
+			<value name="textId" type="byte" minValue="1" maxValue="254"/>
+		</list>
+	</command>	
+	
+	<command id="AF11" name="setDefaultFullTextReq" type="set" direction="C2T">
+		<value name="textId" type="byte" minValue="1" maxValue="127"/>
+		<value name="show" type="byte" minValue="0" maxValue="1"/>
+		<list name="wordCodeList" lenByteNo="1">
+			<value name="wordCode" type="short"/>
+		</list>		
+	</command>
+	
+	<command id="AF41" name="queryDefaultFullTextReq" type="query" direction="C2T" responseId="AFC1">
+		<value name="textId" type="byte" minValue="1" maxValue="127"/>
+	</command>
+	<command id="AFC1" name="queryDefaultFullTextRsp" type="query" direction="T2C" responseId="AF41">
+		<value name="textId" type="byte" minValue="1" maxValue="127"/>
+		<list name="wordCodeList" lenByteNo="1">
+			<value name="wordCode" type="short"/>
+		</list>	
+	</command>
+	
+	<command id="AF12" name="set3ColorTextColorParamReq" type="set" direction="C2T">
+		<value name="textId" type="byte" minValue="1" maxValue="48"/>
+		<list name="textColorList" lenByteNo="1">
+			<paramsRef paramsName="textColor"/>
+		</list>
+		<value name="vBound" type="byte"/>
+		<value name="hBound" type="byte"/>
+		<value name="vSpace" type="short"/>
+		<value name="hSpace" type="short"/>
+	</command>
+	
+	<command id="AF42" name="query3ColorTextColorParamReq" type="query" direction="C2T" responseId="AFC2">
+		<value name="textId" type="byte" minValue="1" maxValue="254"/>
+	</command>
+	<command id="AFC2" name="query3ColorTextColorParamRsp" type="query" direction="T2C" responseId="AF42">
+		<value name="textId" type="byte" minValue="1" maxValue="254"/>
+		<list name="textColorList" lenByteNo="1">
+			<paramsRef paramsName="textColor"/>
+		</list>
+		<value name="vBound" type="byte"/>
+		<value name="hBound" type="byte"/>
+		<value name="vSpace" type="short"/>
+		<value name="hSpace" type="short"/>
+	</command>
+	
+	<command id="AF13" name="setDisplayTextReq" type="set" direction="C2T">
+		<value name="textId" type="byte" minValue="1" maxValue="127"/>
+	</command>
+	
+	<command id="AF43" name="queryDisplayTextReq" type="query" direction="C2T" responseId="AFC3"></command>
+	<command id="AFC3" name="queryDisplayTextRsp" type="query" direction="T2C" responseId="AF43">
+		<value name="textId" type="byte" minValue="1" maxValue="127"/>
+		<list name="wordCodeList" lenByteNo="1">
+			<value name="wordCode" type="short"/>
+		</list>	
+	</command>
+	
+	<command id="AF14" name="clearDisplayTextReq" type="set" direction="C2T"></command>
+	
+	<command id="AF44" name="queryDisplayColorParamReq" type="query" direction="C2T" responseId="AFC4"></command>
+	<command id="AFC4" name="queryDisplayColorParamRsp" type="query" direction="T2C" responseId="AF44">
+		<value name="textId" type="byte" minValue="1" maxValue="127"/>
+		<list name="textColorList" lenByteNo="1">
+			<paramsRef paramsName="textColor"/>
+		</list>
+		<value name="vBound" type="byte"/>
+		<value name="hBound" type="byte"/>
+		<value name="vSpace" type="short"/>
+		<value name="hSpace" type="short"/>
+	</command>
+	
+	<command id="AF15" name="setDisplayTextLoopReq" type="set" direction="C2T">
+		<value name="textId" type="byte" minValue="1" maxValue="254"/>
+		<value name="startX" type="byte" />
+		<value name="startY" type="byte" />
+		<value name="windowWide" type="byte" />
+		<value name="windowHigh" type="byte" />
+		<value name="stepX" type="byte" />
+		<value name="stepY" type="byte" />
+		<value name="speed" type="byte" minValue="0" maxValue="100" />
+		<value name="loops" type="byte" minValue="1" maxValue="96"/>
+	</command>
+	
+	<command id="AF45" name="queryDisplayTextLoopReq" type="query" direction="C2T" responseId="AFC5"></command>
+	<command id="AFC5" name="queryDisplayTextLoopRsp" type="query" direction="T2C" responseId="AF45">
+		<value name="textId" type="byte" minValue="1" maxValue="254"/>
+		<value name="startX" type="byte" />
+		<value name="startY" type="byte" />
+		<value name="windowWide" type="byte" />
+		<value name="windowHigh" type="byte" />
+		<value name="stepX" type="byte" />
+		<value name="stepY" type="byte" />
+		<value name="speed" type="byte" minValue="0" maxValue="100" />
+		<value name="loops" type="byte" minValue="1" maxValue="96"/>
+	</command>
+	
+	<command id="AF16" name="setBig5BitmapReq" type="set" direction="C2T">
+		<value name="big5Code" type="short"/>
+		<value name="frameRow" type="byte"/>
+		<value name="frameColumn" type="byte"/>
+		<value name="frameTotal" type="byte"/>
+		<value name="frameNumber" type="byte"/>
+		<byteArray name="bitmap"/>
+	</command>
+	
+	<command id="AF46" name="queryBig5BitmapReq" type="query" direction="C2T" responseId="AFC6">
+		<value name="big5Code" type="short"/>
+		<value name="frameRow" type="byte"/>
+		<value name="frameColumn" type="byte"/>
+		<value name="frameNumber" type="byte"/>
+	</command>
+	<command id="AFC6" name="queryBig5BitmapRsp" type="query" direction="T2C" responseId="AF46">
+		<value name="big5Code" type="short"/>
+		<value name="frameRow" type="byte"/>
+		<value name="frameColumn" type="byte"/>
+		<value name="frameTotal" type="byte"/>
+		<value name="frameNumber" type="byte"/>
+		<byteArray name="bitmap"/>
+	</command>
+	
+	<command id="AF17" name="clearBig5BitmapReq" type="set" direction="C2T">
+		<value name="big5Code" type="short"/>
+	</command>
+	
+	<command id="AF47" name="queryErrorModuleReq" type="query" direction="C2T" responseId="AFC7">
+	</command>
+	<command id="AFC7" name="queryErrorModuleRsp" type="query" direction="T2C" responseId="AF47">
+		<list  name="errorModuleIdList" lenByteNo="1">
+			<value name="errorModuleId" type="byte"/>
+		</list>	
+	</command>
+	
+	<command id="AF18" name="setGraphicPatternReq" type="set" direction="C2T">
+		<value name="patternCode" type="short"/>
+		<value name="frameRow" type="byte"/>
+		<value name="frameColumn" type="byte"/>
+		<value name="frameTotal" type="byte"/>
+		<value name="frameNumber" type="byte"/>
+		<byteArray name="colorMap"/>
+	</command>
+	
+	<command id="AF48" name="queryGraphicPatternReq" type="query" direction="C2T" responseId="AFC8">
+		<value name="patternCode" type="short"/>
+		<value name="frameRow" type="byte"/>
+		<value name="frameColumn" type="byte"/>
+		<value name="frameNumber" type="byte"/>
+	</command>
+	<command id="AFC8" name="queryGraphicPatternRsp" type="query" direction="T2C" responseId="AF48">
+		<value name="patternCode" type="short"/>
+		<value name="frameRow" type="byte"/>
+		<value name="frameColumn" type="byte"/>
+		<value name="frameTotal" type="byte"/>
+		<value name="frameNumber" type="byte"/>
+		<byteArray name="colorMap"/>
+	</command>
+	
+	<command id="AF31" name="setOffLineDisplayModeReq" type="set" direction="C2T">
+		<value name="offLineDisplayMode" type="byte" minValue="1" maxValue="3" />
+	</command>
+	
+	<command id="AF61" name="queryOffLineDisplayModeReq" type="query" direction="C2T" responseId="AFE1"></command>
+	<command id="AFE1" name="queryOffLineDisplayModeRsp" type="query" direction="T2C" responseId="AF61">
+		<value name="offLineDisplayMode" type="byte" minValue="1" maxValue="3" />
+	</command>
+	
+	<command id="AF3E" name="setBrightControlReq" type="set" direction="C2T">
+		<paramsRef paramsName="brightMap"/>
+		<value name="startHour" type="byte"/>
+		<value name="startMin" type="byte"/>
+		<value name="endHour" type="byte"/>
+		<value name="endMin" type="byte"/>
+	</command>
+	
+	<command id="AF6E" name="queryBrightControlReq" type="query" direction="C2T" responseId="AFEE"></command>
+	<command id="AFEE" name="queryBrightControlRsp" type="query" direction="T2C" responseId="AF6E">
+		<paramsRef paramsName="brightMap"/>
+		<value name="startHour" type="byte"/>
+		<value name="startMin" type="byte"/>
+		<value name="endHour" type="byte"/>
+		<value name="endMin" type="byte"/>
+	</command>
+
+	<command id="AF0E" name="brightBeginEndReport" type="report" direction="T2C">
+		<value name="beginEnd" type="byte" minValue="0" maxValue="1"/>
+	</command>
+	
+	<command id="AF22" name="setTextFullColorParamReq" type="set" direction="C2T">
+		<value name="textId" type="byte" minValue="1" maxValue="127"/>
+		<list name="fontColorList" lenByteNo="1">
+			<paramsRef paramsName="fullColor"/>
+		</list>
+		<list name="bgColorList" lenByteNo="0" useMarshalHelper="true">
+			<paramsRef paramsName="fullColor"/>
+		</list>
+		<list name="glitterSpeedList" lenByteNo="0" useMarshalHelper="true">
+			<value name="glitterSpeed" type="byte"/>
+		</list>
+		<value name="vBound" type="byte"/>
+		<value name="hBound" type="byte"/>
+		<value name="vSpace" type="short"/>
+		<value name="hSpace" type="short"/>
+	</command>
+	
+	<command id="AF52" name="queryTextFullColorParamReq" type="query" direction="C2T" responseId="AFD2">
+		<value name="textId" type="byte" minValue="1" maxValue="254"/>
+	</command>
+	<command id="AFD2" name="queryTextFullColorParamRsp" type="query" direction="T2C" responseId="AF52">
+		<value name="textId" type="byte" minValue="1" maxValue="254"/>
+		<list name="fontColorList" lenByteNo="1">
+			<paramsRef paramsName="fullColor"/>
+		</list>
+		<list name="bgColorList" lenByteNo="0" useMarshalHelper="true">
+			<paramsRef paramsName="fullColor"/>
+		</list>
+		<list name="glitterSpeedList" lenByteNo="0" useMarshalHelper="true">
+			<value name="glitterSpeed" type="byte"/>
+		</list>
+		<value name="vBound" type="byte"/>
+		<value name="hBound" type="byte"/>
+		<value name="vSpace" type="short"/>
+		<value name="hSpace" type="short"/>
+	</command>
+	
+	<command id="AF54" name="queryDisplayTextFullColorParamReq" type="query" direction="C2T" responseId="AFD4">		
+	</command>
+	<command id="AFD4" name="queryDisplayTextFullColorParamRsp" type="query" direction="T2C" responseId="AF54">
+		<value name="textId" type="byte" minValue="1" maxValue="254"/>
+		<list name="fontColorList" lenByteNo="1">
+			<paramsRef paramsName="fullColor"/>
+		</list>
+		<list name="bgColorList" lenByteNo="0" useMarshalHelper="true">
+			<paramsRef paramsName="fullColor"/>
+		</list>
+		<list name="glitterSpeedList" lenByteNo="0" useMarshalHelper="true">
+			<value name="glitterSpeed" type="byte"/>
+		</list>
+		<value name="vBound" type="byte"/>
+		<value name="hBound" type="byte"/>
+		<value name="vSpace" type="short"/>
+		<value name="hSpace" type="short"/>
+	</command>
+	
+	<command id="AF28" name="setPicDataReq" type="set" direction="C2T">
+		<value name="patternCode" type="short"/>
+		<value name="picType" type="byte" minValue="1" maxValue="2"/>
+		<value name="dataLength" type="short"/>
+		<byteArray name="picData"/>
+	</command>
+	
+	<command id="AF58" name="queryPicDataReq" type="query" direction="C2T" responseId="AFD8">
+		<value name="patternCode" type="short"/>
+	</command>
+	<command id="AFD8" name="queryPicDataRsp" type="query" direction="T2C" responseId="AF58">
+		<value name="patternCode" type="short"/>
+		<value name="picType" type="byte" minValue="1" maxValue="2"/>
+		<value name="dataLength" type="short"/>
+		<byteArray name="picData"/>
+	</command>
+	
+	<command id="AF32" name="setDefaultMsgReq" type="set" direction="C2T">
+		<value name="msgId" type="byte"/>
+		<value name="msgType" type="byte"/>
+		<value name="actionType" type="byte"/>
+		<value name="totalPacket" type="byte"/>
+		<value name="packetNo" type="byte"/>
+		<value name="msgSize" type="short"/>
+		<byteArray name="msgContent"/>
+	</command>
+	
+	<command id="AF62" name="queryDefaultMsgReq" type="query" direction="C2T" responseId="AFE2">
+		<value name="msgId" type="byte"/>
+		<value name="totalPacket" type="byte"/>
+		<value name="packetNo" type="byte"/>
+	</command>
+	<command id="AFE2" name="queryDefaultMsgRsp" type="query" direction="T2C" responseId="AF62">
+		<value name="msgId" type="byte"/>
+		<value name="msgType" type="byte"/>
+		<value name="totalPacket" type="byte"/>
+		<value name="packetNo" type="byte"/>
+		<value name="msgSize" type="short"/>
+		<byteArray name="msgContent"/>
+	</command>
+	
+	<command id="AF33" name="setDisplayMsgReq" type="set" direction="C2T">
+		<value name="msgId" type="byte"/>
+	</command> 
+	
+	<command id="AF63" name="queryDisplayMsgReq" type="query" direction="C2T" responseId="AFE3">
+		<value name="msgId" type="byte"/>
+		<value name="totalPacket" type="byte"/>
+		<value name="packetNo" type="byte"/>
+	</command>
+	<command id="AFE3" name="queryDisplayMsgRsp" type="query" direction="T2C" responseId="AF63">
+		<value name="msgId" type="byte"/>
+		<value name="totalPacket" type="byte"/>
+		<value name="packetNo" type="byte"/>
+		<value name="msgSize" type="short"/>
+		<byteArray name="msgContent"/>
+	</command>
+	
+	<command id="AF34" name="setZonePatternReq" type="set" direction="C2T">
+		<value name="patternId" type="byte"/>
+		<value name="dataTypeX" type="byte"/>
+		<value name="dataTypeY" type="byte"/>
+		<list name="zoneList" lenByteNo="1">
+			<value name="zoneNo" type="byte"/>
+			<value name="loc" type="short"/>
+			<value name="zoneSize" type="short"/>
+		</list>
+	</command>
+	
+	<command id="AF64" name="queryZonePatternReq" type="query" direction="C2T" responseId="AFE4">
+		<value name="patternId" type="byte"/>
+		<value name="zoneNo" type="byte"/>
+	</command>
+	<command id="AFE4" name="queryZonePatternRsp" type="query" direction="T2C" responseId="AF64">
+		<value name="patternId" type="byte"/>
+		<value name="dataTypeX" type="byte"/>
+		<value name="dataTypeY" type="byte"/>
+		<list name="zoneList" lenByteNo="1">
+			<value name="zoneNo" type="byte"/>
+			<value name="loc" type="short"/>
+			<value name="zoneSize" type="short"/>
+		</list>
+	</command>
+	
+	<command id="AF35" name="setShowPatternReq" type="set" direction="C2T">
+		<value name="patternId" type="byte"/>
+		<list name="zoneList" lenByteNo="1">
+			<paramsRef paramsName="showPatternZone"/>
+		</list>
+	</command>
+	
+	<command id="AF65" name="queryShowPatternReq" type="query" direction="C2T" responseId="AFE5">
+		<value name="patternId" type="byte"/>
+		<value name="zoneNo" type="byte"/>
+	</command>
+	<command id="AFE5" name="queryShowPatternRsp" type="query" direction="T2C" responseId="AF65">
+		<value name="patternId" type="byte"/>
+		<list name="zoneList" lenByteNo="1">
+			<paramsRef paramsName="showPatternZone"/>
+		</list>
+	</command>
+	
+	<command id="AF36" name="setDisplayShowPatternReq" type="set" direction="C2T">
+		<value name="patternId" type="byte"/>
+		<value name="zoneNo" type="byte"/>
+	</command>
+	
+	<command id="AF66" name="queryDisplayShowPatternReq" type="query" direction="C2T" responseId="AFE6"></command>
+	<command id="AFE6" name="queryDisplayShowPatternRsp" type="query" direction="T2C" responseId="AF66">
+		<value name="patternId" type="byte"/>
+		<list name="zoneList" lenByteNo="1">
+			<paramsRef paramsName="displayShowPatternZone"/>
+		</list>
+	</command>
+	
+	<command id="AF19" name="setStreetParamReq" type="set" direction="C2T">
+		<list name="streenStatusList" lenByteNo="1">
+			<value name="streenStatus" type="byte"/>
+		</list>
+		<value name="disCycle" type="byte"/>
+	</command>
+	
+	<command id="AF49" name="queryStreetParamReq" type="query" direction="C2T" responseId="AFC9"></command>
+	<command id="AFC9" name="queryStreetParamRsp" type="query" direction="T2C" responseId="AF49">
+		<list name="streenStatusList" lenByteNo="1">
+			<value name="streenStatus" type="byte"/>
+		</list>
+		<value name="disCycle" type="byte"/>
+	</command>	
+</cmdFmtDef>

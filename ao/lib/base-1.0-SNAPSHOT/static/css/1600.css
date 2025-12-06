@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+
+.loginbg{
+	height:900px;
+	width:1600px;
+	background: url(/images/login.svg)no-repeat;
+	-webkit-background-size: 1600px 900px;
+	-moz-background-size: 1600px 900px;
+	-o-background-size: 1600px 900px;
+	background-size: 1600px 900px;
+	margin:0 auto;
+}
+.title{
+	height:900px;
+	width:1600px;
+	background: url(/images/title_bg.png)no-repeat;
+	-webkit-background-size: 1600px 900px;
+	-moz-background-size: 1600px 900px;
+	-o-background-size: 1600px 900px;
+	background-size:1600px 900px;
+}
+.logintable{
+	background: url(/images/logintablebg.png)center center no-repeat;
+	height:250px;
+	width:476px;
+	position:relative;
+	left: 48%;
+	top: 56%;
+	text-align:center;
+	font-weight:bold;
+	}
+	
+.logincontent{
+	position:relative;
+	left: 25%;
+	top: 25%;
+	}	
+	
+.textname{
+	padding-top:75px;
+	
+	}
+div.textname+div ,div.textname+div+div {
+	padding-top:15px;
+	
+	}  

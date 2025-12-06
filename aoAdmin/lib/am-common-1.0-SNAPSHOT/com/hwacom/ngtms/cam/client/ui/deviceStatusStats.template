@@ -1,0 +1,13 @@
+<p>
+　{message.deviceStatus_total}: {data.total}
+　{message.deviceStatus_connect}: {data.connect}
+　{message.deviceStatus_disconnect}: 
+	<tpl if="data.disconnect &gt; 0"><font color='red'></tpl>
+		{data.disconnect}
+	<tpl if="data.disconnect &gt; 0"></font></tpl>
+　{message.deviceStatus_goodRatio}: {data.goodRatio}
+　{message.deviceStatus_notSync}: 
+		{data.notSync}
+　{message.deviceStatus_lowException}: 
+		{data.lowException}
+</p>

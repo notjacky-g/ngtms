@@ -1,0 +1,19 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form">
+
+    <ui:with field="messages" type="com.hwacom.ngtms.ao.am.view.Messages" />
+
+    <container:SimpleContainer>
+        <form:FieldLabel text="{messages.combobox_staticText_exportSelection}"
+                        labelWidth="140">
+            <form:widget>
+                <form:StringComboBox ui:field="comboBox" 
+                                    triggerAction="ALL"
+                                    editable="false" />
+            </form:widget>
+        </form:FieldLabel>
+    </container:SimpleContainer>
+</ui:UiBinder> 

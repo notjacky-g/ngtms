@@ -1,0 +1,67 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" 
+			xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+			xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client" 
+			xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container" 
+			xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button" 
+			xmlns:hcce="urn:import:com.hwacom.ngtms.hcce.am.view">
+			
+	<ui:with field="messages" type="com.hwacom.ngtms.hcce.am.view.Messages"/>
+	<ui:with field="allImages" type="com.hwacom.ngtms.hcce.am.images.AllImages"/>
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="sideMargins">
+		<ui:attributes top="3" right="3" bottom="3" left="3"/>
+	</ui:with>
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
+		<ui:attributes top="0" right="0" bottom="0" left="0"/>
+	</ui:with>
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="cardMargins">
+		<ui:attributes top="10" right="10" bottom="10" left="10"/>
+	</ui:with>
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="buttonMargins">
+		<ui:attributes top="10" right="10" bottom="10" left="45"/>
+	</ui:with>
+	<ui:with type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData" field="centerLayoutData">
+		<ui:attributes width="1" height="1" margins="{centerMargins}"/>
+	</ui:with>
+	<ui:with type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData" field="sideLayoutData">
+		<ui:attributes width="250" height="1" margins="{sideMargins}"/>
+	</ui:with>
+	<ui:with type="com.sencha.gxt.widget.core.client.container.MarginData" field="cardMarginData">
+		<ui:attributes margins="{cardMargins}"/>
+	</ui:with>
+	<ui:with type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData" field="buttonMarginData">
+		<ui:attributes width="200" height="45" margins="{buttonMargins}"/>
+	</ui:with>
+
+	<container:HorizontalLayoutContainer>
+		<container:child layoutData="{sideLayoutData}">
+			<container:VerticalLayoutContainer ui:field="leftContainer">
+                <container:child layoutData="{buttonMarginData}">
+                    <button:TextButton text="{messages.mainSystemViewer_buttonTopologyStatus}" ui:field="buttonTopologyStatus" />
+                </container:child>
+                <container:child layoutData="{buttonMarginData}">
+				    <button:TextButton text="{messages.mainSystemViewer_buttonTopologyConfig}" ui:field="buttonTopologyConfig" />
+                </container:child>
+                <container:child layoutData="{buttonMarginData}">
+				    <button:TextButton text="{messages.mainSystemViewer_buttonFmConfig}" ui:field="buttonFmConfig" />
+                </container:child>
+                <container:child layoutData="{buttonMarginData}">
+			        <g:Label ui:field="systemStatus" text="{messages.systemStarting}" width="100" />
+                </container:child>
+            </container:VerticalLayoutContainer>
+		</container:child>
+		<container:child layoutData="{centerLayoutData}">
+			<container:CardLayoutContainer ui:field="cardLayout" layoutData="{cardMarginData}">
+                <gxt:ContentPanel heading="{messages.mainSystemViewer_buttonTopologyStatus}">
+                    <hcce:TopologyNodeStatusViewer ui:field="topologyNodeStatusViewer"/>
+                </gxt:ContentPanel>
+                <gxt:ContentPanel heading="{messages.mainSystemViewer_buttonTopologyConfig}">
+					<hcce:TopologyNodeCfgViewer ui:field="topologyNodeCfgViewer"/>
+				</gxt:ContentPanel>
+				<gxt:ContentPanel heading="{messages.mainSystemViewer_buttonFmConfig}">
+					<hcce:FmViewer ui:field="fmViewer"/>
+				</gxt:ContentPanel>
+			</container:CardLayoutContainer>
+		</container:child>
+	</container:HorizontalLayoutContainer>
+</ui:UiBinder>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.1//EN" "http://gwtproject.org/doctype/2.8.1/gwt-module.dtd">
+<module>
+    <!--<set-property name="gwt.logging.consoleHandler" value="ENABLED" /> -->
+    <!--<set-property name="gwt.logging.popupHandler" value="DISABLED" /> -->
+    <inherits name="com.sencha.gxt.ui.GXT" />
+    <inherits name='com.sencha.gxt.chart.Chart' />
+    <inherits name="com.sencha.gxt.theme.gray.Gray" />
+    <!-- <inherits name="com.sencha.gxt.theme.blue.Blue"/> -->
+
+    <inherits name="com.google.gwt.logging.Logging" />
+    <inherits name="com.google.gwt.user.User" />
+    <inherits name='com.google.gwt.user.theme.standard.Standard' />
+    <inherits name="com.google.common.collect.Collect" />
+
+    <inherits name="org.vectomatic.libgwtsvg" />
+    <inherits name="org.fusesource.restygwt.RestyGWT" />
+    <inherits name="gwtupload.GWTUpload" />
+
+    <stylesheet src="reset.css" />
+    <add-linker name="xsiframe" />
+
+    <!-- https://docs.sencha.com/gxt/4.x/gwt/Permutations.html -->
+    <!-- <set-property name="gxt.user.agent" value="chrome,gecko1_8,gecko1_9"/> -->
+    <set-property name="gxt.user.agent" value="chrome" />
+    <set-property name="gxt.device" value="desktop" /> <!-- phone,tablet,desktop -->
+    <!--<set-property name="gxt.user.agent" value="${gxt.user.agent}" /> -->
+    <!-- 下面這行會導致 Super Dev Mode 執行時，瀏覽器對 client side code 下中斷點似乎無法斷在正確的行號，暫時先註解 -->
+    <!-- 參考資料：https://github.com/gwtproject/gwt/issues/8738 -->
+    <!-- ${gxt.collapse-all-properties} -->
+    <set-configuration-property name="CssResource.obfuscationPrefix" value="empty" />
+
+    <!-- gxt support Gss for Css3.0 -->
+    <!-- https://docs.sencha.com/gxt/4.x/ui/style/gss/GSS.html -->
+    <!-- Enable GSS for the project -->
+    <set-configuration-property name="CssResource.enableGss" value="true" />
+    <!-- Enable GSS for the project UiBinder -->
+    <set-configuration-property name="CssResource.gssDefaultInUiBinder" value="true" />
+    <set-configuration-property name="CssResource.conversionMode" value="strict" />
+</module>

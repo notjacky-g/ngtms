@@ -1,0 +1,106 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
+    xmlns:tree="urn:import:com.sencha.gxt.widget.core.client.tree"
+    xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
+    xmlns:common="urn:import:com.hwacom.ngtms.common.am.view"
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button">
+	
+	
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins4444">
+		<ui:attributes top="4" right="4" bottom="4" left="4"/>
+	</ui:with>
+	
+	<ui:with field="labelLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="30" />
+    </ui:with>
+	<ui:with field="searchLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="250" />
+    </ui:with>
+    <ui:with field="chartFieldLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+		<ui:attributes width="1" height="1" />
+	</ui:with>
+    
+    <ui:with field="roomFieldLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+		<ui:attributes width="370" height="160" margins="{margins4444}"/>
+	</ui:with>
+	<ui:with field="selectFieldLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+		<ui:attributes width="370" height="160" margins="{margins4444}"/>
+	</ui:with>
+	<ui:with field="timeFieldLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+		<ui:attributes width="1" height="1" margins="{margins4444}"/>
+	</ui:with>
+	
+	
+	<ui:with type="com.sencha.gxt.data.shared.TreeStore" field="treeStore"/>
+	<ui:with type="com.sencha.gxt.core.client.ValueProvider" field="treeValueProvider"/>
+	
+	<ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" field="gridCm"/>
+	<ui:with type="com.sencha.gxt.data.shared.ListStore" field="gridStore"/>
+	<ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" field="gridView">
+	</ui:with>
+	
+	<ui:with type="com.sencha.gxt.widget.core.client.menu.MenuItem" field="menuItemDelete">
+        <ui:attributes text="刪除" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.menu.Menu" field="contextMenu" />
+	
+	<container:VerticalLayoutContainer>
+		<container:child layoutData="{searchLayoutData}">
+			<gxt:ContentPanel bodyBorder="false"
+							  buttonAlign="START">
+				<container:HorizontalLayoutContainer>
+					<container:child layoutData="{roomFieldLayoutData}">
+						<container:VerticalLayoutContainer>
+							<container:child layoutData="{labelLayoutData}">
+			                	<form:FieldLabel text="所有監控點位" />
+					        </container:child>
+							<gxt:ContentPanel layoutData="{selectFieldLayoutData}"
+											  headerVisible="false"
+											  bodyBorder="true">
+			                    <tree:Tree ui:field="tree"
+			                               store="{treeStore}"
+			                               valueProvider="{treeValueProvider}" />
+			                </gxt:ContentPanel>
+		                </container:VerticalLayoutContainer>
+					</container:child>
+					<container:child layoutData="{selectFieldLayoutData}">
+						<container:VerticalLayoutContainer>
+							<container:child layoutData="{labelLayoutData}">
+			                	<form:FieldLabel text="已選監控點位" />
+					        </container:child>
+							<gxt:ContentPanel layoutData="{selectFieldLayoutData}"
+											  headerVisible="false"
+											  bodyBorder="true">
+			                    <grid:Grid ui:field="grid" 
+			                                  cm="{gridCm}"
+			                                  store="{gridStore}"
+			                                  view="{gridView}" />
+			                </gxt:ContentPanel>
+			            </container:VerticalLayoutContainer>
+					</container:child>
+					<container:child layoutData="{timeFieldLayoutData}">
+							<form:FieldLabel text="日期範圍" labelWidth="60">
+								<form:widget>
+			          					<common:DateRangePicker ui:field="dateRangePicker" 
+													timePicker="true" 
+													singleDatePicker="false" />
+								</form:widget>
+							</form:FieldLabel>	
+					</container:child>
+				</container:HorizontalLayoutContainer>
+				<gxt:button>
+					<button:TextButton ui:field="search"
+									   text="查詢" />
+				</gxt:button>
+			</gxt:ContentPanel>
+		</container:child>
+		<container:child layoutData="{chartFieldLayoutData}">
+			<gxt:ContentPanel ui:field="chartPanel"
+							  heading="查詢結果"/>
+		</container:child>
+	</container:VerticalLayoutContainer>
+</ui:UiBinder> 

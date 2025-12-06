@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmdFmtDef xmlns="http://hwacom.com/ngtms/cmdfmtdef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://hwacom.com/ngtms/cmdfmtdef cmdFmtDef.xsd"
+	version="v3.0" name="ct3-etag" bindPackage="com.hwacom.ngtms.ncc.tc.ct3.cmdparam.etag"
+	extend="/cmdProt/ct3/ct3-common.xml" classSuffix="Pm"
+	marshalHelperClass="com.hwacom.ngtms.ncc.tc.ct3.marshalhelper.Ct3VdMarshalHelper">
+	
+	<globalParams>
+		<params name="startTime">
+			<value name="year" type="byte" minValue="0" maxValue="255"/>
+			<value name="month" type="byte" minValue="1" maxValue="12"/>
+			<value name="day" type="byte" minValue="1" maxValue="31" />
+			<value name="hour" type="byte" minValue="0" maxValue="23" />
+			<value name="min" type="byte" minValue="0" maxValue="59" />
+			<value name="sec" type="byte" minValue="0" maxValue="59" />
+		</params>
+		<params name="endTime">
+			<value name="year" type="byte" minValue="0" maxValue="255"/>
+			<value name="month" type="byte" minValue="1" maxValue="12"/>
+			<value name="day" type="byte" minValue="1" maxValue="31" />
+			<value name="hour" type="byte" minValue="0" maxValue="23" />
+			<value name="min" type="byte" minValue="0" maxValue="59" />
+			<value name="sec" type="byte" minValue="0" maxValue="59" />
+		</params>
+		<params name="vehicle">
+			<value name="vehicleId" type="string" />
+			<value name="year" type="byte" minValue="0" maxValue="255"/>
+			<value name="month" type="byte" minValue="1" maxValue="12"/>
+			<value name="day" type="byte" minValue="1" maxValue="31" />
+			<value name="hour" type="byte" minValue="0" maxValue="23" />
+			<value name="min" type="byte" minValue="0" maxValue="59" />
+			<value name="sec" type="byte" minValue="0" maxValue="59" />
+		</params>
+	</globalParams>
+	
+	<command id="E441" name="queryHistoryDataReq" type="query" direction="C2T" responseId="E4C1">
+		<paramsRef paramsName="startTime"/>
+		<paramsRef paramsName="endTime"/>
+	</command>	
+	<command id="E4C1" name="queryHistoryDataRsp" type="query" direction="T2C" responseId="E441">
+		<ct3VehicleList name="vehicleList" vehicleNo="0" vehicleNoLength="2" 
+			vehicleNoName="vehicleNo" lenByteNo="2" lenByteName="vehicleLen">
+			<paramsRef paramsName="vehicle"/>
+		</ct3VehicleList>
+	</command>
+	
+	<command id="E412" name="setVehicleReportCycleReq" type="set" direction="C2T">
+		<value name="vehicleIdCycle" type="byte" minValue="0" maxValue="5"/>
+	</command>
+	
+	<command id="E442" name="queryVehicleReportCycleReq" type="query" direction="C2T" responseId="E4C2">		
+	</command>
+	<command id="E4C2" name="queryVehicleReportCycleRsp" type="query" direction="T2C" responseId="E442">
+		<value name="vehicleIdCycle" type="byte" minValue="0" maxValue="5"/>
+	</command>
+	
+	<command id="E402" name="vehicleDataReport" type="report" direction="T2C">
+		<ct3VehicleList name="vehicleList" vehicleNo="0" vehicleNoLength="2" 
+			vehicleNoName="vehicleNo" lenByteNo="2" lenByteName="vehicleLen">
+			<paramsRef paramsName="vehicle"/>
+		</ct3VehicleList>
+	</command>	
+	
+	<command id="E413" name="setTotalVehicleNoReportCycleReq" type="set" direction="C2T">
+		<value name="vehicleNoCycle" type="byte" minValue="0" maxValue="5" />
+	</command>
+	
+	<command id="E443" name="queryTotalVehicleNoReportCycleReq" type="query" direction="C2T" responseId="E4C3">
+	</command>
+	<command id="E4C3" name="queryTotalVehicleNoReportCycleRsp" type="query" direction="T2C" responseId="E443">
+		<value name="vehicleNoCycle" type="byte" minValue="0" maxValue="5" />
+	</command>
+	
+	<command id="E403" name="totalVehicleNoDataReport" type="report" direction="T2C">
+		<value name="year" type="byte" minValue="0" maxValue="255"/>
+		<value name="month" type="byte" minValue="1" maxValue="12"/>
+		<value name="day" type="byte" minValue="1" maxValue="31" />
+		<value name="hour" type="byte" minValue="0" maxValue="23" />
+		<value name="min" type="byte" minValue="0" maxValue="59" />
+		<value name="VehicleNo" type="short" minValue="0" maxValue="65535"/>
+	</command>
+		
+	<command id="E444" name="queryHistoryTotalVehicleNoReq" type="query" direction="C2T" responseId="E4C4">
+		<value name="year" type="byte" minValue="0" maxValue="255"/>
+		<value name="month" type="byte" minValue="1" maxValue="12"/>
+		<value name="day" type="byte" minValue="1" maxValue="31" />
+		<value name="hour" type="byte" minValue="0" maxValue="23" />
+	</command>	
+	<command id="E4C4" name="queryHistoryTotalVehicleNoRsp" type="query" direction="T2C" responseId="E444">
+		<value name="year" type="byte" minValue="0" maxValue="255"/>
+		<value name="month" type="byte" minValue="1" maxValue="12"/>
+		<value name="day" type="byte" minValue="1" maxValue="31" />
+		<value name="hour" type="byte" minValue="0" maxValue="23" />
+		<value name="VehicleNo" type="short" minValue="0" maxValue="65535"/>
+	</command>
+</cmdFmtDef>

@@ -1,0 +1,40 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:account="urn:import:com.hwacom.ngtms.common.am.view">
+
+    <ui:with field="messages" type="com.hwacom.ngtms.common.am.view.Messages" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
+        field="userConfig">
+        <ui:attributes text="{messages.userViewer}" />
+    </ui:with>
+
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
+        field="functionPermissionConfig">
+        <ui:attributes text="{messages.functionPermissionViewer}" />
+    </ui:with>
+
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
+        field="unitConfig">
+        <ui:attributes text="{messages.unitViewer}" />
+    </ui:with>
+
+    <container:BorderLayoutContainer ui:field="container">
+        <container:center>
+            <gxt:TabPanel ui:field="tabPanel" tabScroll="true">
+                <gxt:child config="{userConfig}">
+                    <account:UserViewer ui:field="userViewer" />
+                </gxt:child>
+                <gxt:child config="{functionPermissionConfig}">
+                    <account:RoleFunctionPermissionViewer ui:field="roleFunctionPermissionViewer" />
+                </gxt:child>
+                <gxt:child config="{unitConfig}">
+                    <account:UnitViewer />
+                </gxt:child>
+            </gxt:TabPanel>
+        </container:center>
+    </container:BorderLayoutContainer>
+</ui:UiBinder> 

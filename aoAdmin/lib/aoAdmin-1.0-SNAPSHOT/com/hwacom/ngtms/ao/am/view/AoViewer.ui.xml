@@ -1,0 +1,155 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+    xmlns:am="urn:import:com.hwacom.ngtms.cam.client.ui"
+    xmlns:ao="urn:import:com.hwacom.ngtms.ao.am.view" 
+    xmlns:pd="urn:import:com.hwacom.ngtms.pd.am.view"
+    xmlns:room="urn:import:com.hwacom.ngtms.room.am.view">
+
+    <!-- I18N、Resource -->
+    <ui:with field="messages" type="com.hwacom.ngtms.ao.am.view.Messages" />
+    <ui:with field="pdMessages" type="com.hwacom.ngtms.pd.am.view.Messages" />
+    <ui:with field="allImages" type="com.hwacom.ngtms.ao.am.images.AllImages" />
+    <!-- ======== -->
+
+    <!-- Margin 設定區 -->
+    <ui:with field="centerMargins" type="com.sencha.gxt.core.client.util.Margins">
+        <ui:attributes top="4" right="4" bottom="0" left="0" />
+    </ui:with>
+    <!-- ==== -->
+
+    <!-- Layout Data 區 -->
+    <ui:with field="northLayoutData" type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
+        <ui:attributes size="70" />
+    </ui:with>
+    <ui:with field="centerLayoutData" type="com.sencha.gxt.widget.core.client.container.MarginData">
+        <ui:attributes margins="{centerMargins}" />
+    </ui:with>
+
+    <container:BorderLayoutContainer ui:field="borderLayoutContainer">
+    	<container:north layoutData="{northLayoutData} ">
+        	<ao:TitleViewer />
+        </container:north>
+        <container:center layoutData="{centerLayoutData}">
+            <am:AmTabPanel ui:field="mainLayout"
+                           dndType="DeviceConfig"
+                           active="{roomStatusMonitorViewer}"
+                           enableRoleFilter="true">
+                <am:item>
+                	<ao:RoomStatusMonitorViewer ui:field="roomStatusMonitorViewer"
+                						 		tabTitle="機房狀態監控"
+                						 		buttonIcon="{allImages.statusMonitor}"
+                              				    buttonOverIcon="{allImages.statusMonitorOver}" 
+                              				    defaultShow="true" />
+                </am:item>
+                <am:item>
+                	<ao:RoomDeviceMonitorViewer ui:field="roomDeviceMonitorViewer"
+                						 		tabTitle="門禁設備監控"
+                						 		buttonIcon="{allImages.deviceMonitor}"
+                              				    buttonOverIcon="{allImages.deviceMonitorOver}" />
+                </am:item>
+                <am:item>
+	            	<ao:PdStatusViewer ui:field="pdStatusViewer"
+	                                   tabTitle="{pdMessages.pdStatus}"
+	                                   buttonIcon="{allImages.pdStatus}"
+                              		   buttonOverIcon="{allImages.pdStatusOver}" />
+	            </am:item>
+	            <am:item>
+                	<ao:PowerWaterStatusViewer ui:field="powerWaterStatusViewer"
+                							   tabTitle="用水用電即時狀態" />
+                </am:item>
+                <am:item>
+                    <ao:NcuCardControlViewer ui:field="ncuCardControlViewer"
+                                             tabTitle="卡片權限分配"
+                                             buttonIcon="{allImages.cardControl}"
+                              				 buttonOverIcon="{allImages.cardControlOver}" />
+                </am:item>
+                <am:item>
+                    <ao:AlarmRecordViewer ui:field="alarmRecordViewer"
+                                    	  tabTitle="告警紀錄查詢"
+                                    	  buttonIcon="{allImages.alarmRecord}"
+                                    	  buttonOverIcon="{allImages.alarmRecordOver}"/>
+                </am:item>
+                <am:item>
+                    <ao:LiveFaceRecordViewer ui:field="liveFaceRecordViewer"
+                                    		 tabTitle="人臉辨識紀錄查詢"
+                                    		 buttonIcon="{allImages.liveFaceRecord}"
+                                    		 buttonOverIcon="{allImages.liveFaceRecordOver}"/>
+                </am:item>
+                <am:item>
+                    <ao:NcuCardRecordViewer ui:field="cardReaderAccessRecordViewer"
+                                    		tabTitle="門禁卡片紀錄查詢"
+                                    		buttonIcon="{allImages.cardReaderAccessRecord}"
+                                    		buttonOverIcon="{allImages.cardReaderAccessRecordOver}"/>
+                </am:item>
+                <am:item>
+                	<ao:RoomAnalogRecordViewer ui:field="roomAnalogRecordViewer"
+                                    		   tabTitle="類比資料趨勢圖查詢"
+                                               buttonIcon="{allImages.analogRecord}"
+                                               buttonOverIcon="{allImages.analogRecordOver}"/>
+                </am:item>
+                <am:item>
+                    <ao:NcuConfigSettingViewer ui:field="ncuConfigSettingViewer"
+                                               tabTitle="門禁主機設定"
+                                    		   buttonIcon="{allImages.configSetting}"
+                                    		   buttonOverIcon="{allImages.configSettingOver}"/>
+                </am:item>
+                <am:item>
+                	<ao:RoomDeviceConfigSettingViewer ui:field="roomDeviceConfigSettingViewer"
+                						 		  	  tabTitle="監控點設定"
+                						 		  	  buttonIcon="{allImages.deviceConfigSetting}"
+                              				    	  buttonOverIcon="{allImages.deviceConfigSettingOver}" />
+                </am:item>
+                <am:item>
+                    <ao:RoomGroupViewer ui:field="roomGroupViewer"
+                                        tabTitle="機房設備群組設定"
+                                        buttonIcon="{allImages.group}"
+                                        buttonOverIcon="{allImages.groupOver}"/>
+                </am:item>
+                <am:item>
+                	<ao:RoomDevicePositionEditViewer ui:field="roomDevicePositionEditViewer"
+                						 		     tabTitle="機房設備位置設定"
+                						 		     buttonIcon="{allImages.devicePosition}"
+                              				         buttonOverIcon="{allImages.devicePositionOver}" />
+                </am:item>
+                <am:item>
+                	<room:RoomCardGroupViewer ui:field="roomCardGroupViewer"
+                                              tabTitle="卡片群組名稱設定"
+                                              buttonIcon="{allImages.cardGroup}"
+                              				  buttonOverIcon="{allImages.cardGroupOver}" />
+                </am:item>
+                <am:item>
+                    <ao:NcuCardConfigSettingViewer ui:field="ncuCardConfigSettingViewer"
+                                              	   tabTitle="卡片資料設定"
+                                              	   buttonIcon="{allImages.cardConfigSetting}"
+                              				       buttonOverIcon="{allImages.cardConfigSettingOver}" />
+                </am:item>
+                <am:item>
+	            	<ao:PdConfigSettingViewer ui:field="pdConfigSettingViewer"
+	                                          tabTitle="{pdMessages.pdConfigSetting}"
+                              				  buttonIcon="{allImages.pdConfigSetting}"
+                              				  buttonOverIcon="{allImages.pdConfigSettingOver}" />
+	            </am:item>                        
+	            <am:item>
+	            	<pd:PdLoopDeviceConfigSettingViewer ui:field="pdLoopDeviceConfigSetting"
+	                                           			tabTitle="{pdMessages.pdLoopDeviceConfigSetting}"
+	                                           			buttonIcon="{allImages.pdLoopDeviceConfigSetting}"
+                              				  			buttonOverIcon="{allImages.pdLoopDeviceConfigSettingOver}" />
+                </am:item>
+                <am:item>
+                	<ao:UserViewer ui:field="userViewer"
+                				   tabTitle="帳號管理"
+                				   buttonIcon="{allImages.user}"
+                              	   buttonOverIcon="{allImages.userOver}" />
+                </am:item>
+                <am:item>
+                	<ao:RoleFunctionPermissionViewer ui:field="roleFunctionPermissionViewer" 
+                								     tabTitle="角色權限管理"
+                								     buttonIcon="{allImages.roleFunctionPermission}"
+                              				  		 buttonOverIcon="{allImages.roleFunctionPermissionOver}" />
+                </am:item>
+	        </am:AmTabPanel>
+        </container:center>
+    </container:BorderLayoutContainer>
+</ui:UiBinder>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.1//EN" "http://gwtproject.org/doctype/2.8.1/gwt-module.dtd">
+<module>
+    <inherits name="com.hwacom.ngtms.hcce.am.Common" />
+    <inherits name="com.hwacom.ngtms.Shared" /> <!-- base -->
+    <inherits name="com.hwacom.ngtms.hcce.Shared" /> <!-- hcce -->
+    <inherits name="com.hwacom.ngtms.common.Shared" /> <!-- common -->
+
+    <extend-property name="locale" values="c3t" />
+
+    <source path="">
+        <exclude name="**/package-info.java" />
+        <exclude name="server/**" />
+    </source>
+
+    <replace-with class="com.hwacom.ngtms.cam.client.ui.HeaderViewDefaultAppearance">
+        <when-type-is class="com.hwacom.ngtms.cam.client.ui.HeaderView.HeaderViewAppearance" />
+    </replace-with>
+
+    <generate-with class="com.hwacom.ngtms.common.am.rebind.RIPViewerInitializerGenerator">
+        <when-type-assignable class="com.hwacom.ngtms.common.am.view.RIPViewerInitializer" />
+    </generate-with>
+</module>

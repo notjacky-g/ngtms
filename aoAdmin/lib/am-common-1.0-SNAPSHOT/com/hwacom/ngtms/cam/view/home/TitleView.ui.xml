@@ -1,0 +1,173 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:res='urn:with:com.hwacom.ngtms.cam.view.TitleView.TitleResources'
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client">
+
+    <ui:style>
+    .overCursor {
+        cursor: pointer;
+    }
+    </ui:style>
+    <ui:with type="com.hwacom.ngtms.cam.view.home.TitleView.TitleResources" field="titleResources" />
+    <ui:with type="com.hwacom.ngtms.cam.images.AmImages" field="allImages" />
+
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="separationLineMargins">
+        <ui:attributes top="0" right="4" bottom="0" left="2" />
+    </ui:with>
+
+    <ui:with field="fullWidthHeightData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+   <ui:with field="headerLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="headerLeftLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="631" height="1" />
+    </ui:with>
+    <ui:with field="headerRightLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="230" height="1" />
+    </ui:with>
+    <ui:with field="logoLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="45" height="1" />
+    </ui:with>
+    <ui:with field="itemLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="160" height="1" />
+    </ui:with>
+    <ui:with field="itemTitleLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="alarmTextLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="309" height="1" />
+    </ui:with>
+
+    <ui:with field="topEmptyLayoutData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="10" />
+    </ui:with>
+    <ui:with field="emptyHeight2" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="2" />
+    </ui:with>
+    <ui:with field="emptyHeight3" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="3" />
+    </ui:with>
+    <ui:with field="emptyHeight5" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="5" />
+    </ui:with>
+    <ui:with field="emptyHeight7" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="7" />
+    </ui:with>
+    <ui:with field="emptyHeight10" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="10" />
+    </ui:with>
+    <ui:with field="emptyHeight12" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="12" />
+    </ui:with>
+    <ui:with field="emptyHeight15" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="15" />
+    </ui:with>
+    <ui:with field="emptyHeight20" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="20" />
+    </ui:with>
+    <ui:with field="homeLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="49" height="1" />
+    </ui:with>
+    <ui:with field="separationLineLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="2" height="1" />
+    </ui:with>
+    <ui:with field="width305" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="305" height="1" />
+    </ui:with>
+    <ui:with field="emptyWidth2" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="2" height="1" />
+    </ui:with>
+    <ui:with field="emptyWidth3" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="3" height="1" />
+    </ui:with>
+    <ui:with field="emptyWidth4" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="4" height="1" />
+    </ui:with>
+    <ui:with field="emptyWidth5" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="5" height="1" />
+    </ui:with>
+    <ui:with field="emptyWidth6" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="6" height="1" />
+    </ui:with>
+    <ui:with field="emptyWidth10" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="10" height="1" />
+    </ui:with>
+    <ui:with field="timeLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="30" height="1" />
+    </ui:with>
+    <ui:with field="timeDataLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="65" height="1" />
+    </ui:with>
+    <ui:with field="peopleLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="28" height="1" />
+    </ui:with>
+    <ui:with field="userDataLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="41" height="1" />
+    </ui:with>
+    <ui:with field="logoutDataLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="30" height="1" />
+    </ui:with>
+    <ui:with field="alarmLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="30" height="1" />
+    </ui:with>
+
+    <container:HorizontalLayoutContainer>
+        <container:child layoutData="{headerLeftLayoutData}">
+            <container:SimpleContainer ui:field="leftPanel" styleName="{titleResources.title.titleLeft}">
+            </container:SimpleContainer>
+        </container:child>
+        <container:child layoutData="{headerLayoutData}">
+            <g:Image url="{titleResources.headerCenter.getSafeUri.asString}" />
+        </container:child>
+        <container:child layoutData="{headerRightLayoutData}">
+            <container:SimpleContainer ui:field="rightPanel" styleName="{titleResources.title.titleRight}">
+                <container:VerticalLayoutContainer>
+                    <container:HorizontalLayoutContainer layoutData="{topEmptyLayoutData}" />
+                    <container:HorizontalLayoutContainer>
+                        <container:VerticalLayoutContainer layoutData="{emptyWidth2}" />
+                        <container:VerticalLayoutContainer layoutData="{timeLayoutData}">
+                            <g:Label text=" " layoutData="{emptyHeight10}" />
+                            <g:Image url="{allImages.time.getSafeUri.asString}" pixelSize="30,30"></g:Image>
+                        </container:VerticalLayoutContainer>
+                        <container:VerticalLayoutContainer layoutData="{emptyWidth3}" />
+                        <container:VerticalLayoutContainer layoutData="{timeDataLayoutData}">
+                            <g:Label text=" " layoutData="{emptyHeight12}" />
+                            <g:Label ui:field="dateLabel" text="" styleName="{titleResources.title.titleColor}" />
+                            <g:Label ui:field="timeLabel" text="" styleName="{titleResources.title.titleColor}" />
+                        </container:VerticalLayoutContainer>
+                        <container:VerticalLayoutContainer layoutData="{emptyWidth2}" />
+                        <container:VerticalLayoutContainer layoutData="{separationLineLayoutData}">
+                            <g:Image url="{allImages.separationLine.getSafeUri.asString}"></g:Image>
+                        </container:VerticalLayoutContainer>
+                        <container:VerticalLayoutContainer layoutData="{emptyWidth3}" />
+                        <container:VerticalLayoutContainer layoutData="{peopleLayoutData}">
+                            <g:Label text=" " layoutData="{emptyHeight10}" />
+                            <g:Image url="{allImages.people.getSafeUri.asString}" pixelSize="30,30"></g:Image>
+                        </container:VerticalLayoutContainer>
+                         <container:VerticalLayoutContainer layoutData="{emptyWidth2}" />
+                        <container:VerticalLayoutContainer layoutData="{userDataLayoutData}">
+                            <g:Label text=" " layoutData="{emptyHeight15}" />
+                            <g:Label text=" " layoutData="{emptyHeight5}" />
+                            <g:Label ui:field="userName" text="" styleName="{titleResources.title.titleColor}" />
+                        </container:VerticalLayoutContainer>
+                         <container:VerticalLayoutContainer layoutData="{emptyWidth2}" />
+                        <container:VerticalLayoutContainer layoutData="{separationLineLayoutData}">
+                            <g:Image url="{allImages.separationLine.getSafeUri.asString}"></g:Image>
+                        </container:VerticalLayoutContainer>
+                        <container:VerticalLayoutContainer layoutData="{emptyWidth6}" />
+                        <container:VerticalLayoutContainer layoutData="{logoutDataLayoutData}">
+                            <g:Label text=" " layoutData="{emptyHeight10}" />
+                            <g:Image ui:field="loginOutImage" url="{allImages.logout.getSafeUri.asString}" pixelSize="30,30" styleName="{style.overCursor}"></g:Image>
+                        </container:VerticalLayoutContainer>
+                        <container:VerticalLayoutContainer layoutData="{emptyWidth6}" />
+                        <container:VerticalLayoutContainer layoutData="{emptyWidth6}" />
+                    </container:HorizontalLayoutContainer>
+                </container:VerticalLayoutContainer>
+            </container:SimpleContainer>
+        </container:child>
+    </container:HorizontalLayoutContainer>
+</ui:UiBinder> 

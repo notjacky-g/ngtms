@@ -1,0 +1,51 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:toolbar="urn:import:com.sencha.gxt.widget.core.client.toolbar"
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container">
+
+    <ui:with type="com.hwacom.ngtms.common.am.images.AmImages" field="images" />
+    <ui:with type="com.hwacom.ngtms.common.am.view.Messages" field="messages" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData" field="flex">
+        <ui:attributes flex="1" />
+    </ui:with>
+
+    <ui:with type="com.sencha.gxt.data.shared.LabelProvider" field="labelProvider" />
+
+    <toolbar:ToolBar ui:field="toolBar" enableOverflow="false">
+        <toolbar:child>
+            <button:TextButton ui:field="preview" icon="{images.preview16}" text="{messages.report_preview}" />
+        </toolbar:child>
+        <toolbar:child>
+            <button:TextButton ui:field="exportCsv" icon="{images.excel16}" text="{messages.report_export_csv}" />
+        </toolbar:child>
+        <toolbar:child>
+            <button:TextButton ui:field="exportPdf" icon="{images.pdf16}" text="{messages.report_export_pdf}" visible="false" />
+        </toolbar:child>
+        <toolbar:child>
+            <button:TextButton ui:field="exportXls" icon="{images.excel16}" text="{messages.report_export_xls}" visible="false" />
+        </toolbar:child>
+        <toolbar:child>
+            <button:TextButton ui:field="exportPng" icon="{images.png16}" text="{messages.report_export_png}" visible="false" />
+        </toolbar:child>
+        <toolbar:child>
+            <button:TextButton ui:field="exportJpeg" icon="{images.png16}" text="{messages.report_export_jpeg}" visible="false" />
+        </toolbar:child>
+        <toolbar:child layoutData="{flex}">
+            <g:Label />
+        </toolbar:child>
+        <toolbar:child>
+            <container:SimpleContainer ui:field="pagingToolBarContainer" />
+        </toolbar:child>
+        <toolbar:child layoutData="{flex}">
+            <g:Label />
+        </toolbar:child>
+        <toolbar:child>
+            <form:SimpleComboBox ui:field="zoomRatio" labelProvider="{labelProvider}"
+                                 triggerAction="ALL" editable="false" width="70" />
+        </toolbar:child>
+    </toolbar:ToolBar>
+</ui:UiBinder> 

@@ -1,0 +1,16 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:f="urn:import:com.sencha.gxt.widget.core.client.form" 
+	xmlns:b="urn:import:com.sencha.gxt.widget.core.client.button" 
+	xmlns:c="urn:import:com.sencha.gxt.widget.core.client.container" 
+	xmlns:core="urn:import:com.sencha.gxt.widget.core.client">
+	
+	<ui:style>
+	</ui:style>
+	<core:FramedPanel headerVisible="false">
+		<f:FieldSet ui:field="fieldSet" />
+		<core:button>
+			<b:TextButton ui:field="submitBtn" text="設定" /> <!-- I18N -->
+		</core:button>
+	</core:FramedPanel>
+</ui:UiBinder>

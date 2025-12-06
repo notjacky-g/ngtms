@@ -1,0 +1,33 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client" 
+    xmlns:rpt="urn:import:com.hwacom.ngtms.ao.am.view.rpt"
+    xmlns:tree="urn:import:com.sencha.gxt.widget.core.client.tree">
+
+    <!-- I18N、Resource -->
+    <ui:with field="messages" type="com.hwacom.ngtms.ao.am.view.Messages" />
+    <!-- ======== -->
+
+    <!-- Margin 設定區 -->
+    <ui:with field="centerMargins" type="com.sencha.gxt.core.client.util.Margins">
+        <ui:attributes top="4" right="0" bottom="0" left="0" />
+    </ui:with>
+    <!-- ==== -->
+
+    <!-- Layout Data 區 -->
+    <ui:with field="treeVLayoutData"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <!-- ======== -->
+
+    <!-- 其他 import / with -->
+    <ui:with type="com.sencha.gxt.data.shared.TreeStore" field="store" />
+    <ui:with type="com.sencha.gxt.core.client.ValueProvider" field="valueProvider" />
+    <!-- ======== -->
+
+    <!-- UI Design -->
+    <tree:Tree ui:field="tree" valueProvider="{valueProvider}" store="{store}" />
+
+</ui:UiBinder>

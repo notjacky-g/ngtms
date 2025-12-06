@@ -1,0 +1,18 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:core="urn:import:com.sencha.gxt.widget.core.client"
+	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid" >
+	
+	<!-- 其他 import / with -->
+	<ui:with field="cm" type="com.sencha.gxt.widget.core.client.grid.ColumnModel" />
+	<ui:with field="store" type="com.sencha.gxt.data.shared.ListStore" />
+	<ui:with field="view" type="com.sencha.gxt.widget.core.client.grid.GridView">
+		<ui:attributes forceFit="true" />
+	</ui:with>	
+	<!-- ==== -->
+	
+	<ui:style>
+	</ui:style>
+	
+	<grid:Grid ui:field="grid" cm="{cm}" store="{store}" view="{view}" />
+</ui:UiBinder> 

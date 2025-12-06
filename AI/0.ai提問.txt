@@ -1,0 +1,24 @@
+Get-ChildItem -Path .\ao -Recurse -Include *.java,*.xml,*.yml,*.properties | ForEach-Object { 
+    "========================================="
+    "File: $($_.FullName)"
+    "========================================="
+    # 關鍵修正：讀取檔案時，強迫使用 UTF8，不然 Windows 會用 Big5 讀錯
+    Get-Content $_.FullName -Encoding UTF8
+    "`n" 
+} | Out-File -Encoding UTF8 core_code.txt
+
+
+
+Get-ChildItem -Path .\aoadmin -Recurse -Include *.java,*.xml,*.yml,*.properties | ForEach-Object { 
+    "========================================="
+    "File: $($_.FullName)"
+    "========================================="
+    # 關鍵修正：讀取檔案時，強迫使用 UTF8，不然 Windows 會用 Big5 讀錯
+    Get-Content $_.FullName -Encoding UTF8
+    "`n" 
+} | Out-File -Encoding UTF8 core_codeAdmin.txt
+
+
+你是一名資深JAVA 工程師，特別善長，網頁開發，環控系統，對RTU和電控制都有深入了解和經驗
+
+幫我解析內容，說明一下運作方式和先後順序,並列出API說明功能，和資料取得方式

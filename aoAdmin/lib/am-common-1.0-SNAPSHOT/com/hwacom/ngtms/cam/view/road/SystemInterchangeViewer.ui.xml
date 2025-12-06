@@ -1,0 +1,525 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
+    xmlns:toolbar="urn:import:com.sencha.gxt.widget.core.client.toolbar"
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
+    xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid">
+
+    <ui:with field="messages" type="com.hwacom.ngtms.cam.view.Messages" />
+
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins4044">
+        <ui:attributes top="4" right="0" bottom="4" left="4" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins4444">
+        <ui:attributes top="4" right="4" bottom="4" left="4" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins41544">
+        <ui:attributes top="4" right="15" bottom="4" left="4" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins0400">
+        <ui:attributes top="0" right="4" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins2000">
+        <ui:attributes top="2" right="0" bottom="0" left="0" />
+    </ui:with>
+   
+    <ui:with field="centerData" type="com.sencha.gxt.widget.core.client.container.MarginData">
+        <ui:attributes margins="{margins4044}" />
+    </ui:with>
+    <ui:with field="eastData" type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
+        <ui:attributes size="600" margins="{margins4444}" split="true" />
+    </ui:with>
+    <ui:with field="itemData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="30" margins="{margins4444}" />
+    </ui:with>
+    <ui:with field="itemDataWithRightMargin" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="30" margins="{margins41544}" />
+    </ui:with>
+    <ui:with field="itemVDTitleData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="95" height="1" />
+    </ui:with>
+    <ui:with field="fullData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="fullDataV" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="itemDataW250" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="250" height="1" margins="{margins0400}"/>
+    </ui:with>
+    <ui:with field="topData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="150" />
+    </ui:with>
+    <ui:with field="bottomData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" margins="{margins2000}" />
+    </ui:with>
+    <ui:with field="ringRoadVdData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="190" height="1" />
+    </ui:with>
+    <ui:with field="ringRoadVdWeigthData" type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData">
+        <ui:attributes width="50" height="1" />
+    </ui:with>
+    
+    <ui:with type="com.sencha.gxt.data.shared.ListStore" field="store" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" field="cm" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" field="view">
+        <ui:attributes stripeRows="true"></ui:attributes>
+    </ui:with>
+    
+    <ui:with type="com.sencha.gxt.data.shared.ListStore" field="rampStore" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" field="rampCm" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" field="rampView">
+        <ui:attributes stripeRows="true"></ui:attributes>
+    </ui:with>    
+    <ui:import field="com.sencha.gxt.widget.core.client.button.ToolButton.REFRESH" />
+    <ui:with field="infoConfig" type="com.sencha.gxt.widget.core.client.tips.ToolTipConfig">
+        <ui:attributes title=""  body="{messages.refresh}" closeable="false" />
+    </ui:with>
+    
+    
+    <ui:with type="com.sencha.gxt.data.shared.ListStore" field="ringStore" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" field="ringCm" />
+
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" field="ringView">
+        <ui:attributes stripeRows="true"></ui:attributes>
+    </ui:with>    
+    
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
+        field="rampConfig">
+        <ui:attributes text="{messages.subTab_rampConfig}" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
+        field="ringConfig">
+        <ui:attributes text="{messages.subTab_ringConfig}" />
+    </ui:with>
+
+    <container:BorderLayoutContainer ui:field="borderLayoutContainer">
+        <container:center layoutData="{centerData}">
+            <gxt:ContentPanel ui:field="roadSectionListPanel" heading="{messages.RoadType_C}{messages.config}">
+                <gxt:tool>
+                    <button:ToolButton ui:field="refreshButton" config="{REFRESH}" toolTipConfig="{infoConfig}"  />
+                </gxt:tool>
+                <grid:Grid ui:field="grid" store="{store}" cm="{cm}" view="{view}" borders="false"
+                           columnReordering="true" stateful="true" />
+            </gxt:ContentPanel>
+        </container:center>
+        <container:east layoutData="{eastData}">
+            <container:HorizontalLayoutContainer>
+                <container:child layoutData="{itemDataW250}">
+                    <gxt:ContentPanel ui:field="panel" heading="{messages.configSetup}">
+                        <container:VerticalLayoutContainer scrollMode="AUTOY">
+                            <container:child layoutData="{itemData}">
+                            	<form:FieldLabel text="{messages.roadDivision_divisionId}"
+                    					 		 labelWidth="140">
+			                		<form:widget>
+			                			<form:TextField ui:field="divisionId"
+			                							width="1"
+			                							enabled="true"
+			                							allowBlank="false" />
+			                		</form:widget>
+			                	</form:FieldLabel>
+                            </container:child>
+                            <container:child layoutData="{itemData}">
+                            	<form:FieldLabel text="{messages.roadDivision_divisionName}"
+                    					 		 labelWidth="140">
+			                		<form:widget>
+			                			<form:TextField ui:field="divisionName"
+			                							width="1"
+			                							enabled="true"
+			                							allowBlank="false" />
+			                		</form:widget>
+			                	</form:FieldLabel>
+                            </container:child>
+                            <container:child layoutData="{itemData}">
+                            	<form:FieldLabel text="{messages.roadDivision_mileage}"
+                    					 labelWidth="140">
+			                		<form:widget>
+			                			<form:IntegerField ui:field="mileage"
+			                							   width="1"
+			                							   enabled="true"
+			                							   allowBlank="false" />
+			                		</form:widget>
+			                	</form:FieldLabel>
+                            </container:child>
+                            <container:child layoutData="{itemData}">
+                            	<form:FieldLabel text="{messages.roadDivision_lineName}"
+		                    					 labelWidth="140">
+			                		<form:widget>
+			                			<form:ComboBox ui:field="lineNameCombo"
+			                						   width="1"
+			                						   editable="false"
+			                						   triggerAction="ALL" />
+			                		</form:widget>
+			                	</form:FieldLabel>
+                            </container:child>
+                            <container:child layoutData="{itemData}">
+                            	<form:FieldLabel text="{messages.roadDivision_boundary}"
+		                    					 labelWidth="140">
+			                		<form:widget>
+			                			<form:ComboBox ui:field="boundaryCombo"
+			                						   width="1"
+			                						   editable="false"
+			                						   triggerAction="ALL" />
+			                		</form:widget>
+			                	</form:FieldLabel>
+                            </container:child>
+                            <container:child layoutData="{itemData}">
+                            	<form:FieldLabel text="{messages.roadDivision_travelTimeVisible}"
+		                    					 labelWidth="140">
+			                		<form:widget>
+			                			<form:ComboBox ui:field="travelTimeVisibleCombo"
+			                						   width="1"
+			                						   editable="false"
+			                						   triggerAction="ALL" />
+			                		</form:widget>
+			                	</form:FieldLabel>
+                            </container:child>
+                        </container:VerticalLayoutContainer>
+                        <gxt:button>
+                        	<button:TextButton ui:field="addButton" text="{messages.button_add}" />
+                        </gxt:button>
+                        <gxt:button>
+                        	<button:TextButton ui:field="deleteButton" text="{messages.button_delete}" />
+                        </gxt:button>
+                        <gxt:button>
+                        	<button:TextButton ui:field="saveButton" text="{messages.button_save}" />
+                        </gxt:button>
+                    </gxt:ContentPanel>
+                </container:child>
+                <container:child layoutData="{fullData}">
+                    <gxt:TabPanel ui:field="tabPanel" tabScroll="true">
+                         <gxt:child config="{rampConfig}">
+                            <container:VerticalLayoutContainer>
+                                <container:child layoutData="{topData}">
+                                    <gxt:ContentPanel ui:field="rampListPanel" heading="{messages.ramp_list}">
+                                        <gxt:tool>
+                                            <button:ToolButton ui:field="refreshRampButton" config="{REFRESH}" toolTipConfig="{infoConfig}"  />
+                                        </gxt:tool>
+                                        <grid:Grid ui:field="rampGrid" store="{rampStore}" cm="{rampCm}" view="{rampView}" borders="false"
+                                                   columnReordering="true" stateful="true" />
+                                    </gxt:ContentPanel>
+                                </container:child>
+                                <container:child layoutData="{bottomData}">
+                                    <gxt:ContentPanel ui:field="rampPanel" heading="{messages.configSetup}">
+                                        <container:VerticalLayoutContainer scrollMode="AUTOY">
+		                                    <container:child layoutData="{itemData}">
+		                                    	<form:FieldLabel text="{messages.rampVdConfig_rampType}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:ComboBox ui:field="rampTypeCombo"
+							                						   editable="false"
+							                						   triggerAction="ALL"
+							                						   width="1" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+		                                    </container:child>  
+		                                    <container:child layoutData="{itemData}">
+		                                    	<form:FieldLabel text="{messages.rampVdConfig_direction}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:ComboBox ui:field="directionCombo"
+							                						   editable="false"
+							                						   triggerAction="ALL"
+							                						   width="1" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+		                                    </container:child>  
+		                                    <container:child layoutData="{itemData}">
+		                                    	<form:FieldLabel text="{messages.rampVdConfig_rampTypeDesc}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:TextField ui:field="rampTypeDesc"
+							                							width="1"
+							                							enabled="true"
+							                							allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+		                                    </container:child>
+		                                    <container:child layoutData="{itemData}">
+		                                    	<form:FieldLabel text="{messages.rampVdConfig_rampVdType}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:ComboBox ui:field="rampVdTypeCombo"
+							                						   editable="false"
+							                						   triggerAction="ALL"
+							                						   width="1" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+		                                    </container:child>  
+		                                    <container:child layoutData="{itemData}">
+		                                    	<form:FieldLabel text="{messages.rampVdConfig_exception}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:ComboBox ui:field="exceptionCombo"
+							                						   editable="false"
+							                						   triggerAction="ALL"
+							                						   width="1" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+		                                    </container:child>  
+		                                    <container:child layoutData="{itemData}">
+		                                    	<form:FieldLabel text="{messages.rampVdConfig_vd1}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:TextField ui:field="vd1"
+							                							width="1"
+							                							enabled="true"
+							                							allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+		                                    </container:child>
+		                                    <container:child layoutData="{itemData}">
+		                                    	<form:FieldLabel text="{messages.rampVdConfig_vd2}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:TextField ui:field="vd2"
+							                							width="1"
+							                							enabled="true"
+							                							allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+		                                    </container:child>
+		                                    <container:child layoutData="{itemData}">
+		                                    	<form:FieldLabel text="{messages.rampVdConfig_vd3}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:TextField ui:field="vd3"
+							                							width="1"
+							                							enabled="true"
+							                							allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+		                                    </container:child>
+		                                 </container:VerticalLayoutContainer>
+                                        <gxt:button>
+                                            <button:TextButton ui:field="addRampButton" text="{messages.button_add}"/>
+                                        </gxt:button>
+                                        <gxt:button>
+                                            <button:TextButton ui:field="deleteRampButton" text="{messages.button_delete}"/>
+                                        </gxt:button>
+                                        <gxt:button>
+                                            <button:TextButton ui:field="saveRampButton" text="{messages.button_save}"/>
+                                        </gxt:button>
+                                    </gxt:ContentPanel>                      
+                                </container:child>
+                            </container:VerticalLayoutContainer>
+                        </gxt:child>
+                         <gxt:child config="{ringConfig}">
+                            <container:VerticalLayoutContainer layoutData="{fullData}">
+                                <container:child layoutData="{topData}">
+                                    <gxt:ContentPanel ui:field="ringListPanel" heading="{messages.ramp_list}">
+                                        <gxt:tool>
+                                            <button:ToolButton ui:field="refreshRingButton" config="{REFRESH}" toolTipConfig="{infoConfig}"  />
+                                        </gxt:tool>
+                                        <grid:Grid ui:field="ringGrid" store="{ringStore}" cm="{ringCm}" view="{ringView}" borders="false"
+                                                   columnReordering="true" stateful="true" />
+                                    </gxt:ContentPanel>
+                                </container:child>
+                                <container:child layoutData="{bottomData}">
+                                    <gxt:ContentPanel ui:field="ringPanel" heading="{messages.configSetup}">
+                                        <container:VerticalLayoutContainer scrollMode="AUTOY">
+                                             <container:child layoutData="{itemDataWithRightMargin}">
+                                             	<form:FieldLabel text="{messages.ringRoadConfig_startDirection}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:ComboBox ui:field="startDirectionRingCombo"
+							                						   editable="false"
+							                						   triggerAction="ALL"
+							                						   width="1" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>  
+                                            <container:child layoutData="{itemDataWithRightMargin}">
+                                            	<form:FieldLabel text="{messages.ringRoadConfig_startDescription}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:TextField ui:field="startDescription"
+							                							width="1"
+							                							enabled="true"
+							                							allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>  
+                                            <container:child layoutData="{itemDataWithRightMargin}">
+                                            	<form:FieldLabel text="{messages.ringRoadConfig_endLineId}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:ComboBox ui:field="lineNameRingCombo"
+							                						   editable="false"
+							                						   triggerAction="ALL"
+							                						   width="1" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>
+                                            <container:child layoutData="{itemDataWithRightMargin}">
+                                            	<form:FieldLabel text="{messages.ringRoadConfig_endDirection}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:ComboBox ui:field="directionRingCombo"
+							                						   editable="false"
+							                						   triggerAction="ALL"
+							                						   width="1" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>  
+                                            <container:child layoutData="{itemDataWithRightMargin}">
+                                            	<form:FieldLabel text="{messages.ringRoadConfig_endDivisionId}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:ComboBox ui:field="roadDivisionRingCombo"
+							                						   editable="false"
+							                						   triggerAction="ALL"
+							                						   width="1" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>  
+                                            <container:child layoutData="{itemDataWithRightMargin}">
+                                            	<form:FieldLabel text="{messages.ringRoadConfig_endDescription}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:TextField ui:field="endDescription"
+							                							width="1"
+							                							enabled="true"
+							                							allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>  
+                                            <container:child layoutData="{itemDataWithRightMargin}">
+                                            	<form:FieldLabel text="{messages.ringRoadConfig_exitVd}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:TextField ui:field="exitVd"
+							                							width="1"
+							                							enabled="true"
+							                							allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>  
+                                            <container:child layoutData="{itemDataWithRightMargin}">
+                                            	<form:FieldLabel text="{messages.ringRoadConfig_length}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:IntegerField ui:field="ringLength"
+							                							   width="1"
+							                							   enabled="true"
+							                							   allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>  
+                                            <container:child layoutData="{itemDataWithRightMargin}">
+                                            	<form:FieldLabel text="{messages.ringRoadConfig_speedLimit}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:IntegerField ui:field="speedLimit"
+							                							   width="1"
+							                							   enabled="true"
+							                							   allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>  
+                                            <container:child layoutData="{itemDataWithRightMargin}">
+                                            	<form:FieldLabel text="{messages.ringRoadConfig_freeTravelTime}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:IntegerField ui:field="freeTravelTime"
+							                							   width="1"
+							                							   enabled="true"
+							                							   allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>  
+                                            <container:child layoutData="{itemDataWithRightMargin}">
+                                            	<form:FieldLabel text="{messages.ringRoadConfig_etagSectionId}"
+						                    					 labelWidth="95">
+							                		<form:widget>
+							                			<form:TextField ui:field="etagSectionId"
+							                							width="1"
+							                							enabled="true"
+							                							allowBlank="false" />
+							                		</form:widget>
+							                	</form:FieldLabel>
+                                            </container:child>  
+                                            <container:child layoutData="{itemData}">
+                                                <container:HorizontalLayoutContainer layoutData="{fullData}">
+                                                    <toolbar:LabelToolItem label="環道" layoutData="{itemVDTitleData}" />
+                                                    <toolbar:LabelToolItem label="設備(權重合計必需為 100)" layoutData="{ringRoadVdData}" />
+                                                    <toolbar:LabelToolItem label="" width="10" />
+                                                    <toolbar:LabelToolItem label="權重" layoutData="{ringRoadVdWeigthData}" />
+                                                </container:HorizontalLayoutContainer>
+                                            </container:child>  
+                                            <container:child layoutData="{itemData}">
+                                                <container:HorizontalLayoutContainer layoutData="{fullData}">
+                                                    <toolbar:LabelToolItem label="{messages.ringRoadConfig_ringRoadVd1} :" layoutData="{itemVDTitleData}" />
+                                                    <form:TextField ui:field="ringRoadVd1" layoutData="{ringRoadVdData}" enabled="true" allowBlank="true" />
+                                                    <toolbar:LabelToolItem label="" width="10" />
+                                                    <form:IntegerField ui:field="ringRoadVd1Weigth" layoutData="{ringRoadVdWeigthData}" enabled="true" allowBlank="true" />
+                                                </container:HorizontalLayoutContainer>
+                                            </container:child>  
+                                            <container:child layoutData="{itemData}">
+                                                <container:HorizontalLayoutContainer layoutData="{fullData}">
+                                                    <toolbar:LabelToolItem label="{messages.ringRoadConfig_ringRoadVd2} :" layoutData="{itemVDTitleData}" />
+                                                    <form:TextField ui:field="ringRoadVd2" layoutData="{ringRoadVdData}" enabled="true" allowBlank="true" />
+                                                    <toolbar:LabelToolItem label="" width="10" />
+                                                    <form:IntegerField ui:field="ringRoadVd2Weigth" layoutData="{ringRoadVdWeigthData}" enabled="true" allowBlank="true" />
+                                                </container:HorizontalLayoutContainer>
+                                            </container:child>  
+                                            <container:child layoutData="{itemData}">
+                                                <container:HorizontalLayoutContainer layoutData="{fullData}">
+                                                    <toolbar:LabelToolItem label="{messages.ringRoadConfig_ringRoadVd3} :" layoutData="{itemVDTitleData}" />
+                                                    <form:TextField ui:field="ringRoadVd3" layoutData="{ringRoadVdData}" enabled="true" allowBlank="true" />
+                                                    <toolbar:LabelToolItem label="" width="10" />
+                                                    <form:IntegerField ui:field="ringRoadVd3Weigth" layoutData="{ringRoadVdWeigthData}" enabled="true" allowBlank="true" />
+                                                </container:HorizontalLayoutContainer>
+                                            </container:child>  
+                                            <container:child layoutData="{itemData}">
+                                                <container:HorizontalLayoutContainer layoutData="{fullData}">
+                                                    <toolbar:LabelToolItem label="{messages.ringRoadConfig_ringRoadVd4} :" layoutData="{itemVDTitleData}" />
+                                                    <form:TextField ui:field="ringRoadVd4" layoutData="{ringRoadVdData}" enabled="true" allowBlank="true" />
+                                                    <toolbar:LabelToolItem label="" width="10" />
+                                                    <form:IntegerField ui:field="ringRoadVd4Weigth" layoutData="{ringRoadVdWeigthData}" enabled="true" allowBlank="true" />
+                                                </container:HorizontalLayoutContainer>
+                                            </container:child>  
+                                            <container:child layoutData="{itemData}">
+                                                <container:HorizontalLayoutContainer layoutData="{fullData}">
+                                                    <toolbar:LabelToolItem label="{messages.ringRoadConfig_ringRoadVd5} :" layoutData="{itemVDTitleData}" />
+                                                    <form:TextField ui:field="ringRoadVd5" layoutData="{ringRoadVdData}" enabled="true" allowBlank="true" />
+                                                    <toolbar:LabelToolItem label="" width="10" />
+                                                    <form:IntegerField ui:field="ringRoadVd5Weigth" layoutData="{ringRoadVdWeigthData}" enabled="true" allowBlank="true" />
+                                                </container:HorizontalLayoutContainer>
+                                            </container:child>  
+                                            <container:child layoutData="{itemData}">
+                                                <container:HorizontalLayoutContainer layoutData="{fullData}">
+                                                    <toolbar:LabelToolItem label="{messages.ringRoadConfig_ringRoadVd6} :" layoutData="{itemVDTitleData}" />
+                                                    <form:TextField ui:field="ringRoadVd6" layoutData="{ringRoadVdData}" enabled="true" allowBlank="true" />
+                                                    <toolbar:LabelToolItem label="" width="10" />
+                                                    <form:IntegerField ui:field="ringRoadVd6Weigth" layoutData="{ringRoadVdWeigthData}" enabled="true" allowBlank="true" />
+                                                </container:HorizontalLayoutContainer>
+                                            </container:child>  
+                                         </container:VerticalLayoutContainer>
+                                        <gxt:button>
+                                            <button:TextButton ui:field="addRingButton" text="{messages.button_add}"/>
+                                        </gxt:button>
+                                        <gxt:button>
+                                            <button:TextButton ui:field="deleteRingButton" text="{messages.button_delete}"/>
+                                        </gxt:button>
+                                        <gxt:button>
+                                            <button:TextButton ui:field="saveRingButton" text="{messages.button_save}"/>
+                                        </gxt:button>
+                                    </gxt:ContentPanel>
+                                </container:child>
+                             </container:VerticalLayoutContainer>
+                        </gxt:child>
+                    </gxt:TabPanel>
+                </container:child>
+            </container:HorizontalLayoutContainer>           
+        </container:east>
+    </container:BorderLayoutContainer>
+</ui:UiBinder>
+

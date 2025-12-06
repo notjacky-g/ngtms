@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:c="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:t="urn:import:com.sencha.gxt.widget.core.client.toolbar"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+    xmlns:core="urn:import:com.sencha.gxt.widget.core.client">
+
+    <ui:style>
+        .clickable {
+            cursor: pointer;
+        }
+    </ui:style>
+
+    <ui:with field="imageLD" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="textLD" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="24" />
+    </ui:with>
+    <ui:with field="spaceLayoutData" type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="24" />
+    </ui:with>
+
+    <!-- 用 ContentPanel 的原因是當 image 的大小過大時，ContentPanel 會限制住顯示範圍 / 裁切效果 SimpleContainer 
+        則沒有這種效果 -->
+    <core:ContentPanel ui:field="root" bodyBorder="false"
+        headerVisible="false" borders="false" styleName="{style.clickable}">
+        <c:VerticalLayoutContainer>
+            <c:child layoutData="{spaceLayoutData}">
+                <g:Label text=" "/>
+            </c:child>
+            <c:child layoutData="{imageLD}">
+                <c:CenterLayoutContainer>
+                    <g:Image ui:field="currentImage" />
+                </c:CenterLayoutContainer>
+            </c:child>
+            <c:child layoutData="{textLD}">
+                <c:CenterLayoutContainer>
+                    <t:LabelToolItem ui:field="txt" />
+                </c:CenterLayoutContainer>
+            </c:child>
+            <c:child layoutData="{spaceLayoutData}">
+                <g:Label text=" "/>
+            </c:child>
+        </c:VerticalLayoutContainer>
+    </core:ContentPanel>
+</ui:UiBinder>

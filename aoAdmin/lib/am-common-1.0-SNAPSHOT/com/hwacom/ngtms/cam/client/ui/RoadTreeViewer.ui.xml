@@ -1,0 +1,80 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:gwt="urn:import:com.google.gwt.user.client.ui"
+    xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
+    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+    xmlns:toolbar="urn:import:com.sencha.gxt.widget.core.client.toolbar"
+    xmlns:tree="urn:import:com.sencha.gxt.widget.core.client.tree"
+    xmlns:am="urn:import:com.hwacom.ngtms.cam.client.ui">
+
+    <!-- I18N、Resource -->
+    <ui:with type="com.hwacom.ngtms.cam.view.Messages" field="messages" />
+    <ui:with type="com.hwacom.ngtms.cam.images.AmImages" field="amImage" />
+    <!-- ======== -->
+
+    <!-- Layout Data 區 -->
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
+        <ui:attributes top="0" right="0" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="southMargins">
+        <ui:attributes top="5" right="0" bottom="0" left="0" />
+    </ui:with>
+
+    <ui:with field="toolBarRowData"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="20" />
+    </ui:with>
+    <ui:with field="treeRowData"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="1" />
+    </ui:with>
+    <ui:with field="gridVLD"
+        type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
+        <ui:attributes width="1" height="200" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.MarginData" field="centerData">
+        <ui:attributes margins="{centerMargins}" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="southData">
+      <ui:attributes size="200" margins="{southMargins}" collapsible="true" split="true" />
+    </ui:with>
+    <!-- ======== -->
+
+    <!-- 其他 import / with -->
+    <ui:with type="com.sencha.gxt.data.shared.TreeStore" field="store" />
+    <ui:with type="com.sencha.gxt.core.client.ValueProvider" field="valueProvider" />
+    <!-- ======== -->
+
+    <ui:style>
+    </ui:style>
+
+    <gxt:ContentPanel ui:field="treePanel" headerVisible="false">
+        <container:VerticalLayoutContainer borders="true" >
+            <container:child layoutData="{toolBarRowData}">
+                <toolbar:ToolBar ui:field="toolBar">
+                    <!-- <button:TextButton ui:field="allExpand" icon="{amImage.folder}" toolTip="{messages.tree_allExpand}" /> -->
+                    <!-- <button:TextButton ui:field="allCollapse" icon="{amImage.folder_close}" toolTip="{messages.tree_allCollapse}" /> -->
+                    <gwt:Image ui:field="expandAllImage" url="{amImage.folder.getSafeUri.asString}" pixelSize="16,16" ></gwt:Image>
+                    <gwt:Image ui:field="collapseAllImage" url="{amImage.folder_close.getSafeUri.asString}" pixelSize="16,16" ></gwt:Image>
+                </toolbar:ToolBar>
+            </container:child>
+            <container:child layoutData="{treeRowData}">
+                <container:BorderLayoutContainer borders="false" ui:field="borderLayoutContainer">
+                    <container:center layoutData="{centerData}">
+                        <gxt:ContentPanel headerVisible="false">
+                            <tree:Tree ui:field="tree" valueProvider="{valueProvider}" store="{store}" />
+                        </gxt:ContentPanel>
+                    </container:center>
+                    <container:south layoutData="{southData}">
+                        <gxt:ContentPanel heading="{messages.roadTree_selectedDevice}">
+                            <am:RoadTreeSelectedViewer ui:field="selectedView" />
+                        </gxt:ContentPanel>
+                    </container:south>
+                </container:BorderLayoutContainer>
+            </container:child>
+            <!-- <container:child layoutData="{gridVLD}" > -->
+                <!-- <am:RoadTreeSelectedView ui:field="selectedView" /> -->
+            <!-- </container:child> -->
+        </container:VerticalLayoutContainer>
+    </gxt:ContentPanel>
+</ui:UiBinder>

@@ -1,0 +1,56 @@
+/*
+ * © HwaCom Systems Inc. ${year}
+ * All Rights Reserved
+ * No part of this software or any of its contents may be reproduced, copied, modified or adapted,
+ * without the prior written consent of HwaCom Systems Inc., unless otherwise indicated for stand-alone materials.
+ */
+package ${packageName};
+
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.GwtEvent;
+
+public class ${eventName}
+    extends GwtEvent<${eventName}.${eventName}Handler> {
+
+  public static final Type<${eventName}Handler> TYPE =
+      new Type<${eventName}Handler>();
+
+  public enum Action {
+    <#list actions as action>
+    ${action}<#sep>,</#sep>
+    </#list>
+  }
+
+  private final Action action;
+
+  public ${eventName}(Action action) {
+    this.action = action;
+  }
+
+  @Override
+  public Type<${eventName}Handler> getAssociatedType() {
+    return TYPE;
+  }
+
+  @Override
+  protected void dispatch(${eventName}Handler handler) {
+  <#list actions as action>
+    <#if action?index == 0>
+    if (action == Action.${action}) {
+    <#else>
+    } else if (action == Action.${action}) {
+    </#if>
+      handler.on<#list action?split("_") as m>${m?lower_case?cap_first}</#list>(this);
+    <#if action?is_last>
+    }
+    </#if>
+  </#list>
+  }
+
+  public interface ${eventName}Handler extends EventHandler {
+
+    <#list actions as action>
+    void on<#list action?split("_") as m>${m?lower_case?cap_first}</#list>(${eventName} event);
+    </#list>
+  }
+}

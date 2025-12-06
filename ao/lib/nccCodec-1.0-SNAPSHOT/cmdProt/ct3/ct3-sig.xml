@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmdFmtDef xmlns="http://hwacom.com/ngtms/cmdfmtdef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://hwacom.com/ngtms/cmdfmtdef cmdFmtDef.xsd"
+	version="v3.0" name="ct3-sig" bindPackage="com.hwacom.ngtms.ncc.tc.ct3.cmdparam.sig"
+	extend="/cmdProt/ct3/ct3-common.xml" classSuffix="Pm"
+	marshalHelperClass="com.hwacom.ngtms.ncc.tc.ct3.marshalhelper.Ct3ScmMarshalHelper">
+
+	<globalParams>
+		<params name="controlStrategy">
+			<bitArray byteNo="1" name="strategy">
+				<bits name="pretimedControl" bitsLenth="1"/>
+				<bits name="dynamicControl" bitsLenth="1"/>
+				<bits name="siteControl" bitsLenth="1"/>
+				<bits name="centerControl" bitsLenth="1"/>
+				<bits name="phaseControl" bitsLenth="1"/>
+				<bits name="realTimeControl" bitsLenth="1"/>
+				<bits name="actuatedControl" bitsLenth="1"/>
+				<bits name="vipControl" bitsLenth="1"/>
+			</bitArray>
+		</params>
+		<params name="signalMap">
+            <bitArray byteNo="1" name="signal">
+                <bits name="north" bitsLenth="1"/>
+                <bits name="eastNorth" bitsLenth="1"/>
+                <bits name="east" bitsLenth="1"/>
+                <bits name="eastSouth" bitsLenth="1"/>
+                <bits name="south" bitsLenth="1"/>
+                <bits name="westSouth" bitsLenth="1"/>
+                <bits name="west" bitsLenth="1"/>
+                <bits name="westNorth" bitsLenth="1"/>
+            </bitArray>
+        </params>
+        <params name="signalStatus">
+            <bitArray byteNo="1" name="status">
+                <bits name="red" bitsLenth="1"/>
+                <bits name="yellow" bitsLenth="1"/>
+                <bits name="circleGreen" bitsLenth="1"/>
+                <bits name="leftGreen" bitsLenth="1"/>
+                <bits name="straightGreen" bitsLenth="1"/>
+                <bits name="rightGreen" bitsLenth="1"/>
+                <bits name="pedGreen" bitsLenth="1"/>
+                <bits name="pedRed" bitsLenth="1"/>
+            </bitArray>
+        </params>
+        <params name="actuateType">
+		 	<bitArray byteNo="1" name="type">
+                <bits name="bus" bitsLenth="1"/>
+                <bits name="turnLeft" bitsLenth="1"/>
+                <bits name="ramp" bitsLenth="1"/>
+                <bits name="railway" bitsLenth="1"/>
+                <bits name="pedestrian" bitsLenth="1"/>
+                <bits name="all" bitsLenth="1"/>
+                <bits name="brake" bitsLenth="1"/>
+                <bits name="reserved" bitsLenth="1"/>
+            </bitArray>
+		</params>
+		<params name="bright">
+			<bitArray byteNo="1" name="brightnesss">
+	            <bits name="brightness65percent" bitsLenth="1"/>
+	            <bits name="brightness80percent" bitsLenth="1"/>
+	            <bits name="brightness100percent" bitsLenth="1"/>
+	            <bits name="reserved3" bitsLenth="1"/>
+	            <bits name="releasePreviousForceDimControl" bitsLenth="1"/>
+	            <bits name="forceDimControl" bitsLenth="1"/>
+	            <bits name="reserved6" bitsLenth="1"/>
+	            <bits name="reserved7" bitsLenth="1"/>
+       		</bitArray>
+		</params>
+        <params name="segment">
+			<value name="hour" type="byte"/>
+			<value name="min" type="byte"/>
+			<value name="planId" type="byte"/>
+		</params>
+		<params name="segmentDayRange">
+			<value name="startYear" type="byte" minValue="0" maxValue="255" />
+			<value name="startMonth" type="byte" minValue="1" maxValue="12" />
+			<value name="startDay" type="byte" minValue="1" maxValue="31" />
+			<value name="endYear" type="byte" minValue="0" maxValue="255" />
+			<value name="endMonth" type="byte" minValue="1" maxValue="12" />
+			<value name="endDay" type="byte" minValue="1" maxValue="31" />
+		</params>
+	</globalParams>
+
+	<!-- 目前控制策略管理 -->
+	<command id="5F10" name="setControlStrategyReq" type="set" direction="C2T">
+		<paramsRef paramsName="controlStrategy"/>
+		<value name="effectTime" type="byte" minValue="0" maxValue="255" />
+	</command>
+
+	<command id="5F40" name="queryControlStrategyReq" type="query" direction="C2T" responseId="5FC0" />
+	<command id="5FC0" name="queryControlStrategyRsp" type="query" direction="T2C" responseId="5F40">
+		<paramsRef paramsName="controlStrategy"/>
+		<value name="effectTime" type="byte" minValue="0" maxValue="255" />
+	</command>
+
+	<command id="5F00" name="controlStrategyReport" type="report" direction="T2C">
+		<paramsRef paramsName="controlStrategy"/>
+		<value name="beginEnd" type="byte" minValue="0" maxValue="3" />
+	</command>
+
+	<!-- ㄧ般日車道調撥控制參數管理 -->
+	<command id="5F11" name="setReverseLaneNormalDayReq" type="set" direction="C2T">
+		<value name="inDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="inStartHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inStartMin" type="byte" minValue="0" maxValue="59" />
+		<value name="inEndHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inEndMin" type="byte" minValue="0" maxValue="59" />
+		<value name="outDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="outStartHour" type="byte" minValue="0" maxValue="23" />
+		<value name="outStartMin" type="byte" minValue="0" maxValue="59" />
+		<value name="outEndHour" type="byte" minValue="0" maxValue="23" />
+		<value name="outEndMin" type="byte" minValue="0" maxValue="59" />
+		<value name="clearTime" type="byte" minValue="0" maxValue="255" />
+		<value name="flashGreen" type="byte" minValue="0" maxValue="255" />
+		<value name="greenTime" type="byte" minValue="0" maxValue="255" />
+		<value name="reverseTimeType" type="byte" minValue="1" maxValue="3" />
+		<list name="weekDayList" lenByteNo="1">
+			<value name="weekDay" type="byte" minValue="1" maxValue="17" />
+		</list>
+	</command>
+
+	<command id="5F41" name="queryReverseLaneNormalDayReq" type="query" direction="C2T" responseId="5FC1" >
+		<value name="reverseTimeType" type="byte" minValue="0" maxValue="255" />
+		<value name="weekDay" type="byte" minValue="1" maxValue="17" />
+	</command>
+	<command id="5FC1" name="queryReverseLaneNormalDayRsp" type="query" direction="T2C" responseId="5F41">
+		<value name="inDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="inStartHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inStartMin" type="byte" minValue="0" maxValue="59" />
+		<value name="inEndHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inEndMin" type="byte" minValue="0" maxValue="59" />
+		<value name="outDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="outStartHour" type="byte" minValue="0" maxValue="23" />
+		<value name="outStartMin" type="byte" minValue="0" maxValue="59" />
+		<value name="outEndHour" type="byte" minValue="0" maxValue="23" />
+		<value name="outEndMin" type="byte" minValue="0" maxValue="59" />
+		<value name="clearTime" type="byte" minValue="0" maxValue="255" />
+		<value name="flashGreen" type="byte" minValue="0" maxValue="255" />
+		<value name="greenTime" type="byte" minValue="0" maxValue="255" />
+		<value name="reverseTimeType" type="byte" minValue="1" maxValue="3" />
+		<list name="weekDayList" lenByteNo="1">
+			<value name="weekDay" type="byte" minValue="1" maxValue="17" />
+		</list>
+	</command>
+
+	<command id="5F01" name="reverseLaneNormalDayReport" type="report" direction="T2C">
+		<value name="beginEnd" type="byte" minValue="0" maxValue="3" />
+	</command>
+
+	<!-- 特殊日車道調撥控制參數管理 -->
+	<command id="5F12" name="setReverseLaneSpecialDayReq" type="set" direction="C2T">
+		<value name="inDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="inStartHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inStartMin" type="byte" minValue="0" maxValue="59" />
+		<value name="inEndHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inEndMin" type="byte" minValue="0" maxValue="59" />
+		<value name="outDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="outStartHour" type="byte" minValue="0" maxValue="23" />
+		<value name="outStartMin" type="byte" minValue="0" maxValue="59" />
+		<value name="outEndHour" type="byte" minValue="0" maxValue="23" />
+		<value name="outEndMin" type="byte" minValue="0" maxValue="59" />
+		<value name="clearTime" type="byte" minValue="0" maxValue="255" />
+		<value name="flashGreen" type="byte" minValue="0" maxValue="255" />
+		<value name="greenTime" type="byte" minValue="0" maxValue="255" />
+		<value name="reverseTimeType" type="byte" minValue="1" maxValue="3" />
+		<value name="startYear" type="byte" minValue="0" maxValue="255" />
+		<value name="startMonth" type="byte" minValue="1" maxValue="12" />
+		<value name="startDay" type="byte" minValue="1" maxValue="31" />
+		<value name="endYear" type="byte" minValue="0" maxValue="255" />
+		<value name="endMonth" type="byte" minValue="1" maxValue="12" />
+		<value name="endDay" type="byte" minValue="1" maxValue="31" />
+	</command>
+
+	<command id="5F42" name="queryReverseLaneSpecialDayReq" type="query" direction="C2T" responseId="5FC2" >
+		<value name="reverseTimeType" type="byte" minValue="0" maxValue="255" />
+	</command>
+	<command id="5FC2" name="queryReverseLaneSpecialDayRsp" type="query" direction="T2C" responseId="5F42">
+		<value name="inDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="inStartHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inStartMin" type="byte" minValue="0" maxValue="59" />
+		<value name="inEndHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inEndMin" type="byte" minValue="0" maxValue="59" />
+		<value name="outDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="outStartHour" type="byte" minValue="0" maxValue="23" />
+		<value name="outStartMin" type="byte" minValue="0" maxValue="59" />
+		<value name="outEndHour" type="byte" minValue="0" maxValue="23" />
+		<value name="outEndMin" type="byte" minValue="0" maxValue="59" />
+		<value name="clearTime" type="byte" minValue="0" maxValue="255" />
+		<value name="flashGreen" type="byte" minValue="0" maxValue="255" />
+		<value name="greenTime" type="byte" minValue="0" maxValue="255" />
+		<value name="reverseTimeType" type="byte" minValue="1" maxValue="3" />
+		<value name="startYear" type="byte" minValue="0" maxValue="255" />
+		<value name="startMonth" type="byte" minValue="1" maxValue="12" />
+		<value name="startDay" type="byte" minValue="1" maxValue="31" />
+		<value name="endYear" type="byte" minValue="0" maxValue="255" />
+		<value name="endMonth" type="byte" minValue="1" maxValue="12" />
+		<value name="endDay" type="byte" minValue="1" maxValue="31" />
+	</command>
+
+	<command id="5F02" name="reverseLaneSpecialDayReport" type="report" direction="T2C">
+		<value name="beginEnd" type="byte" minValue="0" maxValue="3" />
+	</command>
+
+	<!-- 時相資料管理 -->
+	<command id="5F13" name="setPhaseReq" type="set" direction="C2T">
+		<value name="phaseOrder" type="byte" minValue="0" maxValue="254" />
+		<paramsRef paramsName="signalMap"/>
+		<value name="signalCount" type="byte" minValue="1" maxValue="8" lengthField="true" />
+		<list name="subPhaseList" lenByteNo="1">
+			<list name="signalStatusList" lenByteNo="0" lenFieldName="signalCount">
+				<paramsRef paramsName="signalStatus"/>
+			</list> 
+		</list>
+	</command>
+
+	<command id="5F43" name="queryPhaseReq" type="query" direction="C2T" responseId="5FC3" >
+		<value name="phaseOrder" type="byte" minValue="0" maxValue="254" />
+	</command>
+	<command id="5FC3" name="queryPhaseRsp" type="query" direction="T2C" responseId="5F43">
+		<value name="phaseOrder" type="byte" minValue="0" maxValue="254" />
+		<paramsRef paramsName="signalMap"/>
+		<value name="signalCount" type="byte" minValue="1" maxValue="8" lengthField="true" />
+		<list name="subPhaseList" lenByteNo="1">
+			<list name="signalStatusList" lenByteNo="0" lenFieldName="signalCount">
+				<paramsRef paramsName="signalStatus"/>
+			</list> 
+		</list>
+	</command>
+
+	<command id="5F03" name="phaseReport" type="report" direction="T2C">
+		<value name="phaseOrder" type="byte" minValue="0" maxValue="254" />
+		<paramsRef paramsName="signalMap"/>
+		<value name="signalCount" lengthOfNextList="true" type="byte" minValue="1" maxValue="8" />
+		<value name="subPhaseId" type="byte" minValue="1" maxValue="8" />
+		<value name="stepId" type="byte" minValue="0" maxValue="255" />
+		<value name="stepSec" type="short" minValue="0" maxValue="65535" />
+		<list name="signalStatusList" lenByteNo="0">
+			<paramsRef paramsName="signalStatus"/>
+		</list>
+	</command>
+
+	<!-- 時制計畫基本參數管理 -->
+	<command id="5F14" name="setTimingPlanBasicReq" type="set" direction="C2T">
+		<value name="planId" type="byte" minValue="0" maxValue="48" />
+		<list name="timingPlanBasicList" lenByteNo="1">
+			<value name="minGreen" type="byte" minValue="0" maxValue="255" />
+			<value name="maxGreen" type="short" minValue="0" maxValue="8190" />
+			<value name="yellow" type="byte" minValue="0" maxValue="9" />
+			<value name="allRed" type="byte" minValue="0" maxValue="9" />
+			<value name="pedGreedFlash" type="byte" minValue="0" maxValue="99" />
+			<value name="pedRed" type="byte" minValue="0" maxValue="99" />
+		</list>
+	</command>
+
+	<command id="5F44" name="queryTimingPlanBasicReq" type="query" direction="C2T" responseId="5FC4" >
+		<value name="planId" type="byte" minValue="0" maxValue="48" />
+	</command>
+	<command id="5FC4" name="queryTimingPlanBasicRsp" type="query" direction="T2C" responseId="5F44">
+		<value name="planId" type="byte" minValue="0" maxValue="48" />
+		<list name="timingPlanBasicList" lenByteNo="1">
+			<value name="minGreen" type="byte" minValue="0" maxValue="255" />
+			<value name="maxGreen" type="short" minValue="0" maxValue="8190" />
+			<value name="yellow" type="byte" minValue="0" maxValue="9" />
+			<value name="allRed" type="byte" minValue="0" maxValue="9" />
+			<value name="pedGreedFlash" type="byte" minValue="0" maxValue="99" />
+			<value name="pedRed" type="byte" minValue="0" maxValue="99" />
+		</list>
+	</command>
+
+	<!-- 時制計畫資料庫管理 -->
+	<command id="5F15" name="setTimingPlanReq" type="set" direction="C2T">
+		<value name="planId" type="byte" minValue="0" maxValue="48" />
+		<value name="direct" type="byte" minValue="0" maxValue="7" />
+		<value name="phaseOrder" type="byte" minValue="0" maxValue="254" />
+		<list name="timingPlanList" lenByteNo="1">
+			<value name="green" type="short" minValue="0" maxValue="8190" />
+		</list>
+		<value name="cycleTime" type="short" minValue="0" maxValue="65535" />
+		<value name="offset" type="short" minValue="0" maxValue="65535" />
+	</command>
+
+	<command id="5F45" name="queryTimingPlanReq" type="query" direction="C2T" responseId="5FC5" >
+		<value name="planId" type="byte" minValue="0" maxValue="48" />
+	</command>
+	<command id="5FC5" name="queryTimingPlanRsp" type="query" direction="T2C" responseId="5F45">
+		<value name="planId" type="byte" minValue="0" maxValue="48" />
+		<value name="direct" type="byte" minValue="0" maxValue="7" />
+		<value name="phaseOrder" type="byte" minValue="0" maxValue="254" />
+		<list name="timingPlanList" lenByteNo="1">
+			<value name="green" type="short" minValue="0" maxValue="8190" />
+		</list>
+		<value name="cycleTime" type="short" minValue="0" maxValue="65535" />
+		<value name="offset" type="short" minValue="0" maxValue="65535" />
+	</command>
+
+	<!-- ㄧ般日時段型態管理 -->
+	<command id="5F16" name="setSegmentNormalDayReq" type="set" direction="C2T">
+		<value name="segmentType" type="byte" minValue="0" maxValue="7" />
+		<list name="segmentList" lenByteNo="1">
+			<paramsRef paramsName="segment"/>
+		</list>
+		<list name="weekDayList" lenByteNo="1">
+			<value name="weekDay" type="byte" minValue="1" maxValue="17" />
+		</list>
+	</command>
+
+	<command id="5F46" name="querySegmentNormalDayReq" type="query" direction="C2T" responseId="5FC6" >
+		<value name="segmentType" type="byte" minValue="0" maxValue="255" />
+		<value name="weekDay" type="byte" minValue="0" maxValue="255" />
+	</command>
+	<command id="5FC6" name="querySegmentNormalDayRsp" type="query" direction="T2C" responseId="5F46">
+		<value name="segmentType" type="byte" minValue="0" maxValue="7" />
+		<list name="segmentList" lenByteNo="1">
+			<paramsRef paramsName="segment"/>
+		</list>
+		<list name="weekDayList" lenByteNo="1">
+			<value name="weekDay" type="byte" minValue="1" maxValue="17" />
+		</list>
+	</command>
+
+	<!-- 特殊日時段型態管理 -->
+	<command id="5F17" name="setSegmentSpecialDayReq" type="set" direction="C2T">
+		<value name="segmentType" type="byte" minValue="8" maxValue="20" />
+		<list name="segmentList" lenByteNo="1">
+			<paramsRef paramsName="segment" useMarshalHelper="true"/>
+		</list>
+		<paramsRef paramsName="segmentDayRange" useMarshalHelper="true"/>
+	</command>
+
+	<command id="5F47" name="querySegmentSpecialDayReq" type="query" direction="C2T" responseId="5FC7" >
+		<value name="segmentType" type="byte" minValue="0" maxValue="255" />
+	</command>
+	<command id="5FC7" name="querySegmentSpecialDayRsp" type="query" direction="T2C" responseId="5F47">
+		<value name="segmentType" type="byte" minValue="8" maxValue="20" />
+		<list name="segmentList" lenByteNo="1">
+			<paramsRef paramsName="segment" useMarshalHelper="true"/>
+		</list>
+		<paramsRef paramsName="segmentDayRange" useMarshalHelper="true"/>
+	</command>
+
+	<!-- 目前時制計畫管理 -->
+	<command id="5F18" name="setExecuteTimingPlanReq" type="set" direction="C2T">
+		<value name="planId" type="byte" minValue="0" maxValue="48" />
+	</command>
+
+	<command id="5F48" name="queryExecuteTimingPlanReq" type="query" direction="C2T" responseId="5FC8" />
+	<command id="5FC8" name="queryExecuteTimingPlanRsp" type="query" direction="T2C" responseId="5F48">
+		<value name="planId" type="byte" minValue="0" maxValue="48" />
+		<value name="direct" type="byte" minValue="0" maxValue="7" />
+		<value name="phaseOrder" type="byte" minValue="0" maxValue="254" />
+		<list name="executeTimingPlanList" lenByteNo="1">
+			<value name="green" type="short" minValue="0" maxValue="8190" />
+		</list>
+		<value name="cycleTime" type="short" minValue="0" maxValue="65535" />
+		<value name="offset" type="short" minValue="0" maxValue="65535" />
+	</command>
+
+	<!-- 臨界路口控制 -->
+	<command id="5F1D" name="setCriticalReq" type="set" direction="C2T">
+		<value name="subPhaseCount" lengthOfNextList="true" type="byte" minValue="1" maxValue="8" />
+		<value name="cycleTime" type="short" minValue="0" maxValue="65535" />
+		<value name="offset" type="short" minValue="0" maxValue="65535" />
+		<list name="criticalList" lenByteNo="0">
+			<value name="green" type="short" minValue="0" maxValue="8190" />
+		</list>
+	</command>
+	
+    <!-- 特勤路線控制(VIP)參數管理 -->
+	<command id="5F1E" name="setSecretControlReq" type="set" direction="C2T">
+		<value name="inDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="outDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="inStartHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inStartMin" type="byte" minValue="0" maxValue="59" />
+		<value name="inEndHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inEndMin" type="byte" minValue="0" maxValue="59" />
+	</command>
+	
+	 <!-- 特勤路線控制(VIP)參數查詢 -->
+	<command id="5F4E" name="querySecretControlReq" type="query" direction="T2C" responseId="5FCE"/>
+	
+	 <!-- 特勤路線控制(VIP)查詢回報-->
+	<command id="5FCE" name="querySecretControlRsp" type="query" direction="T2C" responseId="5F4E">
+	    <value name="inDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="outDirect" type="byte" minValue="0" maxValue="7" />
+		<value name="inStartHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inStartMin" type="byte" minValue="0" maxValue="59" />
+		<value name="inEndHour" type="byte" minValue="0" maxValue="23" />
+		<value name="inEndMin" type="byte" minValue="0" maxValue="59" />
+	</command>
+	
+	<!-- 現場操作回報 -->
+	<command id="5F08" name="siteOperationReport" type="report" direction="T2C">
+		<value name="fieldOperate" type="byte" minValue="0" maxValue="255" />
+	</command>
+
+	<!-- 設備資料更動回報 -->
+	<command id="5F0A" name="tcDataChangeReport" type="report" direction="T2C">
+		<bitArray byteNo="1" name="updateDb">
+            <bits name="phaseOrder" bitsLenth="1"/>
+            <bits name="timeSegment" bitsLenth="1"/>
+            <bits name="basicParameter" bitsLenth="1"/>
+            <bits name="timimngPlan" bitsLenth="1"/>
+            <bits name="vipParameter" bitsLenth="1"/>
+            <bits name="reverseLaneControl" bitsLenth="1"/>
+            <bits name="dimControl" bitsLenth="1"/>
+            <bits name="actuatedControl" bitsLenth="1"/>
+        </bitArray>
+		<value name="subDbId" type="byte" minValue="0" maxValue="255" />
+	</command>
+
+	<!-- 要求資料庫資料重傳 -->
+	<command id="5F0B" name="requestDataResendReport" type="report" direction="T2C">
+		<bitArray byteNo="1" name="updateDb">
+            <bits name="phaseOrder" bitsLenth="1"/>
+            <bits name="timeSegment" bitsLenth="1"/>
+            <bits name="basicParameter" bitsLenth="1"/>
+            <bits name="timimngPlan" bitsLenth="1"/>
+            <bits name="vipParameter" bitsLenth="1"/>
+            <bits name="reverseLaneControl" bitsLenth="1"/>
+            <bits name="dimControl" bitsLenth="1"/>
+            <bits name="actuatedControl" bitsLenth="1"/>
+        </bitArray>
+	</command>
+
+	<!-- 燈態步階傳輸週期管理 -->
+	<command id="5F3F" name="setSignalStepReportCycleReq" type="set" direction="C2T">
+		<value name="transmitType" type="byte" minValue="1" maxValue="2" />
+		<value name="transmitCycle" type="byte" minValue="0" maxValue="255" />
+	</command>
+
+	<command id="5F6F" name="querySignalStepReportCycleReq" type="query" direction="C2T" responseId="5FEF" >
+		<value name="transmitType" type="byte" minValue="1" maxValue="2" />
+	</command>
+	<command id="5FEF" name="querySignalStepReportCycleRsp" type="query" direction="T2C" responseId="5F6F">
+		<value name="transmitType" type="byte" minValue="1" maxValue="2" />
+		<value name="transmitCycle" type="byte" minValue="0" maxValue="255" />
+	</command>
+
+	<command id="5F0F" name="signalStepReport" type="report" direction="T2C">
+		<paramsRef paramsName="signalMap"/>
+		<bitArray byteNo="1" name="greenSignalMap">
+            <bits name="greenNorth" bitsLenth="1"/>
+            <bits name="greenEastNorth" bitsLenth="1"/>
+            <bits name="greenEast" bitsLenth="1"/>
+            <bits name="greenEastSouth" bitsLenth="1"/>
+            <bits name="greenSouth" bitsLenth="1"/>
+            <bits name="greenWestSouth" bitsLenth="1"/>
+            <bits name="greenWest" bitsLenth="1"/>
+            <bits name="greenWestNorth" bitsLenth="1"/>
+        </bitArray>
+        <bitArray byteNo="1" name="yellowSignalMap">
+            <bits name="yellowNorth" bitsLenth="1"/>
+            <bits name="yellowEastNorth" bitsLenth="1"/>
+            <bits name="yellowEast" bitsLenth="1"/>
+            <bits name="yellowEastSouth" bitsLenth="1"/>
+            <bits name="yellowSouth" bitsLenth="1"/>
+            <bits name="yellowWestSouth" bitsLenth="1"/>
+            <bits name="yellowWest" bitsLenth="1"/>
+            <bits name="yellowWestNorth" bitsLenth="1"/>
+        </bitArray>
+        <bitArray byteNo="1" name="redSignalMap">
+            <bits name="redNorth" bitsLenth="1"/>
+            <bits name="redEastNorth" bitsLenth="1"/>
+            <bits name="redEast" bitsLenth="1"/>
+            <bits name="redEastSouth" bitsLenth="1"/>
+            <bits name="redSouth" bitsLenth="1"/>
+            <bits name="redWestSouth" bitsLenth="1"/>
+            <bits name="redWest" bitsLenth="1"/>
+            <bits name="redWestNorth" bitsLenth="1"/>
+        </bitArray>
+	</command>
+	
+	<!-- 觸動控制組態管理 -->
+	<command id="5F19" name="setActuateControlConfigReq" type="set" direction="C2T">
+		<value name="subPhaseId" type="byte" minValue="1" maxValue="8" />
+		<paramsRef paramsName="actuateType"/>
+		<value name="timeExtend" type="byte" minValue="0" maxValue="255" />
+		<value name="actuateData1" type="byte"  minValue="0" maxValue="255"  />
+		<value name="actuateData2" type="byte" minValue="0" maxValue="255"   />
+	</command>
+	
+    <command id="5F49" name="queryActuateControlConfigReq" type="query" direction="T2C" responseId="5FC9">
+		<paramsRef paramsName="actuateType"/>
+	</command>
+	
+    <command id="5FC9" name="queryActuateControlConfigRsp" type="query" direction="T2C" responseId="5F49">
+		<value name="subPhaseId" type="byte" minValue="1" maxValue="8" />
+		<paramsRef paramsName="actuateType"/>
+		<value name="timeExtend" type="byte" minValue="0" maxValue="255" />
+		<value name="actuateData1" type="byte"  minValue="0" maxValue="255"  />
+		<value name="actuateData2" type="byte" minValue="0" maxValue="255"   />
+	</command>
+	
+	<command id="5F09" name="actuateControlConfigReport" type="report" direction="T2C">
+		<paramsRef paramsName="actuateType" />
+		<value name="actuateData1" type="byte"  minValue="0" maxValue="255"  />
+	</command>
+	
+	<command id="5F3E" name="setDeviceDescentControlReq" type="set" direction="C2T">
+		<paramsRef paramsName="bright" />
+        <value name="startHour" type="byte" minValue="0" maxValue="23" />
+		<value name="startMin" type="byte" minValue="0" maxValue="59" />
+		<value name="endHour" type="byte" minValue="0" maxValue="23" />
+		<value name="endMin" type="byte" minValue="0" maxValue="59" />
+	</command>
+	
+	<command id="5F6E" name="queryDeviceDescentControlReq" type="query" direction="T2C"  responseId="5FEE" />
+	<command id="5FEE" name="queryDeviceDescentControlRsp" type="query" direction="T2C"  responseId="5F6E">
+	    <paramsRef paramsName="bright" />
+        <value name="startHour" type="byte" minValue="0" maxValue="23" />
+		<value name="startMin" type="byte" minValue="0" maxValue="59" />
+		<value name="endHour" type="byte" minValue="0" maxValue="23" />
+		<value name="endMin" type="byte" minValue="0" maxValue="59" />
+	</command>
+	
+	<command id="5F0E" name="deviceDescentControlReport" type="report" direction="T2C">
+		<value name="beginEnd" type="byte"  minValue="0" maxValue="1"  />
+	</command>
+	
+</cmdFmtDef>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.1//EN" "http://www.gwtproject.org/doctype/2.8.1/gwt-module.dtd">
+<module rename-to="ao">
+    <inherits name="com.hwacom.ngtms.pd.am.common"/>
+    <inherits name="com.hwacom.ngtms.ao.Shared" />
+    <inherits name="com.hwacom.ngtms.alarm.Shared" />
+    <inherits name="com.hwacom.ngtms.room.am.common"/>
+    
+    <entry-point class="com.hwacom.ngtms.ao.am.AoEP" />
+
+    <source path="am">
+        <exclude name="**/package-info.java" />
+        <exclude name="boot/Invoker.java" />
+      	<exclude name="server/**" />
+    </source>
+</module>

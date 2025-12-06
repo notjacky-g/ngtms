@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- 
+注意！
+1. 所有 Hz Member/ Client 都須使用相同的 Serializer 才能順利讀取(Deserialize)資料
+2. 本文件須經專案主管或 Reviewer 同意後才能 Commit 到SVN。 Commit 前須仔細評估哪些軟體必須 rebuild & restart 。
+-->
+<HzSerializerDeclare>
+    <!-- Common -->
+    <!--  
+	<HzSerializer id="1">
+        <TypeClass>com.hwacom.ngtms.common.ncc.TcReportWrapper</TypeClass>
+        <HzSerializerClass>com.hwacom.ngtms.common.serializer.TcReportWrapperSerializer</HzSerializerClass>
+    </HzSerializer>
+    <HzSerializer id="2">
+        <TypeClass>com.hwacom.ngtms.common.ncc.TcConnectionStatusReport</TypeClass>
+        <HzSerializerClass>com.hwacom.ngtms.common.serializer.TcConnectionStatusReportSerializer</HzSerializerClass>
+    </HzSerializer>
+	-->
+</HzSerializerDeclare>
